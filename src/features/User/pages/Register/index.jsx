@@ -2,10 +2,21 @@ import RegisterForm from "features/User/components/RegisterForm";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
+import userApi from "api/userApi";
 
 function Register() {
 	const onSubmit = (data) => {
 		console.log(data);
+		const register = async () => {
+			try {
+				const result = await userApi.register(data);
+				console.log(result);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		register();
 	};
 
 	const defaultValues = {

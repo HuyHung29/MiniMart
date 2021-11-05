@@ -2,6 +2,7 @@ import Footer from "components/Footer";
 import Header from "components/Header";
 import Loading from "components/Loading";
 import NotFound from "components/NotFound";
+import Products from "features/Products";
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
 					<Header />
 					<Switch>
 						<Route path='/user' component={User} />
+						<Route path='/products' component={Products} />
 						<Route component={NotFound} />
 					</Switch>
 					<Footer />
