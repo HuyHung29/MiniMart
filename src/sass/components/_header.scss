@@ -1,0 +1,153 @@
+.header {
+    &__top {
+        height: $top-header-height;
+        font-size: 1.5rem;
+        @include flex(center);
+
+        &__icon {
+            font-size: 2rem;
+            margin-right: 10px;
+            color: $primary-color;
+        }
+
+        &__text {
+            cursor: pointer;
+            transition: color 0.2s ease-in;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+
+    &__middle {
+        background-size: auto;
+        background-repeat: repeat;
+        background-position: center;
+
+        &__container {
+            min-height: $mid-header-height;
+        }
+
+        & .form-wrap {
+            padding: 2px;
+            background-color: #ebebeb;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        &__form {
+            background-color: white;
+            border-radius: 5px;
+            @include flex(center);
+
+            &__icon {
+                font-size: 1.6rem;
+                color: $sub-text-color;
+                padding: 0 10px;
+            }
+
+            &__input {
+                padding: 10px 0;
+                font-size: 1.5rem;
+                outline: unset;
+                border: unset;
+
+                &:focus {
+                    border: unset;
+                    box-shadow: unset;
+                }
+            }
+
+            &__button {
+                font-size: 1.4rem;
+                background-color: #ebebeb;
+                border: unset;
+                transition: all 0.2s linear;
+                color: $text-color;
+                padding: 4px 20px;
+                font-weight: 600;
+
+                &:hover {
+                    color: $text-color;
+                    background-color: $primary-color;
+                }
+            }
+        }
+
+        &__bottom {
+            margin-top: 10px;
+        }
+
+        &__menu {
+            @include flex(center);
+            font-size: 1.4rem;
+            column-gap: 30px;
+        }
+
+        &__item {
+            position: relative;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease-in-out;
+
+            &::after {
+                content: '';
+                position: absolute;
+                border: 1px solid white;
+                height: 60%;
+                top: 50%;
+                right: -15px;
+                transform: translateY(-50%);
+            }
+
+            &:hover {
+                color: $primary-color;
+            }
+
+            &:last-child {
+                &::after {
+                    display: none;
+                }
+            }
+        }
+
+        &__user {
+            @include flex(flex-start);
+            column-gap: 10px;
+            font-size: 1.5rem;
+
+            & .favorite-list, & .account {
+                @include flex(center,flex-start);
+                flex: 1;
+                color: white;
+
+                & p {
+                    cursor: pointer;
+                    transition: 0.2s ease-in-out;
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
+
+                & i {
+                    font-size: 2.4rem;
+                     margin-right: 5px;  
+                }
+            }
+
+            & .account {
+                &__action {
+                    &__link {
+                        display: block;
+                        transition: 0.2s ease-in-out;
+
+                        &:hover {
+                            color: $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

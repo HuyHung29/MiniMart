@@ -1,0 +1,186 @@
+.cart {
+    z-index: 90;
+
+    &__group {
+        position: relative;
+
+        &__menu {
+            position: absolute;
+            top: calc(100% + 30px);
+            right: 0;
+            background-color: white;
+            min-width: 320px;
+            box-shadow: 0 5px 10px rgba($color: #000000, $alpha: 0.3);
+            font-size: 1.4rem;
+            border-radius: 10px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease-in;
+            
+            &::before {
+                content: '';
+                position: absolute;
+                border: 25px solid;
+                border-color: transparent transparent white transparent;
+                top: -40px;
+                right: 70px;
+                transform: translateX(50%);
+            }
+        }
+
+        &:hover &__menu  {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: calc(100% + 20px);
+            height: 30px;
+            background-color: transparent;
+        }
+    }
+
+    &__button {
+        @include flex(center);
+        background-color: white;
+        padding: 12px 15px;
+        border-radius: 5px;
+        color: $secondary-color;
+        cursor: pointer;
+
+        & i {
+            margin-right: 5px;
+            font-size: 1.8rem;
+            position: relative;
+            top: -3px;
+        }
+    }
+
+    &__list {
+        padding: 10px 15px;
+        max-height: 280px;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background-color: #F5F5F5;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        &::-webkit-scrollbar {
+            width: 6px;
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: $sub-text-color;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        &:hover {
+            &::-webkit-scrollbar-track,
+            &::-webkit-scrollbar-thumb {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+
+    &__item {
+        @include flex();
+        padding: 20px 0;
+
+        & + & {
+            border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+        }
+
+        &__img {
+            margin-right: 15px;
+            & img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+            }
+        }
+
+        &__info {
+            flex: 1;
+            @include flex(center);
+
+            &--wrap {
+                flex: 1;
+            }
+        }
+
+        &__name {
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color 0.2s ease-in;
+
+            &:hover {
+                color: $secondary-color;
+            }
+        }
+
+        &__price, &__quantity {
+            font-size: 1.4rem;
+            margin-top: 5px;
+        }
+
+        &__price {
+            color: $secondary-color;
+            font-weight: 600;
+        }
+
+        &__action {
+            font-size: 2rem;
+            color: $sub-text-color;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: color 0.2s ease-in-out;
+
+            &:hover {
+                color: $secondary-color;
+            }
+        }
+    }
+
+    &__bottom {
+        padding: 15px;
+    }
+
+    &__total-price {
+        @include flex(center, space-between);
+        font-size: 1.5rem;
+
+        & span {
+            color: $secondary-color;
+            font-weight: 600;
+        }
+    }
+
+    &__pay {
+        color: white;
+        font-size: 1.6rem;
+        background-color: $secondary-color;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 25px 0 10px;
+        border: unset;
+        transition: background-color 0.2s ease-in;
+
+        &:hover {
+            background-color: $text-color;
+        }
+    }
+}
