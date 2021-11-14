@@ -1,0 +1,33 @@
+.breadcrumb {
+    margin-bottom: 0;
+    
+    &-item {
+        font-size: 1.4rem;
+
+        &::before {
+            display: none;
+        }
+
+        &.active {
+            color: $secondary-color;
+        }
+
+        &.active &-icon {
+            display: none;
+        }
+
+        &-link {
+            transition: color 0.25s ease-in;
+
+            &:hover {
+                color: $secondary-color;
+            }
+        }
+
+        &-icon {
+            font-size: 1.2rem;
+            padding: 0 10px;
+        }
+
+    }
+}

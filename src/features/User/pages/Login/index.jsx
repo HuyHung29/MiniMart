@@ -1,18 +1,84 @@
+import userApi from "api/userApi";
 import ForgetPasswordForm from "features/User/components/ForgetPasswordForm";
 import LoginForm from "features/User/components/LoginForm";
+import ResetPasswordForm from "features/User/components/ResetPasswordForm";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 
 function Login() {
-	const [forgetPassword, setForgetPassword] = useState(false);
+	const [isForgetPassword, setIsForgetPassword] = useState(false);
+	const [isResetPassword, setIsResetPassword] = useState(false);
+	const [resetCode, setResetCode] = useState(null);
 
 	const onLoginSubmit = (data) => {
-		console.log(data);
+		const login = async () => {
+			try {
+				const respond = await userApi.login(data);
+				console.log(respond);
+			} catch (error) {
+				throw error;
+			}
+		};
+
+		toast.promise(login, {
+			pending: "Đang xử lý",
+			success: "Đăng nhập thành công",
+			error: {
+				render({ data }) {
+					return `Đăng nhập thất bại ${data.response.data.message}`;
+				},
+			},
+		});
 	};
 
 	const onForgetPasswordSubmit = (data) => {
-		console.log(data);
+		const forgetPassword = async () => {
+			try {
+				const respond = await userApi.forgetPassword(data);
+				console.log(respond);
+				setIsResetPassword(true);
+				setResetCode(respond.data.resetCode);
+			} catch (error) {
+				throw error;
+			}
+		};
+
+		toast.promise(forgetPassword, {
+			pending: "Đang xử lý",
+			success: "Nhâp mật khẩu mới",
+			error: {
+				render({ data }) {
+					return `${data.response.data.message}`;
+				},
+			},
+		});
+	};
+
+	const onResetPasswordSubmit = (data) => {
+		const resetPassword = async () => {
+			try {
+				const respond = await userApi.resetPassword({
+					...data,
+					resetCode,
+				});
+				console.log(respond);
+				setIsForgetPassword(false);
+			} catch (error) {
+				throw error;
+			}
+		};
+
+		toast.promise(resetPassword, {
+			pending: "Đang xử lý",
+			success: "Đổi mật khẩu thành công",
+			error: {
+				render({ data }) {
+					return `${data.response.data.message}`;
+				},
+			},
+		});
 	};
 
 	const defaultLoginValues = {
@@ -24,25 +90,30 @@ function Login() {
 		email: "",
 	};
 
+	const defaultResetPasswordValues = {
+		resetPassword: "",
+		confirmResetPassword: "",
+	};
+
 	const goBack = () => {
-		setForgetPassword(false);
+		setIsForgetPassword(false);
 	};
 
 	return (
-		<Container fluid className='register form__background'>
+		<Container fluid className='login'>
 			<Row>
 				<Col
 					md={{
 						offset: 4,
 						size: 4,
 					}}
-					className=' form'>
+					className='form'>
 					{/* form login */}
 					<div
 						className='form__wrap'
 						id='form-login'
 						style={{
-							display: forgetPassword ? "none" : "block",
+							display: isForgetPassword ? "none" : "block",
 						}}>
 						<h1 className='form__title'>Đăng nhập</h1>
 						<LoginForm
@@ -63,26 +134,34 @@ function Login() {
 							<span
 								className='form__redirect__link'
 								onClick={() => {
-									setForgetPassword(true);
+									setIsForgetPassword(true);
 								}}>
 								Quên mật khẩu?
 							</span>
 						</p>
 					</div>
 
-					{/* Form forget password */}
+					{/* Form forget and reset password */}
 					<div
 						className='form__wrap'
-						id='form-forget'
+						id='form-reset-forget'
 						style={{
-							display: forgetPassword ? "block" : "none",
+							display: isForgetPassword ? "block" : "none",
 						}}>
 						<h1 className='form__title'>Đặt lại mật khẩu</h1>
-						<ForgetPasswordForm
-							onSubmit={onForgetPasswordSubmit}
-							defaultValues={defaultForgetPasswordValues}
-							goBack={goBack}
-						/>
+						{isResetPassword ? (
+							<ResetPasswordForm
+								onSubmit={onResetPasswordSubmit}
+								defaultValues={defaultResetPasswordValues}
+								goBack={goBack}
+							/>
+						) : (
+							<ForgetPasswordForm
+								onSubmit={onForgetPasswordSubmit}
+								defaultValues={defaultForgetPasswordValues}
+								goBack={goBack}
+							/>
+						)}
 					</div>
 
 					{/* Login with social  */}

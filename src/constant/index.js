@@ -13,3 +13,9 @@ export const images = {
 	BG_SEARCH: bgSearchBtn,
 	BG_FOOTER: bgFooter,
 };
+
+export const breadcrumbNames = {
+	register: "Đăng ký tài khoản",
+	login: "Đăng nhập tài khoản",
+	user: "Trang khách hàng",
+};

@@ -1,16 +1,17 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import Layout from "components/Layout";
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./sass/index.scss";
-import { store } from "./app/store";
 import { Provider } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
+import { store } from "./app/store";
+import "./sass/index.scss";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<Layout />
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")

@@ -3,18 +3,33 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import userApi from "api/userApi";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Register() {
+	const history = useHistory();
 	const onSubmit = (data) => {
-		console.log(data);
 		const register = async () => {
 			try {
-				const result = await userApi.register(data);
-				console.log(result);
+				const respond = await userApi.register(data);
+				const id = respond.data.user._id;
+				await userApi.confirm(id);
+				history.push("/user/login");
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		};
+
+		toast.promise(register, {
+			pending: "Đang xử lý",
+			success: "Đăng ký thành công",
+			error: {
+				render: ({ data }) => {
+					const { message } = data.response.data;
+					return `Đăng kí thất bại với lỗi: ${message}`;
+				},
+			},
+		});
 
 		register();
 	};
@@ -27,7 +42,7 @@ function Register() {
 		password: "",
 	};
 	return (
-		<Container fluid className='register form__background'>
+		<Container fluid className='register'>
 			<Row>
 				<Col
 					md={{

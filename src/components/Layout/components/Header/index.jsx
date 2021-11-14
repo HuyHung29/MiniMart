@@ -1,3 +1,4 @@
+import Cart from "components/Cart";
 import { images } from "constant";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -10,7 +11,6 @@ import {
 	InputGroup,
 	Row,
 } from "reactstrap";
-import Cart from "../Cart";
 
 function Header() {
 	return (

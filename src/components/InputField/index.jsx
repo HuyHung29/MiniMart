@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
 function InputField(props) {
-	const { name, errors, label, ...rest } = props;
+	const { name, errors, label, type, ...rest } = props;
 
 	return (
 		<FormGroup className='input'>
@@ -13,8 +13,10 @@ function InputField(props) {
 			<Input
 				name={name}
 				invalid={!!errors[name]}
+				type={type}
 				{...rest}
 				className='input__control'
+				autoComplete={type === "password" ? "off" : "on"}
 			/>
 			{errors[name] ? (
 				<FormFeedback className='input__error'>

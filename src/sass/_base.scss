@@ -47,3 +47,9 @@ img {
 .row>* {
 	padding: 0 1.5rem;
 }
+
+.layout {
+	&__content__background {
+		background-color: $form-background;
+	}
+}
