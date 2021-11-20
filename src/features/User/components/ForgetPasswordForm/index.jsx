@@ -6,6 +6,12 @@ import { Controller, useForm } from "react-hook-form";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
 
+ForgetPasswordForm.propTypes = {
+	onSubmit: PropTypes.func.isRequired,
+	defaultValues: PropTypes.object.isRequired,
+	goBack: PropTypes.func.isRequired,
+};
+
 const schema = yup
 	.object({
 		email: yup
@@ -21,6 +27,7 @@ function ForgetPasswordForm({ onSubmit, defaultValues, goBack }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
+		mode: "all",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
@@ -52,11 +59,5 @@ function ForgetPasswordForm({ onSubmit, defaultValues, goBack }) {
 		</Form>
 	);
 }
-
-ForgetPasswordForm.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
-	defaultValues: PropTypes.object.isRequired,
-	goBack: PropTypes.func.isRequired,
-};
 
 export default ForgetPasswordForm;

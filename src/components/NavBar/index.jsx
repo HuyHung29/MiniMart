@@ -38,11 +38,7 @@ function NavBar(props) {
 			<Row className='align-items-center'>
 				<Col xl='3'>
 					<Navbar expand className='py-0'>
-						<NavbarToggler
-							onClick={() => {
-								console.log("click");
-							}}
-						/>
+						<NavbarToggler />
 						<Collapse navbar>
 							<Nav navbar className='w-100'>
 								<UncontrolledDropdown inNavbar nav>

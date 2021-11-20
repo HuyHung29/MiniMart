@@ -22,7 +22,7 @@ function NotFound() {
 			</p>
 			<div align='center'>
 				<Link to='/' className='btn-back'>
-					Back to previous page
+					Trở lại trang chủ
 				</Link>
 			</div>
 			<img

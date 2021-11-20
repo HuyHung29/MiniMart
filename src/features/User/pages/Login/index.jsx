@@ -1,9 +1,12 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import userApi from "api/userApi";
 import ForgetPasswordForm from "features/User/components/ForgetPasswordForm";
 import LoginForm from "features/User/components/LoginForm";
 import ResetPasswordForm from "features/User/components/ResetPasswordForm";
+import { userLogin } from "features/User/userSlice";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 
@@ -11,12 +14,16 @@ function Login() {
 	const [isForgetPassword, setIsForgetPassword] = useState(false);
 	const [isResetPassword, setIsResetPassword] = useState(false);
 	const [resetCode, setResetCode] = useState(null);
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onLoginSubmit = (data) => {
 		const login = async () => {
 			try {
-				const respond = await userApi.login(data);
-				console.log(respond);
+				const result = await dispatch(userLogin(data));
+				const originalResult = unwrapResult(result);
+				console.log(originalResult);
+				history.push("/");
 			} catch (error) {
 				throw error;
 			}
@@ -27,7 +34,7 @@ function Login() {
 			success: "Đăng nhập thành công",
 			error: {
 				render({ data }) {
-					return `Đăng nhập thất bại ${data.response.data.message}`;
+					return `Đăng nhập thất bại ${data.message}`;
 				},
 			},
 		});
@@ -36,12 +43,11 @@ function Login() {
 	const onForgetPasswordSubmit = (data) => {
 		const forgetPassword = async () => {
 			try {
-				const respond = await userApi.forgetPassword(data);
-				console.log(respond);
+				const response = await userApi.forgetPassword(data);
 				setIsResetPassword(true);
-				setResetCode(respond.data.resetCode);
+				setResetCode(response.data.resetCode);
 			} catch (error) {
-				throw error;
+				throw error.response.data;
 			}
 		};
 
@@ -50,7 +56,7 @@ function Login() {
 			success: "Nhâp mật khẩu mới",
 			error: {
 				render({ data }) {
-					return `${data.response.data.message}`;
+					return `${data.message}`;
 				},
 			},
 		});
@@ -59,14 +65,13 @@ function Login() {
 	const onResetPasswordSubmit = (data) => {
 		const resetPassword = async () => {
 			try {
-				const respond = await userApi.resetPassword({
+				await userApi.resetPassword({
 					...data,
 					resetCode,
 				});
-				console.log(respond);
 				setIsForgetPassword(false);
 			} catch (error) {
-				throw error;
+				throw error.response.data;
 			}
 		};
 
@@ -75,7 +80,7 @@ function Login() {
 			success: "Đổi mật khẩu thành công",
 			error: {
 				render({ data }) {
-					return `${data.response.data.message}`;
+					return `${data.message}`;
 				},
 			},
 		});
@@ -97,6 +102,7 @@ function Login() {
 
 	const goBack = () => {
 		setIsForgetPassword(false);
+		setIsResetPassword(false);
 	};
 
 	return (

@@ -1,0 +1,92 @@
+.user {
+    padding-top: 20px;
+    padding-bottom: 50px;
+
+    &__nav {
+        width: 80%;
+
+        &__header {
+            @include flex(center);
+            font-size: 1.4rem;
+            padding-bottom: 20px;
+            border-bottom: 1px solid $border-color;
+        }
+
+        &__img {
+            @include flex(center, center);
+            color: #d6d5d5;
+            font-size: 2.2rem;
+            border: 1px solid currentColor;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        &__basic-info {
+            margin-left: 15px;
+        }
+
+        &__text {
+            font-size: 1.4rem;
+        }
+
+        &__sub-text {
+            color: $sub-text-color;
+            text-transform: capitalize;
+        }
+
+        &__list {
+            margin-top: 30px;
+        }
+
+        &__item {
+            margin-top: 15px;
+            font-size: 1.4rem;
+            text-transform: capitalize;
+
+            & i {
+                margin-right: 10px;
+                font-size: 1.8rem;
+                width: 20px;
+                height: 20px;
+            }
+
+            &.sub-item {
+                margin-left: 16px;
+                color: $sub-text-color;
+            }
+        }
+
+        &__link {
+            transition: color 0.25s ease-in;
+
+            &:hover {
+                color: $secondary-color;
+            }
+
+            &.active {
+                color: $secondary-color;
+            }
+        }
+
+        &__sub-nav {
+            margin-left: 15px;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &__sub-nav.open {
+            height: 108px;
+            opacity: 1;
+        }
+    }
+
+    &__content {
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid $border-color;
+        padding: 20px 30px 60px;
+    }
+}

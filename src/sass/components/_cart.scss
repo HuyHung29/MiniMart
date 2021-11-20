@@ -15,7 +15,9 @@
             border-radius: 10px;
             visibility: hidden;
             opacity: 0;
-            transition: opacity 0.2s ease-in;
+            transform: scale(0);
+            transform-origin: calc(100% - 70px) top;
+            transition: all 0.2s ease-in;
             
             &::before {
                 content: '';
@@ -31,6 +33,7 @@
         &:hover &__menu  {
             visibility: visible;
             opacity: 1;
+            transform: scale(1);
         }
 
         &::after {

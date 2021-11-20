@@ -18,4 +18,13 @@ export const breadcrumbNames = {
 	register: "Đăng ký tài khoản",
 	login: "Đăng nhập tài khoản",
 	user: "Trang khách hàng",
+	profile: "Hồ sơ",
+	password: "Đổi mật khẩu",
+	address: "Địa chỉ",
+};
+
+export const formValidateData = {
+	minName: 2,
+	minPassword: 6,
+	phoneRegex: /^[0-9]{9,}$/,
 };

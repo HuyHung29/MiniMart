@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import { images } from "constant/index";
 import { Button } from "reactstrap";
 
+Cart.propTypes = {
+	product: PropTypes.object,
+};
+
 function Cart(props) {
 	return (
 		<div className='cart'>
@@ -95,9 +99,5 @@ function Cart(props) {
 		</div>
 	);
 }
-
-Cart.propTypes = {
-	product: PropTypes.object,
-};
 
 export default Cart;

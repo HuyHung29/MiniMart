@@ -1,4 +1,6 @@
 .input {
+    flex: 1;
+
     margin: 15px 0;
     &__label {
         font-size: 1.5rem;
@@ -14,7 +16,7 @@
 
     &__control {
         font-size: 1.4rem;
-        padding: 6px 15px;
+        padding: 10px;
     }
 
     &__error {

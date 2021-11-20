@@ -11,8 +11,8 @@ function Register() {
 	const onSubmit = (data) => {
 		const register = async () => {
 			try {
-				const respond = await userApi.register(data);
-				const id = respond.data.user._id;
+				const response = await userApi.register(data);
+				const id = response.data.user._id;
 				await userApi.confirm(id);
 				history.push("/user/login");
 			} catch (error) {

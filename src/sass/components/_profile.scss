@@ -1,0 +1,63 @@
+.profile {
+
+    &__header {
+        padding: 0 0 18px;
+        border-bottom: 1px solid $border-color;
+    }
+
+    &__heading {
+        font-size: 2rem;
+        font-weight: 500;
+        text-transform: capitalize;
+    }
+
+    &__sub-heading {
+        font-size: 1.4rem;
+        color: $sub-text-color;
+    }
+
+    &__user {
+        padding: 20px 15px;
+        font-size: 1.4rem;
+
+        &__field {
+            @include flex(center);
+            margin-bottom: 15px;
+        }
+
+        &__label {
+            min-width: 100px;
+            margin-right: 20px;
+            text-align: right;
+            color: $sub-text-color;
+            text-transform: capitalize;
+
+            &.xl {
+                min-width: 130px;
+            }
+        }
+
+        &__input {
+            padding: 10px;
+        }
+
+        &__action {
+            margin-left: 120px;
+            font-size: 1.6rem;
+            padding: 8px 20px;
+            background-color: $secondary-color;
+            border-color: $secondary-color;
+
+            &:hover, &:focus {
+                background-color: $primary-color;
+                border-color: $primary-color;
+            }
+
+            &.xl {
+                margin-left: 150px;
+            }
+        }
+    }
+
+
+}

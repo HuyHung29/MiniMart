@@ -6,6 +6,12 @@ import { Controller, useForm } from "react-hook-form";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
 
+ResetPasswordForm.propTypes = {
+	onSubmit: PropTypes.func.isRequired,
+	defaultValues: PropTypes.object.isRequired,
+	goBack: PropTypes.func.isRequired,
+};
+
 const schema = yup
 	.object({
 		resetPassword: yup.string().required("Vui lòng nhập trường này"),
@@ -21,6 +27,7 @@ function ResetPasswordForm({ onSubmit, defaultValues, goBack }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
+		mode: "all",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
@@ -67,11 +74,5 @@ function ResetPasswordForm({ onSubmit, defaultValues, goBack }) {
 		</Form>
 	);
 }
-
-ResetPasswordForm.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
-	defaultValues: PropTypes.object.isRequired,
-	goBack: PropTypes.func.isRequired,
-};
 
 export default ResetPasswordForm;

@@ -5,6 +5,12 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
+import { formValidateData } from "constant";
+
+LoginForm.propTypes = {
+	onSubmit: PropTypes.func.isRequired,
+	defaultValues: PropTypes.object.isRequired,
+};
 
 const schema = yup
 	.object({
@@ -12,7 +18,13 @@ const schema = yup
 			.string()
 			.email("Nhập sai định dạng email")
 			.required("Vui lòng nhập trường này"),
-		password: yup.string().required("Vui lòng nhập trường này"),
+		password: yup
+			.string()
+			.min(
+				formValidateData.minPassword,
+				`Mật khẩu cần tối thiểu ${formValidateData.minPassword}`
+			)
+			.required("Vui lòng nhập trường này"),
 	})
 	.required();
 
@@ -22,6 +34,7 @@ function LoginForm({ onSubmit, defaultValues }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
+		mode: "all",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
@@ -66,10 +79,5 @@ function LoginForm({ onSubmit, defaultValues }) {
 		</Form>
 	);
 }
-
-LoginForm.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
-	defaultValues: PropTypes.object.isRequired,
-};
 
 export default LoginForm;

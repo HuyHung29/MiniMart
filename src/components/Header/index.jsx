@@ -1,5 +1,6 @@
 import Cart from "components/Cart";
 import { images } from "constant";
+import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -12,7 +13,17 @@ import {
 	Row,
 } from "reactstrap";
 
-function Header() {
+Header.propTypes = {
+	isLogin: PropTypes.bool.isRequired,
+	logout: PropTypes.func.isRequired,
+	userName: PropTypes.string.isRequired,
+};
+
+Header.defaultProps = {
+	userName: "",
+};
+
+function Header({ isLogin, userName, logout }) {
 	return (
 		<header className='header'>
 			<Container>
@@ -50,7 +61,10 @@ function Header() {
 								<Form className='header__middle__form'>
 									<i className='fas fa-search header__middle__form__icon'></i>
 									<InputGroup>
-										<Input className='header__middle__form__input' />
+										<Input
+											className='header__middle__form__input'
+											placeholder='Tìm kiếm ở đây'
+										/>
 										<Button
 											className='header__middle__form__button'
 											style={{
@@ -83,16 +97,33 @@ function Header() {
 							<div className='account'>
 								<i className='fas fa-user'></i>
 								<div className='account__action'>
-									<Link
-										className='account__action__link'
-										to='/user/login'>
-										Đăng nhập
-									</Link>
-									<Link
-										className='account__action__link'
-										to='/user/register'>
-										Đăng ký
-									</Link>
+									{isLogin ? (
+										<>
+											<Link
+												className='account__action__link user-name'
+												to='/user'>
+												{userName}
+											</Link>
+											<p
+												className='account__action__link'
+												onClick={logout}>
+												Đăng xuất
+											</p>
+										</>
+									) : (
+										<>
+											<Link
+												className='account__action__link'
+												to='/user/login'>
+												Đăng nhập
+											</Link>
+											<Link
+												className='account__action__link'
+												to='/user/register'>
+												Đăng ký
+											</Link>
+										</>
+									)}
 								</div>
 							</div>
 							<Cart />

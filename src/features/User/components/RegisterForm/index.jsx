@@ -5,18 +5,30 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
+import { formValidateData } from "constant";
+
+RegisterForm.propTypes = {
+	onSubmit: PropTypes.func.isRequired,
+	defaultValues: PropTypes.object.isRequired,
+};
 
 const schema = yup
 	.object({
 		surname: yup
 			.string()
-			.min(2, "Cần tối thiếu 2 kí tự")
+			.min(
+				formValidateData.minName,
+				`Cần tối thiếu ${formValidateData.minName} kí tự`
+			)
 			.required("Vui lòng nhập trường này"),
 		name: yup
 			.string()
-			.min(2, "Cần tối thiếu 2 kí tự")
+			.min(
+				formValidateData.minName,
+				`Cần tối thiếu ${formValidateData.minName} kí tự`
+			)
 			.required("Vui lòng nhập trường này"),
-		phone: yup.string().matches(/^[0-9]{9,}$/, {
+		phone: yup.string().matches(formValidateData.phoneRegex, {
 			message: "Số điện thoại phải có nhiều hơn 9 chữ số",
 			excludeEmptyString: true,
 		}),
@@ -24,7 +36,13 @@ const schema = yup
 			.string()
 			.email("Nhập sai định dạng email")
 			.required("Vui lòng nhập trường này"),
-		password: yup.string().required("Vui lòng nhập trường này"),
+		password: yup
+			.string()
+			.min(
+				formValidateData.minPassword,
+				`Cần tối thiếu ${formValidateData.minPassword} kí tự`
+			)
+			.required("Vui lòng nhập trường này"),
 	})
 	.required();
 
@@ -34,6 +52,7 @@ function RegisterForm({ onSubmit, defaultValues }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
+		mode: "all",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
@@ -117,10 +136,5 @@ function RegisterForm({ onSubmit, defaultValues }) {
 		</Form>
 	);
 }
-
-RegisterForm.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
-	defaultValues: PropTypes.object.isRequired,
-};
 
 export default RegisterForm;

@@ -145,6 +145,13 @@
                         &:hover {
                             color: $primary-color;
                         }
+
+                        &.user-name {
+                            width: 60px;
+                            white-space: nowrap; 
+                            overflow-x: hidden; 
+                            text-overflow: ellipsis;
+                        }
                     }
                 }
             }
