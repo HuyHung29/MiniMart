@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import InputField from "components/InputField";
+import InputField from "components/Custom/InputField";
 import { formValidateData } from "constant";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";

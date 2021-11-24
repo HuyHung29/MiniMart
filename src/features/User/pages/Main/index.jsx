@@ -1,4 +1,5 @@
 import { unwrapResult } from "@reduxjs/toolkit";
+import userApi from "api/userApi";
 import classNames from "classnames";
 import { updateUser } from "features/User/userSlice";
 import React, { useState } from "react";
@@ -34,8 +35,25 @@ function MainPage(props) {
 		});
 	};
 
-	const onUserChangePassword = (data) => {
-		console.log(data);
+	const onUserChangePassword = (data, reset) => {
+		const changePassword = async () => {
+			try {
+				await userApi.changePassword(data);
+				reset();
+			} catch (error) {
+				throw error.response.data;
+			}
+		};
+
+		toast.promise(changePassword, {
+			pending: "Đang xử lý",
+			success: "Đổi mật khẩu thành công",
+			error: {
+				render: ({ data }) => {
+					return <p>{data.message}</p>;
+				},
+			},
+		});
 	};
 
 	return (

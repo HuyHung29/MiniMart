@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import InputField from "components/InputField";
+import InputField from "components/Custom/InputField";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Form } from "reactstrap";
@@ -8,7 +8,7 @@ import { formValidateData } from "constant";
 
 const schema = yup
 	.object({
-		currentPassword: yup.string().required("Vui lòng nhập trường này"),
+		password: yup.string().required("Vui lòng nhập trường này"),
 		newPassword: yup
 			.string()
 			.min(
@@ -16,35 +16,34 @@ const schema = yup
 				`Cần tối thiểu ${formValidateData.minPassword} ký tự`
 			)
 			.notOneOf(
-				[yup.ref("currentPassword"), null],
+				[yup.ref("password"), null],
 				"Mật khẩu mới cần khác mật khẩu hiện tại"
 			)
 			.required("Vui lòng nhập trường này"),
-		confirmPassword: yup
+		confirmNewPassword: yup
 			.string()
 			.oneOf([yup.ref("newPassword"), null], "Password must match")
 			.required("Vui lòng nhập trường này"),
 	})
 	.required();
 
-function Password({ onChangePassword }) {
+function Password({ onUserChangePassword }) {
 	const defaultValues = {
-		currentPassword: "",
+		password: "",
 		newPassword: "",
-		confirmPassword: "",
+		confirmNewPassword: "",
 	};
 
 	const {
 		control,
 		handleSubmit,
+		reset,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
 		mode: "all",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
-
-	console.log(isDirty, isValid);
 
 	return (
 		<div className='profile'>
@@ -58,13 +57,13 @@ function Password({ onChangePassword }) {
 			<Form
 				className='profile__user'
 				id='profile-form'
-				onSubmit={handleSubmit(() => {
-					onChangePassword();
+				onSubmit={handleSubmit((data) => {
+					onUserChangePassword(data, reset);
 				})}>
 				<div className='profile__user__field'>
 					<p className='profile__user__label xl'>Mật khẩu hiện tại</p>
 					<Controller
-						name='currentPassword'
+						name='password'
 						control={control}
 						render={({ field }) => (
 							<InputField
@@ -98,14 +97,14 @@ function Password({ onChangePassword }) {
 				<div className='profile__user__field'>
 					<p className='profile__user__label xl'>Xác nhận mật khẩu</p>
 					<Controller
-						name='confirmPassword'
+						name='confirmNewPassword'
 						control={control}
 						render={({ field }) => (
 							<InputField
 								{...field}
 								errors={errors}
 								label=''
-								placeholder='Xác nhận mật khẩu'
+								placeholder='Xác nhận khẩu mới'
 								ref={null}
 								className='profile__user__input'
 							/>

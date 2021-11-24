@@ -1,7 +1,5 @@
-import categoriesApi from "api/categoriesApi";
 import BreadCrumb from "components/BreadCrumb";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React from "react";
 import {
 	Col,
 	Collapse,
@@ -15,24 +13,12 @@ import {
 	Row,
 	UncontrolledDropdown,
 } from "reactstrap";
+import PropTypes from "prop-types";
 
-function NavBar(props) {
-	const [categories, setCategories] = useState([]);
-
-	useEffect(() => {
-		const fetchCategories = async () => {
-			try {
-				const result = await categoriesApi.getAllCategory();
-				const { categories } = result.data;
-				setCategories(categories);
-			} catch (error) {
-				toast.error("Ko lay duoc du lieu");
-			}
-		};
-
-		fetchCategories();
-	}, []);
-
+NavBar.propTypes = {
+	categories: PropTypes.array.isRequired,
+};
+function NavBar({ categories }) {
 	return (
 		<Container>
 			<Row className='align-items-center'>

@@ -4,6 +4,10 @@ import product from "assets/img/test.jpg";
 import bgMidHeader from "assets/img/bg_midheader.png";
 import bgSearchBtn from "assets/img/bg_search.png";
 import bgFooter from "assets/img/bg_footer.png";
+import sliderImg from "assets/img/slider_1.jpeg";
+import banner1 from "assets/img/banner/banner_1.jpg";
+import banner2 from "assets/img/banner/banner_2.jpg";
+import banner3 from "assets/img/banner/banner_3.jpg";
 
 export const images = {
 	LOGO: logo,
@@ -12,7 +16,10 @@ export const images = {
 	BG_MID_HEADER: bgMidHeader,
 	BG_SEARCH: bgSearchBtn,
 	BG_FOOTER: bgFooter,
+	SLIDER_IMG: sliderImg,
 };
+
+export const bannerImg = [banner1, banner2, banner3];
 
 export const breadcrumbNames = {
 	register: "Đăng ký tài khoản",
@@ -21,6 +28,9 @@ export const breadcrumbNames = {
 	profile: "Hồ sơ",
 	password: "Đổi mật khẩu",
 	address: "Địa chỉ",
+	products: "Sản phẩm",
+	add: "Thêm mới",
+	edit: "Chỉnh sửa",
 };
 
 export const formValidateData = {

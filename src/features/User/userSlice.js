@@ -17,17 +17,7 @@ export const fetchUserInfo = createAsyncThunk(
 			const response = await userApi.getUser();
 			return response.data;
 		} catch (error) {
-			if (error.response.status === 401) {
-				const refreshToken = JSON.parse(
-					localStorage.getItem("refresh")
-				);
-				const getNewToken = await userApi.getAccessToken(refreshToken);
-				localStorage.setItem(
-					"token",
-					JSON.stringify(getNewToken.data.accessToken)
-				);
-			}
-			throw error;
+			throw error.response.status;
 		}
 	}
 );
@@ -43,12 +33,14 @@ export const updateUser = createAsyncThunk("users/updateUser", async (data) => {
 
 const loginStatus = JSON.parse(localStorage.getItem("isLogin"));
 const userInfo = JSON.parse(localStorage.getItem("user"));
+const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
 const userSlice = createSlice({
 	name: "users",
 	initialState: {
 		isLogin: loginStatus ? loginStatus : false,
 		user: userInfo ? userInfo.user : {},
+		accessToken: accessToken ? accessToken : "",
 	},
 	reducers: {
 		userLogout: (state) => {
@@ -73,6 +65,29 @@ const userSlice = createSlice({
 			.addCase(fetchUserInfo.fulfilled, (state, action) => {
 				state.user = action.payload.user;
 				localStorage.setItem("user", JSON.stringify(action.payload));
+			})
+			.addCase(fetchUserInfo.rejected, (state, action) => {
+				if (action.payload === 401) {
+					const refreshToken = JSON.parse(
+						localStorage.getItem("refresh")
+					);
+					const resetPassword = async () => {
+						try {
+							const newAccessToken = await userApi.getAccessToken(
+								refreshToken
+							);
+							state.accessToken = newAccessToken;
+							localStorage.setItem(
+								"token",
+								JSON.stringify(newAccessToken.data.accessToken)
+							);
+						} catch (error) {
+							throw error;
+						}
+					};
+
+					resetPassword();
+				}
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
 				state.user = action.payload.user;

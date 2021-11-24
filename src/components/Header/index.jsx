@@ -54,7 +54,9 @@ function Header({ isLogin, userName, logout }) {
 				<Container>
 					<Row className=' header__middle__container align-content-center'>
 						<Col md='3' className='header__middle__logo'>
-							<img src={images.LOGO} alt='logo' />
+							<Link to='/'>
+								<img src={images.LOGO} alt='logo' />
+							</Link>
 						</Col>
 						<Col md='5' className='header__middle__search'>
 							<div className='form-wrap'>
