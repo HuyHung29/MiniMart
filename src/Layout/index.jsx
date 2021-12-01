@@ -5,11 +5,12 @@ import Header from "components/Header";
 import Loading from "components/Loading";
 import NavBar from "components/NavBar";
 import NotFound from "components/NotFound";
-import { fetchUserInfo, userLogout } from "features/User/userSlice";
+import { fetchUserInfo, userLogout } from "app/userSlice";
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { fetchProducts } from "app/productsSlice";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const User = React.lazy(() => import("features/User"));
@@ -22,16 +23,18 @@ function Layout() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const getCategories = async () => {
+		const getNeededInfo = async () => {
 			try {
-				const response = await dispatch(fetchCategories());
-				unwrapResult(response);
+				const categories = await dispatch(fetchCategories());
+				unwrapResult(categories);
+				const products = await dispatch(fetchProducts());
+				unwrapResult(products);
 			} catch (error) {
 				throw error;
 			}
 		};
 
-		getCategories();
+		getNeededInfo();
 	}, [dispatch]);
 
 	useEffect(() => {

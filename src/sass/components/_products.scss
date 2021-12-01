@@ -1,0 +1,20 @@
+.products {
+    font-size: 1.4rem;
+    margin-top: 20px;
+
+    &__header {
+        font-size: 1.6rem;
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    &__item {
+        &__des {
+           text-align: justify;
+        }
+
+        &__action {
+           font-size: 1.4rem;
+        }
+    }
+}

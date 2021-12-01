@@ -1,10 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import FileField from "components/Custom/FileField";
 import InputField from "components/Custom/InputField";
 import SelectField from "components/Custom/SelectField";
+import { formTitle } from "constant";
 import PropTypes from "prop-types";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Form } from "reactstrap";
+import { Button, Col, Form, Row } from "reactstrap";
 
 AddEditForm.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
@@ -13,10 +15,18 @@ AddEditForm.propTypes = {
 	categories: PropTypes.array.isRequired,
 };
 
-function AddEditForm({ onSubmit, schema, defaultValues, categories }) {
+function AddEditForm({
+	onSubmit,
+	schema,
+	defaultValues,
+	categories,
+	editProduct,
+}) {
 	const {
+		register,
 		control,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm({
 		mode: "all",
@@ -37,6 +47,88 @@ function AddEditForm({ onSubmit, schema, defaultValues, categories }) {
 		return key.map((item, index) => {
 			if (item === "pictures")
 				return (
+					<Col md='12' key={index}>
+						<FileField
+							register={register(item)}
+							name={item}
+							errors={errors}
+							label={formTitle[item]}
+							previewList={
+								editProduct ? editProduct.pictures : undefined
+							}
+							key={index}
+						/>
+					</Col>
+				);
+			if (item === "category" || item === "unit") {
+				if (item === "unit") {
+					return (
+						<Col md='6' key={index}>
+							<Controller
+								name={item}
+								control={control}
+								render={({ field }) => (
+									<SelectField
+										{...field}
+										errors={errors}
+										label={formTitle[item]}
+										options={[
+											{
+												value: "Kg",
+												label: "Kg",
+											},
+											{
+												value: "Gam",
+												label: "Gam",
+											},
+										]}
+										ref={null}
+									/>
+								)}
+							/>
+						</Col>
+					);
+				} else {
+					return (
+						<Col md='6' key={index}>
+							<Controller
+								name={item}
+								control={control}
+								render={({ field }) => (
+									<SelectField
+										{...field}
+										errors={errors}
+										label={formTitle[item]}
+										options={options}
+										ref={null}
+									/>
+								)}
+							/>
+						</Col>
+					);
+				}
+			}
+
+			if (item === "description")
+				return (
+					<Col md='12' key={index}>
+						<Controller
+							name={item}
+							control={control}
+							render={({ field }) => (
+								<InputField
+									{...field}
+									errors={errors}
+									label={formTitle[item]}
+									type='textarea'
+									ref={null}
+								/>
+							)}
+						/>
+					</Col>
+				);
+			return (
+				<Col md='6' key={index}>
 					<Controller
 						name={item}
 						control={control}
@@ -44,46 +136,12 @@ function AddEditForm({ onSubmit, schema, defaultValues, categories }) {
 							<InputField
 								{...field}
 								errors={errors}
-								label={item}
-								type='file'
-								accept='image/png, image/jpeg'
+								label={formTitle[item]}
 								ref={null}
 							/>
 						)}
-						key={index}
 					/>
-				);
-			if (item === "category")
-				return (
-					<Controller
-						name={item}
-						control={control}
-						render={({ field }) => (
-							<SelectField
-								{...field}
-								errors={errors}
-								label={item}
-								options={options}
-								ref={null}
-							/>
-						)}
-						key={index}
-					/>
-				);
-			return (
-				<Controller
-					name={item}
-					control={control}
-					render={({ field }) => (
-						<InputField
-							{...field}
-							errors={errors}
-							label={item}
-							ref={null}
-						/>
-					)}
-					key={index}
-				/>
+				</Col>
 			);
 		});
 	};
@@ -93,11 +151,21 @@ function AddEditForm({ onSubmit, schema, defaultValues, categories }) {
 			onSubmit={handleSubmit((data) => {
 				onSubmit(data);
 			})}>
-			{renderController()}
-			<Button type='submit' className='form__btn form__btn--success'>
-				Gửi
-			</Button>
-			<Button className='form__btn form__btn--danger'>Hủy</Button>
+			<Row>
+				{renderController()}
+				<Col className='text-center'>
+					<Button
+						type='submit'
+						className='form__btn form__btn--success'>
+						Tạo mới
+					</Button>
+					<Button
+						className='form__btn form__btn--danger'
+						onClick={() => reset()}>
+						Hủy
+					</Button>
+				</Col>
+			</Row>
 		</Form>
 	);
 }

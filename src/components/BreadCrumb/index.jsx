@@ -6,8 +6,15 @@ import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 function BreadCrumb() {
 	const location = useLocation();
 	const { pathname } = location;
+
 	const renderBreadcrumb = () => {
 		const pathNames = pathname.split("/").filter((x) => x);
+		if (
+			typeof breadcrumbNames[pathNames[pathNames.length - 1]] ===
+			"undefined"
+		) {
+			pathNames.pop();
+		}
 		if (pathname !== "/") {
 			return (
 				<Breadcrumb>
@@ -27,6 +34,7 @@ function BreadCrumb() {
 								</BreadcrumbItem>
 							);
 						}
+
 						return index === pathNames.length - 1 ? (
 							<BreadcrumbItem key={index} active>
 								{breadcrumbNames[name]}

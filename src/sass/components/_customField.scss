@@ -54,3 +54,17 @@
     }
 
 }
+
+.preview {
+    &__list {
+        @include flex();
+        margin-top: 20px;
+        column-gap: 15px;
+    }
+
+    &__img {
+        max-width: 200px;
+        border-radius: 5px;
+        object-fit: contain;
+    }
+}

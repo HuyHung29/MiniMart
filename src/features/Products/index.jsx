@@ -10,8 +10,11 @@ function Products() {
 		<Switch>
 			<Route exact path={`${match.url}`} component={MainPage} />
 			<Route path={`${match.url}/add`} component={AddEditProduct} />
-			<Route path={`${match.url}/edit/:id`} component={AddEditProduct} />
-			<Route path={`${match.url}/:id`} />
+			<Route
+				path={`${match.url}/edit/:productId`}
+				component={AddEditProduct}
+			/>
+			<Route path={`${match.url}/:productId`} />
 			<Route component={NotFound} />
 		</Switch>
 	);

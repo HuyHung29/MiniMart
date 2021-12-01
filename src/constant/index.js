@@ -38,3 +38,15 @@ export const formValidateData = {
 	minPassword: 6,
 	phoneRegex: /^[0-9]{9,}$/,
 };
+
+export const formTitle = {
+	title: "Tên sản phẩm",
+	pictures: "Ảnh sản phẩm",
+	price: "Giá sản phẩm",
+	quantity: "Số lượng có",
+	country: "Xuất xứ",
+	unit: "Đơn vị tính",
+	category: "Phân loại",
+	description: "Mô tả sản phẩm",
+	discount: "Giảm giá",
+};

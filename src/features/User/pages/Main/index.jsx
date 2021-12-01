@@ -1,7 +1,7 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import userApi from "api/userApi";
 import classNames from "classnames";
-import { updateUser } from "features/User/userSlice";
+import { updateUser } from "app/userSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";

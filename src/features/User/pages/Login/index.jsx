@@ -3,7 +3,7 @@ import userApi from "api/userApi";
 import ForgetPasswordForm from "features/User/components/ForgetPasswordForm";
 import LoginForm from "features/User/components/LoginForm";
 import ResetPasswordForm from "features/User/components/ResetPasswordForm";
-import { userLogin } from "features/User/userSlice";
+import { userLogin } from "app/userSlice";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
