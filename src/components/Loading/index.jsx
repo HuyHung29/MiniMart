@@ -1,7 +1,11 @@
 import React from "react";
 
 function Loading() {
-	return <div>Loading ...</div>;
+	return (
+		<div className='loader-wrap'>
+			<div className='loader'></div>
+		</div>
+	);
 }
 
 export default Loading;

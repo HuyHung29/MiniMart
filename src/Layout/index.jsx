@@ -18,6 +18,7 @@ const Products = React.lazy(() => import("features/Products"));
 
 function Layout() {
 	const { user, isLogin, accessToken } = useSelector((state) => state.users);
+	const { role } = user;
 	const [loginStatus, setLoginStatus] = useState(isLogin);
 	const categories = useSelector((state) => state.categories);
 	const dispatch = useDispatch();
@@ -64,7 +65,9 @@ function Layout() {
 						<Switch>
 							<Route path='/' exact component={Home} />
 							<Route path='/user' component={User} />
-							<Route path='/products' component={Products} />
+							<Route path='/products'>
+								<Products role={role} />
+							</Route>
 							<Route component={NotFound} />
 						</Switch>
 					</div>

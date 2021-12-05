@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FileField from "components/Custom/FileField";
 import InputField from "components/Custom/InputField";
 import SelectField from "components/Custom/SelectField";
-import { formTitle } from "constant";
+import { itemTitle } from "constant";
 import PropTypes from "prop-types";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -52,7 +52,7 @@ function AddEditForm({
 							register={register(item)}
 							name={item}
 							errors={errors}
-							label={formTitle[item]}
+							label={itemTitle[item]}
 							previewList={
 								editProduct ? editProduct.pictures : undefined
 							}
@@ -71,7 +71,7 @@ function AddEditForm({
 									<SelectField
 										{...field}
 										errors={errors}
-										label={formTitle[item]}
+										label={itemTitle[item]}
 										options={[
 											{
 												value: "Kg",
@@ -98,7 +98,7 @@ function AddEditForm({
 									<SelectField
 										{...field}
 										errors={errors}
-										label={formTitle[item]}
+										label={itemTitle[item]}
 										options={options}
 										ref={null}
 									/>
@@ -119,7 +119,7 @@ function AddEditForm({
 								<InputField
 									{...field}
 									errors={errors}
-									label={formTitle[item]}
+									label={itemTitle[item]}
 									type='textarea'
 									ref={null}
 								/>
@@ -136,7 +136,7 @@ function AddEditForm({
 							<InputField
 								{...field}
 								errors={errors}
-								label={formTitle[item]}
+								label={itemTitle[item]}
 								ref={null}
 							/>
 						)}

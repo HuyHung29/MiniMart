@@ -1,21 +1,23 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { createProduct } from "app/productsSlice";
+import { createProduct, updateProduct } from "app/productsSlice";
 import AddEditForm from "components/AddEditForm";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 import * as yup from "yup";
 
 function AddEditProduct() {
-	const categories = useSelector((state) => state.categories);
 	const dispatch = useDispatch();
+	const categories = useSelector((state) => state.categories);
 	const { productId } = useParams();
+	const history = useHistory();
 	const editProduct = useSelector((state) =>
 		state.products.find((product) => product._id === productId)
 	);
-	const idEdit = !!productId;
+
+	const isEdit = !!productId;
 
 	const schema = yup
 		.object({
@@ -36,60 +38,66 @@ function AddEditProduct() {
 				.number()
 				.min(0, "Giá phải là số dương")
 				.required("Vui lòng nhập trường này"),
-			quantity: yup
-				.number()
-				.min(0, "Giá phải là số dương")
-				.required("Vui lòng nhập trường này"),
 			country: yup.string().required("Vui lòng nhập trường này"),
 			unit: yup.string().required("Vui lòng nhập trường này"),
 			category: yup.string().required("Vui lòng nhập trường này"),
 		})
 		.required();
 
-	const defaultValues = idEdit
-		? {
-				title: editProduct.title,
-				price: editProduct.price,
-				discount: editProduct.discount,
-				quantity: editProduct.quantity,
-				country: editProduct.country,
-				unit: editProduct.unit,
-				category: editProduct.category,
-				pictures: "",
-				description: editProduct.description,
-		  }
-		: {
-				title: "",
-				price: "",
-				discount: "",
-				quantity: "",
-				country: "",
-				unit: "",
-				category: "",
-				pictures: "",
-				description: "",
-		  };
+	const defaultValues =
+		isEdit && !!editProduct
+			? {
+					title: editProduct.title,
+					price: editProduct.price,
+					discount: editProduct.discount,
+					country: editProduct.country,
+					unit: editProduct.unit,
+					category: editProduct.category,
+					pictures: "",
+					description: editProduct.description,
+			  }
+			: {
+					title: "",
+					price: "",
+					discount: "",
+					country: "",
+					unit: "",
+					category: "",
+					pictures: "",
+					description: "",
+			  };
 
 	const onSubmit = (data) => {
+		console.log(data);
 		const formData = new FormData();
 
 		for (let key in data) {
-			if (key === "pictures") {
+			if (key === "pictures" && data[key] !== "") {
 				formData.append(key, data[key][0]);
 			} else formData.append(key, data[key]);
 		}
-		const fetchCreateProduct = async () => {
+
+		const fetchAddEditProduct = async () => {
+			let action = "";
+			if (isEdit) {
+				action = updateProduct({ productId, formData });
+			} else {
+				action = createProduct(formData);
+			}
 			try {
-				const response = await dispatch(createProduct(formData));
+				const response = await dispatch(action);
 				unwrapResult(response);
+				history.push("/products");
 			} catch (error) {
 				throw error;
 			}
 		};
 
-		toast.promise(fetchCreateProduct, {
+		toast.promise(fetchAddEditProduct, {
 			pending: "Đang xử lý",
-			success: "Thêm sản phẩm thành công",
+			success: isEdit
+				? "Cập nhật thành công"
+				: "Thêm sản phẩm thành công",
 			error: {
 				render({ data }) {
 					return data.message;
@@ -104,7 +112,7 @@ function AddEditProduct() {
 				<Col />
 				<Col md='8'>
 					<h2 className='add-edit-page text-center my-5'>
-						Thêm sản phẩm
+						{isEdit ? "Sửa sản phẩm" : "Thêm sản phẩm"}
 					</h2>
 					<AddEditForm
 						schema={schema}

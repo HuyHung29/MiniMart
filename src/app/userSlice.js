@@ -33,7 +33,7 @@ export const updateUser = createAsyncThunk("users/updateUser", async (data) => {
 
 const loginStatus = JSON.parse(localStorage.getItem("isLogin"));
 const userInfo = JSON.parse(localStorage.getItem("user"));
-const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+const accessToken = JSON.parse(localStorage.getItem("token"));
 
 const userSlice = createSlice({
 	name: "users",

@@ -20,8 +20,8 @@ const productsApi = {
 		const url = `${baseUrl}/${id}`;
 		return axiosClient.delete(url);
 	},
-	deleteAllProduct: () => {
-		return axiosClient.delete(baseUrl);
+	deleteMultiProduct: (data) => {
+		return axiosClient.delete(baseUrl, { data });
 	},
 };
 

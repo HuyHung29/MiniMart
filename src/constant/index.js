@@ -39,7 +39,7 @@ export const formValidateData = {
 	phoneRegex: /^[0-9]{9,}$/,
 };
 
-export const formTitle = {
+export const itemTitle = {
 	title: "Tên sản phẩm",
 	pictures: "Ảnh sản phẩm",
 	price: "Giá sản phẩm",
@@ -49,4 +49,7 @@ export const formTitle = {
 	category: "Phân loại",
 	description: "Mô tả sản phẩm",
 	discount: "Giảm giá",
+	createdAt: "Ngày tạo",
+	updatedAt: "Ngày cập nhật",
+	sellNumber: "Số lượng bán",
 };

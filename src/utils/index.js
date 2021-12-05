@@ -1,3 +1,3 @@
-export const findCategories = (id, categories) => {
-	return categories.find((item) => item._id === id);
+export const findItemById = (id, list) => {
+	return list.find((item) => item._id === id);
 };

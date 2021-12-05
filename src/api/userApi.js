@@ -12,7 +12,7 @@ const userApi = {
 		return axiosClient.get(url);
 	},
 	login: (data) => {
-		const url = baseUrl;
+		const url = baseUrl + "login";
 		return axiosClient.post(url, data);
 	},
 	forgetPassword: (email) => {
