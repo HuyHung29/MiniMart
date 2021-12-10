@@ -9,10 +9,10 @@ const productsApi = {
 		const url = `${baseUrl}/${id}`;
 		return axiosClient.put(url, newData);
 	},
-	getAllProduct: () => {
-		return axiosClient.get(baseUrl);
+	getAllProduct: (params) => {
+		return axiosClient.get(baseUrl, { params });
 	},
-	getProduct: (id) => {
+	getProductById: (id) => {
 		const url = `${baseUrl}/${id}`;
 		return axiosClient.get(url);
 	},

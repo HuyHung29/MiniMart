@@ -6,6 +6,7 @@ import { itemTitle } from "constant";
 import PropTypes from "prop-types";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { Button, Col, Form, Row } from "reactstrap";
 
 AddEditForm.propTypes = {
@@ -13,6 +14,7 @@ AddEditForm.propTypes = {
 	defaultValues: PropTypes.object.isRequired,
 	schema: PropTypes.object.isRequired,
 	categories: PropTypes.array.isRequired,
+	editItem: PropTypes.object,
 };
 
 function AddEditForm({
@@ -20,12 +22,14 @@ function AddEditForm({
 	schema,
 	defaultValues,
 	categories,
-	editProduct,
+	editItem,
 }) {
+	const history = useHistory();
 	const {
 		register,
 		control,
 		handleSubmit,
+		getValues,
 		reset,
 		formState: { errors },
 	} = useForm({
@@ -33,6 +37,8 @@ function AddEditForm({
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
+
+	console.log(defaultValues, getValues());
 
 	const options = categories.map((item) => {
 		return { value: item._id, label: item.name };
@@ -54,7 +60,7 @@ function AddEditForm({
 							errors={errors}
 							label={itemTitle[item]}
 							previewList={
-								editProduct ? editProduct.pictures : undefined
+								editItem ? editItem.pictures : undefined
 							}
 							key={index}
 						/>
@@ -157,11 +163,17 @@ function AddEditForm({
 					<Button
 						type='submit'
 						className='form__btn form__btn--success'>
-						Tạo mới
+						{editItem ? "Cập nhật" : "Tạo mới"}
 					</Button>
 					<Button
 						className='form__btn form__btn--danger'
-						onClick={() => reset()}>
+						onClick={() => {
+							if (editItem) {
+								history.goBack();
+							} else {
+								reset();
+							}
+						}}>
 						Hủy
 					</Button>
 				</Col>
@@ -169,9 +181,5 @@ function AddEditForm({
 		</Form>
 	);
 }
-
-AddEditForm.propTypes = {
-	onSubmit: PropTypes.func,
-};
 
 export default AddEditForm;

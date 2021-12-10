@@ -1,6 +1,7 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { createProduct, updateProduct } from "app/productsSlice";
 import AddEditForm from "components/AddEditForm";
+import Loading from "components/Loading";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -14,9 +15,8 @@ function AddEditProduct() {
 	const { productId } = useParams();
 	const history = useHistory();
 	const editProduct = useSelector((state) =>
-		state.products.find((product) => product._id === productId)
+		state.products.listProduct.find((product) => product._id === productId)
 	);
-
 	const isEdit = !!productId;
 
 	const schema = yup
@@ -114,13 +114,17 @@ function AddEditProduct() {
 					<h2 className='add-edit-page text-center my-5'>
 						{isEdit ? "Sửa sản phẩm" : "Thêm sản phẩm"}
 					</h2>
-					<AddEditForm
-						schema={schema}
-						defaultValues={defaultValues}
-						categories={categories}
-						onSubmit={onSubmit}
-						editProduct={editProduct ? editProduct : undefined}
-					/>
+					{isEdit && editProduct ? (
+						<AddEditForm
+							schema={schema}
+							defaultValues={defaultValues}
+							categories={categories}
+							onSubmit={onSubmit}
+							editItem={editProduct ? editProduct : undefined}
+						/>
+					) : (
+						<Loading />
+					)}
 				</Col>
 				<Col />
 			</Row>

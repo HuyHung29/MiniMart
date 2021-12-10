@@ -67,7 +67,8 @@ const userSlice = createSlice({
 				localStorage.setItem("user", JSON.stringify(action.payload));
 			})
 			.addCase(fetchUserInfo.rejected, (state, action) => {
-				if (action.payload === 401) {
+				console.log(action);
+				if (action.error.message === "401") {
 					const refreshToken = JSON.parse(
 						localStorage.getItem("refresh")
 					);
@@ -76,7 +77,8 @@ const userSlice = createSlice({
 							const newAccessToken = await userApi.getAccessToken(
 								refreshToken
 							);
-							state.accessToken = newAccessToken;
+							console.log(newAccessToken);
+							state.accessToken = newAccessToken.data.accessToken;
 							localStorage.setItem(
 								"token",
 								JSON.stringify(newAccessToken.data.accessToken)
@@ -87,6 +89,8 @@ const userSlice = createSlice({
 					};
 
 					resetPassword();
+				} else {
+					console.log(action.error.message);
 				}
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {

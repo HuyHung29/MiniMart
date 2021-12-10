@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 
 function MainPage() {
-	const products = useSelector((state) => state.products);
+	const products = useSelector((state) => state.products.listProduct);
 	const categories = useSelector((state) => state.categories);
 	const dispatch = useDispatch();
 	const match = useRouteMatch();

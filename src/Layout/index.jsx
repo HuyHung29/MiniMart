@@ -43,7 +43,7 @@ function Layout() {
 	}, [isLogin]);
 
 	useEffect(() => {
-		if (isLogin && accessToken) dispatch(fetchUserInfo());
+		if (isLogin || accessToken) dispatch(fetchUserInfo());
 	}, [dispatch, isLogin, accessToken]);
 
 	const logout = () => {
