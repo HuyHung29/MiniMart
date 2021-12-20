@@ -64,42 +64,36 @@ export const deleteMultiProduct = createAsyncThunk(
 
 const productsSlice = createSlice({
 	name: "products",
-	initialState: {
-		listProduct: [],
-		pagination: {},
-	},
+	initialState: [],
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchProducts.fulfilled, (state, action) => {
-				state.listProduct = [...action.payload.products];
-				state.pagination = { ...action.payload.pagination };
+				return (state = [...action.payload.products]);
 			})
 			.addCase(createProduct.fulfilled, (state, action) => {
-				state.listProduct.push(action.payload.product);
+				state.push(action.payload.product);
 			})
 			.addCase(updateProduct.fulfilled, (state, { payload }) => {
 				const { product } = payload;
-				const index = state.listProduct.findIndex(
+				const index = state.findIndex(
 					(item) => item._id === product._id
 				);
-				state.listProduct[index] = product;
+				state[index] = product;
 			})
 			.addCase(deleteProduct.fulfilled, (state, action) => {
-				const index = state.listProduct.findIndex(
+				const index = state.findIndex(
 					(item) => item._id === action.meta.arg
 				);
 				if (index !== -1) {
-					state.listProduct.splice(index, 1);
+					state.splice(index, 1);
 				}
 			})
 			.addCase(deleteMultiProduct.fulfilled, (state, { meta }) => {
 				const { productIds } = meta.arg;
 				productIds.forEach((item) => {
-					state.listProduct.splice(
-						state.listProduct.findIndex(
-							(product) => product._id === item
-						),
+					state.splice(
+						state.findIndex((product) => product._id === item),
 						1
 					);
 				});

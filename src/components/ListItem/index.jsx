@@ -1,23 +1,26 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Button, Input, Table } from "reactstrap";
-import { Link } from "react-router-dom";
-import { findItemById } from "utils";
-import moment from "moment";
+import ReadMore from "components/ReadMore";
 import { itemTitle } from "constant";
+import moment from "moment";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import Select from "react-select";
+import { Button, Input, Table } from "reactstrap";
+import { findItemById } from "utils";
 
 ListItem.propTypes = {
 	listItem: PropTypes.array.isRequired,
 	handleDeleteItem: PropTypes.func.isRequired,
 	handleDeleteSelectedItem: PropTypes.func.isRequired,
 	categories: PropTypes.array.isRequired,
-	url: PropTypes.string.isRequired,
+	location: PropTypes.object.isRequired,
 };
 
 ListItem.defaultProps = {
 	listItem: [],
 	categories: [],
-	url: "",
+	location: {},
 };
 
 function ListItem({
@@ -25,10 +28,24 @@ function ListItem({
 	handleDeleteItem,
 	handleDeleteSelectedItem,
 	categories,
-	url,
+	location,
 }) {
 	const [checkList, setCheckList] = useState([]);
+	const limitPerPage = [
+		{ value: 5, label: "5" },
+		{ value: 10, label: "10" },
+		{ value: 25, label: "25" },
+		{ value: 100, label: "100" },
+	];
+	const { pathname, search } = location;
+	const history = useHistory();
 
+	const deleteSearch = () => {
+		return search.includes("limit=")
+			? search.substr(0, search.indexOf("limit=")) +
+					search.substr(search.indexOf("limit=") + 6)
+			: search + "&";
+	};
 	// Handle select item
 	const handleCheck = (e) => {
 		const target = e.target;
@@ -115,6 +132,13 @@ function ListItem({
 								</td>
 							);
 
+						if (key === "description")
+							return (
+								<td key={number} className='listItem__item'>
+									<ReadMore row={5}>{item[key]}</ReadMore>
+								</td>
+							);
+
 						if (key === "createdAt" || key === "updatedAt")
 							return (
 								<td key={number} className='listItem__item'>
@@ -129,7 +153,7 @@ function ListItem({
 					})}
 					<td className='listItem__item'>
 						<Link
-							to={`${url}/edit/${item._id}`}
+							to={`${pathname}/edit/${item._id}`}
 							className='btn btn-primary listItem__btn'>
 							Sửa
 						</Link>
@@ -149,7 +173,7 @@ function ListItem({
 
 	return (
 		<>
-			<Link to={`${url}/add`} className='btn btn-primary add-btn'>
+			<Link to={`${pathname}/add`} className='btn btn-primary add-btn'>
 				<i className='fas fa-plus'></i>
 				<span>Thêm mới</span>
 			</Link>
@@ -170,13 +194,89 @@ function ListItem({
 					</>
 				) : (
 					<>
-						<p className='filter'></p>
-						<Button className='filter-btn btn-danger'>
+						<p></p>
+						<div className='filter-task'>
 							<i className='fas fa-list-ul'></i>
-						</Button>
+
+							<ul className='filter-task__list'>
+								<li className='filter-task__item'>
+									<NavLink
+										to={{
+											pathname: pathname,
+											search: "?sort=-price",
+										}}
+										className='filter-task__link'
+										activeClassName='filter-task__link--active'
+										isActive={() => {
+											return (
+												pathname + search ===
+												`${pathname}?sort=-price`
+											);
+										}}>
+										Giá từ cao đến thấp{" "}
+										<i className='fas fa-sort-amount-down'></i>
+									</NavLink>
+								</li>
+								<li className='filter-task__item'>
+									<NavLink
+										to={{
+											pathname: pathname,
+											search: "?sort=price",
+										}}
+										className='filter-task__link'
+										activeClassName='filter-task__link--active'
+										isActive={() => {
+											return (
+												pathname + search ===
+												`${pathname}?sort=price`
+											);
+										}}>
+										Giá từ thấp đến cao{" "}
+										<i className='fas fa-sort-amount-up'></i>
+									</NavLink>
+								</li>
+								<li className='filter-task__item'>
+									<NavLink
+										to={{
+											pathname: pathname,
+											search: "?sort=title",
+										}}
+										className='filter-task__link'
+										activeClassName='filter-task__link--active'
+										isActive={() => {
+											return (
+												pathname + search ===
+												`${pathname}?sort=title`
+											);
+										}}>
+										Tên từ A - Z{" "}
+										<i className='fas fa-sort-alpha-down'></i>
+									</NavLink>
+								</li>
+								<li className='filter-task__item'>
+									<NavLink
+										to={{
+											pathname: pathname,
+											search: "?sort=-title",
+										}}
+										className='filter-task__link'
+										activeClassName='filter-task__link--active'
+										isActive={() => {
+											return (
+												pathname + search ===
+												`${pathname}?sort=-title`
+											);
+										}}>
+										Tên từ Z - S{" "}
+										<i className='fas fa-sort-alpha-up'></i>
+									</NavLink>
+								</li>
+							</ul>
+						</div>
 					</>
 				)}
 			</div>
+
 			<Table bordered size='xl' className='listItem'>
 				<thead className='listItem__header'>
 					<tr>
@@ -196,6 +296,21 @@ function ListItem({
 				</thead>
 				<tbody className='listItem__list'>{renderListItem()}</tbody>
 			</Table>
+			<div className='limit'>
+				<p className='limit__title'>Số sản phẩm trên một trang</p>
+				<Select
+					className='limit__select'
+					onChange={(val) => {
+						history.push(
+							`${pathname}${
+								search ? deleteSearch() : "?"
+							}&limit=${val.value}`
+						);
+					}}
+					defaultValue={limitPerPage[0]}
+					options={limitPerPage}
+				/>
+			</div>
 		</>
 	);
 }

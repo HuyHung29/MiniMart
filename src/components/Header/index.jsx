@@ -2,7 +2,7 @@ import Cart from "components/Cart";
 import { images } from "constant";
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
 	Button,
 	Col,
@@ -24,6 +24,8 @@ Header.defaultProps = {
 };
 
 function Header({ isLogin, userName, logout }) {
+	const history = useHistory();
+
 	return (
 		<header className='header'>
 			<Container>
@@ -60,10 +62,18 @@ function Header({ isLogin, userName, logout }) {
 						</Col>
 						<Col md='5' className='header__middle__search'>
 							<div className='form-wrap'>
-								<Form className='header__middle__form'>
+								<Form
+									className='header__middle__form'
+									onSubmit={(e) => {
+										e.preventDefault();
+										history.push(
+											`/products?search=${e.target.search.value}`
+										);
+									}}>
 									<i className='fas fa-search header__middle__form__icon'></i>
 									<InputGroup>
 										<Input
+											name='search'
 											className='header__middle__form__input'
 											placeholder='Tìm kiếm ở đây'
 										/>

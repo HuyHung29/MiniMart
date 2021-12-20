@@ -15,7 +15,7 @@ FileField.defaultProps = {
 };
 
 function FileField(props) {
-	const { register, errors, name, label, previewList } = props;
+	const { register, errors, name, label } = props;
 	const [files, setFiles] = useState([]);
 
 	const handleChange = (e) => {
@@ -24,16 +24,6 @@ function FileField(props) {
 	};
 
 	const renderPreviewList = () => {
-		if (previewList && [...files].length === 0) {
-			return previewList.map((item, index) => {
-				return (
-					<li key={index}>
-						<img src={item} alt='anh' className='preview__img' />
-					</li>
-				);
-			});
-		}
-
 		return (
 			files &&
 			[...files].map((file, index) => (
@@ -50,7 +40,7 @@ function FileField(props) {
 
 	return (
 		<FormGroup className='input'>
-			<Label className='input__label'>{label}</Label>
+			{label ? <Label className='input__label'>{label}</Label> : ""}
 
 			<input
 				{...register}
@@ -71,7 +61,9 @@ function FileField(props) {
 				""
 			)}
 
-			<ul className='preview__list'>{renderPreviewList()}</ul>
+			<div className='preview'>
+				<ul className='preview__list'>{renderPreviewList()}</ul>
+			</div>
 		</FormGroup>
 	);
 }

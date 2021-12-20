@@ -15,7 +15,7 @@ function AddEditProduct() {
 	const { productId } = useParams();
 	const history = useHistory();
 	const editProduct = useSelector((state) =>
-		state.products.listProduct.find((product) => product._id === productId)
+		state.products.find((product) => product._id === productId)
 	);
 	const isEdit = !!productId;
 
@@ -23,13 +23,15 @@ function AddEditProduct() {
 		.object({
 			title: yup.string().required("Vui lòng nhập trường này"),
 			description: yup.string().required("Vui lòng nhập trường này"),
-			pictures: yup
-				.mixed()
-				.test("fileSize", "The file is too large", (value) => {
-					if (!value.length) return true; // attachment is optional
-					return value[0].size <= 2000000;
-				})
-				.required("CHọn ảnh cho sản phẩm"),
+			pictures: !isEdit
+				? yup
+						.mixed()
+						.test("fileSize", "The file is too large", (value) => {
+							if (!value.length) return true; // attachment is optional
+							return value[0].size <= 2000000;
+						})
+						.required("CHọn ảnh cho sản phẩm")
+				: yup.array().required(),
 			price: yup
 				.number()
 				.min(0, "Giá phải là số dương")
@@ -53,7 +55,8 @@ function AddEditProduct() {
 					country: editProduct.country,
 					unit: editProduct.unit,
 					category: editProduct.category,
-					pictures: "",
+					pictures: editProduct.pictures,
+					newPictures: "",
 					description: editProduct.description,
 			  }
 			: {
@@ -70,11 +73,24 @@ function AddEditProduct() {
 	const onSubmit = (data) => {
 		console.log(data);
 		const formData = new FormData();
-
-		for (let key in data) {
-			if (key === "pictures" && data[key] !== "") {
-				formData.append(key, data[key][0]);
-			} else formData.append(key, data[key]);
+		if (isEdit) {
+			for (let key in data) {
+				if (key === "newPictures" && data[key] !== "") {
+					for (let i = 0; i < data[key].length; i++) {
+						formData.append(key, data[key][i]);
+					}
+				} else if (key === "pictures") {
+					formData.append(key, JSON.stringify(data[key]));
+				} else formData.append(key, data[key]);
+			}
+		} else {
+			for (let key in data) {
+				if (key === "pictures" && data[key] !== "") {
+					for (let i = 0; i < data[key].length; i++) {
+						formData.append(key, data[key][i]);
+					}
+				} else formData.append(key, data[key]);
+			}
 		}
 
 		const fetchAddEditProduct = async () => {
@@ -106,6 +122,31 @@ function AddEditProduct() {
 		});
 	};
 
+	const renderForm = () => {
+		if (!isEdit) {
+			return (
+				<AddEditForm
+					schema={schema}
+					defaultValues={defaultValues}
+					categories={categories}
+					onSubmit={onSubmit}
+				/>
+			);
+		} else {
+			if (editProduct) {
+				return (
+					<AddEditForm
+						schema={schema}
+						defaultValues={defaultValues}
+						categories={categories}
+						onSubmit={onSubmit}
+						editItem={editProduct ? editProduct : undefined}
+					/>
+				);
+			} else return <Loading />;
+		}
+	};
+
 	return (
 		<Container>
 			<Row>
@@ -114,17 +155,7 @@ function AddEditProduct() {
 					<h2 className='add-edit-page text-center my-5'>
 						{isEdit ? "Sửa sản phẩm" : "Thêm sản phẩm"}
 					</h2>
-					{isEdit && editProduct ? (
-						<AddEditForm
-							schema={schema}
-							defaultValues={defaultValues}
-							categories={categories}
-							onSubmit={onSubmit}
-							editItem={editProduct ? editProduct : undefined}
-						/>
-					) : (
-						<Loading />
-					)}
+					{renderForm()}
 				</Col>
 				<Col />
 			</Row>

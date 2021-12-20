@@ -28,8 +28,8 @@ function AddEditForm({
 	const {
 		register,
 		control,
+		setValue,
 		handleSubmit,
-		getValues,
 		reset,
 		formState: { errors },
 	} = useForm({
@@ -37,8 +37,6 @@ function AddEditForm({
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
-
-	console.log(defaultValues, getValues());
 
 	const options = categories.map((item) => {
 		return { value: item._id, label: item.name };
@@ -51,7 +49,27 @@ function AddEditForm({
 		}
 
 		return key.map((item, index) => {
-			if (item === "pictures")
+			if (["pictures", "newPictures"].includes(item)) {
+				if (editItem && item === "pictures") {
+					return (
+						<Col md='12' key={index}>
+							<Controller
+								name={item}
+								control={control}
+								render={({ field }) => (
+									<InputField
+										{...field}
+										errors={errors}
+										label={itemTitle[item]}
+										type='text'
+										ref={null}
+										setFormValue={setValue}
+									/>
+								)}
+							/>
+						</Col>
+					);
+				}
 				return (
 					<Col md='12' key={index}>
 						<FileField
@@ -59,13 +77,11 @@ function AddEditForm({
 							name={item}
 							errors={errors}
 							label={itemTitle[item]}
-							previewList={
-								editItem ? editItem.pictures : undefined
-							}
 							key={index}
 						/>
 					</Col>
 				);
+			}
 			if (item === "category" || item === "unit") {
 				if (item === "unit") {
 					return (

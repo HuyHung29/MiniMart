@@ -1,16 +1,16 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchCategories } from "app/categoriesSlice";
+import { fetchUserInfo, userLogout } from "app/userSlice";
 import Footer from "components/Footer";
 import Header from "components/Header";
 import Loading from "components/Loading";
 import NavBar from "components/NavBar";
 import NotFound from "components/NotFound";
-import { fetchUserInfo, userLogout } from "app/userSlice";
+import ScrollToTop from "components/ScrollToTop";
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { fetchProducts } from "app/productsSlice";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const User = React.lazy(() => import("features/User"));
@@ -28,8 +28,6 @@ function Layout() {
 			try {
 				const categories = await dispatch(fetchCategories());
 				unwrapResult(categories);
-				const products = await dispatch(fetchProducts());
-				unwrapResult(products);
 			} catch (error) {
 				throw error;
 			}
@@ -54,6 +52,7 @@ function Layout() {
 	return (
 		<Router>
 			<Suspense fallback={<Loading />}>
+				<ScrollToTop />
 				<div className='Layout'>
 					<Header
 						isLogin={loginStatus}
