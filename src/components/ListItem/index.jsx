@@ -1,10 +1,8 @@
-import ReadMore from "components/ReadMore";
-import { itemTitle } from "constant";
-import moment from "moment";
+import { itemTitle, listTitle } from "constant";
 import PropTypes from "prop-types";
+import qs from "query-string";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import Select from "react-select";
 import { Button, Input, Table } from "reactstrap";
 import { findItemById } from "utils";
@@ -39,13 +37,23 @@ function ListItem({
 	];
 	const { pathname, search } = location;
 	const history = useHistory();
+	const { limit, sort } = qs.parse(search);
 
-	const deleteSearch = () => {
-		return search.includes("limit=")
-			? search.substr(0, search.indexOf("limit=")) +
-					search.substr(search.indexOf("limit=") + 6)
-			: search + "&";
+	const replaceSort = (field) => {
+		return sort
+			? search.replace(`sort=${sort}`, `sort=${field}`)
+			: search + `&sort=${field}`;
 	};
+
+	const replaceLimit = (number) => {
+		if (search) {
+			return limit
+				? search.replace(`limit=${limit}`, `limit=${number}`)
+				: search + "&limit=" + number;
+		}
+		return "?limit=" + number;
+	};
+
 	// Handle select item
 	const handleCheck = (e) => {
 		const target = e.target;
@@ -75,13 +83,11 @@ function ListItem({
 	const renderListTitle = () => {
 		if (listItem.length !== 0) {
 			return Object.keys(listItem[0]).map((title, index) => {
-				if (title === "_id" || title === "postedBy" || title === "__v")
-					return null;
-				return (
+				return listTitle.includes(title) ? (
 					<th key={index} className='listItem__title'>
 						{itemTitle[title]}
 					</th>
-				);
+				) : null;
 			});
 		}
 	};
@@ -102,17 +108,12 @@ function ListItem({
 					</th>
 					<td className='listItem__item'>{index + 1}</td>
 					{Object.keys(item).map((key, number) => {
-						if (
-							key === "_id" ||
-							key === "postedBy" ||
-							key === "__v"
-						)
-							return null;
+						if (!listTitle.includes(key)) return null;
 
 						if (key === "pictures")
 							return (
 								<td key={number} className='listItem__item'>
-									<div>
+									<div className='listItem__listImg'>
 										{item[key].map((img, index) => (
 											<img
 												src={img}
@@ -132,22 +133,9 @@ function ListItem({
 								</td>
 							);
 
-						if (key === "description")
-							return (
-								<td key={number} className='listItem__item'>
-									<ReadMore row={5}>{item[key]}</ReadMore>
-								</td>
-							);
-
-						if (key === "createdAt" || key === "updatedAt")
-							return (
-								<td key={number} className='listItem__item'>
-									{moment(item[key]).format("DD/MM/YYYY")}
-								</td>
-							);
 						return (
 							<td key={number} className='listItem__item'>
-								{item[key]}
+								<p>{item[key]}</p>
 							</td>
 						);
 					})}
@@ -203,16 +191,13 @@ function ListItem({
 									<NavLink
 										to={{
 											pathname: pathname,
-											search: "?sort=-price",
+											search: search
+												? replaceSort("-price")
+												: "?sort=-price",
 										}}
 										className='filter-task__link'
 										activeClassName='filter-task__link--active'
-										isActive={() => {
-											return (
-												pathname + search ===
-												`${pathname}?sort=-price`
-											);
-										}}>
+										isActive={() => sort === "-price"}>
 										Giá từ cao đến thấp{" "}
 										<i className='fas fa-sort-amount-down'></i>
 									</NavLink>
@@ -221,16 +206,13 @@ function ListItem({
 									<NavLink
 										to={{
 											pathname: pathname,
-											search: "?sort=price",
+											search: search
+												? replaceSort("price")
+												: "?sort=price",
 										}}
 										className='filter-task__link'
 										activeClassName='filter-task__link--active'
-										isActive={() => {
-											return (
-												pathname + search ===
-												`${pathname}?sort=price`
-											);
-										}}>
+										isActive={() => sort === "price"}>
 										Giá từ thấp đến cao{" "}
 										<i className='fas fa-sort-amount-up'></i>
 									</NavLink>
@@ -239,16 +221,13 @@ function ListItem({
 									<NavLink
 										to={{
 											pathname: pathname,
-											search: "?sort=title",
+											search: search
+												? replaceSort("title")
+												: "?sort=title",
 										}}
 										className='filter-task__link'
 										activeClassName='filter-task__link--active'
-										isActive={() => {
-											return (
-												pathname + search ===
-												`${pathname}?sort=title`
-											);
-										}}>
+										isActive={() => sort === "title"}>
 										Tên từ A - Z{" "}
 										<i className='fas fa-sort-alpha-down'></i>
 									</NavLink>
@@ -257,16 +236,13 @@ function ListItem({
 									<NavLink
 										to={{
 											pathname: pathname,
-											search: "?sort=-title",
+											search: search
+												? replaceSort("-title")
+												: "?sort=-title",
 										}}
 										className='filter-task__link'
 										activeClassName='filter-task__link--active'
-										isActive={() => {
-											return (
-												pathname + search ===
-												`${pathname}?sort=-title`
-											);
-										}}>
+										isActive={() => sort === "-title"}>
 										Tên từ Z - S{" "}
 										<i className='fas fa-sort-alpha-up'></i>
 									</NavLink>
@@ -276,41 +252,55 @@ function ListItem({
 					</>
 				)}
 			</div>
-
-			<Table bordered size='xl' className='listItem'>
-				<thead className='listItem__header'>
-					<tr>
-						<th className='listItem__title'>
-							<Input
-								type='checkbox'
-								name='checkAll'
-								value={listItem.map((item) => item._id)}
-								onChange={handleCheck}
-								className='check-input'
-							/>
-						</th>
-						<th className='listItem__title'>STT</th>
-						{renderListTitle()}
-						<th colSpan='2'></th>
-					</tr>
-				</thead>
-				<tbody className='listItem__list'>{renderListItem()}</tbody>
-			</Table>
-			<div className='limit'>
-				<p className='limit__title'>Số sản phẩm trên một trang</p>
-				<Select
-					className='limit__select'
-					onChange={(val) => {
-						history.push(
-							`${pathname}${
-								search ? deleteSearch() : "?"
-							}&limit=${val.value}`
-						);
-					}}
-					defaultValue={limitPerPage[0]}
-					options={limitPerPage}
-				/>
-			</div>
+			{listItem.length === 0 ? (
+				<div className='listItem--empty'>Chưa có sản phẩm nào</div>
+			) : (
+				<>
+					<Table bordered size='xl' className='listItem'>
+						<thead className='listItem__header'>
+							<tr>
+								<th className='listItem__title'>
+									<Input
+										type='checkbox'
+										name='checkAll'
+										value={listItem.map((item) => item._id)}
+										onChange={handleCheck}
+										className='check-input'
+									/>
+								</th>
+								<th className='listItem__title'>STT</th>
+								{renderListTitle()}
+								<th colSpan='2'></th>
+							</tr>
+						</thead>
+						<tbody className='listItem__list'>
+							{renderListItem()}
+						</tbody>
+					</Table>
+					<div className='limit'>
+						<p className='limit__title'>
+							Số sản phẩm trên một trang
+						</p>
+						<Select
+							className='limit__select'
+							onChange={(val) => {
+								console.log(val.value);
+								history.push(
+									`${pathname}${replaceLimit(val.value)}`
+								);
+							}}
+							defaultValue={
+								limit
+									? limitPerPage.find((item) => {
+											return item.value === +limit;
+									  })
+									: limitPerPage[0]
+							}
+							options={limitPerPage}
+						/>
+					</div>
+				</>
+			)}
 		</>
 	);
 }

@@ -1,0 +1,272 @@
+.product-card--wrap {
+	display: flex;
+	padding: 0 1rem;
+}
+
+.product-card {
+	background-color: white;
+	flex: 1;
+	position: relative;
+	border-radius: 1px;
+	overflow: hidden;
+	cursor: pointer;
+	border: 1px solid transparent;
+	box-shadow: 0px 2px 4px rgba($color: #000000, $alpha: 0.1);
+	transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+	&:hover {
+		border-color: $secondary-color;
+		box-shadow: 0px 5px 10px rgba($color: #000000, $alpha: 0.2);
+		transform: translateY(-1px);
+	}
+
+	&__link {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+	}
+
+	&__img {
+		transition: 0.2s ease-in;
+
+		& img {
+			width: 100%;
+		}
+	}
+
+	&__info {
+		flex: 1;
+		padding: 10px 15px;
+		@include flex();
+		flex-direction: column;
+	}
+
+	&__name {
+		font-size: 1.4rem;
+		margin-bottom: 10px;
+	}
+
+	&__price--wrap {
+		@include flex(center, space-between);
+		margin-top: auto;
+	}
+
+	&__price {
+		font-size: 1.6rem;
+		color: $secondary-color;
+		font-weight: 500;
+
+		&--old {
+			font-size: 1.2rem;
+			text-decoration: line-through;
+			color: $sub-text-color;
+		}
+	}
+
+	&__view--btn {
+		position: absolute;
+		top: 5px;
+		left: 10px;
+		font-size: 1.4rem;
+		color: $secondary-color;
+		transform: scale(0);
+		transition: 0.2s ease-in;
+	}
+
+	&:hover &__view--btn {
+		transform: scale(1);
+	}
+
+	&__favorite--btn {
+		position: absolute;
+		top: 5px;
+		right: 10px;
+		font-size: 1.4rem;
+		color: $secondary-color;
+	}
+}
+
+.product-list--wrap {
+	padding-top: 30px;
+}
+
+.product-list {
+	row-gap: 20px;
+
+	&__title {
+		font-size: 1.8rem;
+		padding: 15px 0;
+		margin-bottom: 15px;
+		border-bottom: 1px dashed $sub-text-color;
+	}
+}
+
+.product-preview--wrap {
+	position: fixed;
+	inset: 0;
+	background-color: rgba($color: #000000, $alpha: 0.15);
+	z-index: 99;
+	@include flex(center, center);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.product-preview {
+	position: relative;
+	background-color: white;
+	width: 65%;
+	margin: 50px 0;
+	animation: fadeIn 0.25s ease-in;
+	border-radius: 5px;
+
+	@include flex(stretch, space-between);
+	flex-direction: row;
+	column-gap: 30px;
+
+	padding: 30px 30px;
+
+	&__pictures {
+		width: 50%;
+	}
+
+	&__content {
+		width: 50%;
+	}
+
+	&__name {
+		font-size: 3rem;
+		font-weight: 500;
+	}
+
+	&__origin {
+		font-size: 1.4rem;
+		font-weight: 600;
+		margin-top: 20px;
+
+		& span {
+			font-weight: 400;
+		}
+	}
+
+	&__price--wrap {
+		@include flex(center, flex-start);
+		padding: 10px;
+		margin: 20px 0;
+		border-top: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
+	}
+
+	&__price {
+		font-size: 2.4rem;
+		color: $secondary-color;
+		font-weight: 600;
+		margin-right: 10px;
+
+		&--old {
+			font-size: 1.4rem;
+			color: &sub-text-color;
+			text-decoration: line-through;
+		}
+	}
+
+	&__quantity {
+		@include flex(center, space-between);
+		padding: 10px;
+		margin: 20px 0;
+		border: 1px solid $border-color;
+		font-size: 1.4rem;
+
+		&__btn {
+			color: $sub-text-color;
+			cursor: pointer;
+			user-select: none;
+
+			&:hover {
+				color: $text-color;
+			}
+		}
+
+		&__value {
+			border: none;
+			width: auto;
+			text-align: center;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+
+	&__btn {
+		font-size: 1.6rem;
+		padding: 10px 15px;
+		background-color: $secondary-color;
+		border: 1px solid $secondary-color;
+
+		&:focus {
+			background-color: $secondary-color;
+			color: white;
+			box-shadow: none;
+			outline: none;
+			border-color: $secondary-color;
+		}
+
+		&:hover {
+			background-color: white;
+			color: $secondary-color;
+			border-color: $secondary-color;
+		}
+	}
+
+	.close-btn {
+		position: absolute;
+		top: 5px;
+		right: 10px;
+		font-size: 2.8rem;
+		transition: color 0.1s ease-in;
+		cursor: pointer;
+
+		&:hover {
+			color: $secondary-color;
+		}
+	}
+}
+
+.sort-price {
+	&__item {
+		margin: 15px 0;
+		vertical-align: middle;
+		cursor: pointer;
+
+		& input {
+			cursor: pointer;
+			font-size: 1.4rem;
+		}
+
+		& label {
+			font-size: 1.4rem;
+			margin-left: 15px;
+			transition: color 0.2s ease-in;
+			cursor: pointer;
+
+			&:hover {
+				color: $secondary-color;
+			}
+		}
+	}
+}
+
+.product-detail {
+	background-color: white;
+	margin: 0 7.5px;
+}

@@ -1,0 +1,51 @@
+.slick-arrow {
+	visibility: hidden;
+}
+
+.slick-slide {
+	cursor: pointer;
+}
+
+.slick-slide {
+	padding-right: 15px;
+}
+
+.slick-list {
+	margin-right: -15px;
+}
+
+.image-slider {
+	.image-active {
+		& img {
+			border: 1px solid $border-color;
+		}
+		border-radius: 1px;
+		text-align: center;
+	}
+
+	&__list {
+		margin-top: 15px;
+	}
+
+	&__item {
+		border: 1px solid $border-color;
+		margin-right: 15px;
+		border-radius: 1px;
+
+		&--active {
+			border: 1px solid $secondary-color;
+		}
+
+		&:focus-visible {
+			outline: none;
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&:focus:not(:focus-visible) {
+			outline: none;
+		}
+	}
+}

@@ -9,12 +9,7 @@ function BreadCrumb() {
 
 	const renderBreadcrumb = () => {
 		const pathNames = pathname.split("/").filter((x) => x);
-		if (
-			typeof breadcrumbNames[pathNames[pathNames.length - 1]] ===
-			"undefined"
-		) {
-			pathNames.pop();
-		}
+
 		if (pathname !== "/") {
 			return (
 				<Breadcrumb>
@@ -37,7 +32,9 @@ function BreadCrumb() {
 
 						return index === pathNames.length - 1 ? (
 							<BreadcrumbItem key={index} active>
-								{breadcrumbNames[name]}
+								{breadcrumbNames[name]
+									? breadcrumbNames[name]
+									: name.replaceAll("-", " ")}
 								<i className='fas fa-caret-right breadcrumb-item-icon'></i>
 							</BreadcrumbItem>
 						) : (
@@ -45,7 +42,9 @@ function BreadCrumb() {
 								<Link
 									to={`/${name}`}
 									className='breadcrumb-item-link'>
-									{breadcrumbNames[name]}
+									{breadcrumbNames[name]
+										? breadcrumbNames[name]
+										: name.replaceAll("-", " ")}
 								</Link>
 								<i className='fas fa-caret-right breadcrumb-item-icon'></i>
 							</BreadcrumbItem>

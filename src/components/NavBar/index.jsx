@@ -20,37 +20,39 @@ NavBar.propTypes = {
 };
 function NavBar({ categories }) {
 	return (
-		<Container>
-			<Row className='align-items-center'>
-				<Col xl='3'>
-					<Navbar expand className='py-0'>
-						<NavbarToggler />
-						<Collapse navbar>
-							<Nav navbar className='w-100'>
-								<UncontrolledDropdown inNavbar nav>
-									<DropdownToggle nav>
-										<i className='fas fa-bars nav__icon'></i>
-										Danh mục
-									</DropdownToggle>
-									<DropdownMenu end>
-										{categories.map((item, index) => {
-											return (
-												<DropdownItem key={index}>
-													{item.name}
-												</DropdownItem>
-											);
-										})}
-									</DropdownMenu>
-								</UncontrolledDropdown>
-							</Nav>
-						</Collapse>
-					</Navbar>
-				</Col>
-				<Col>
-					<BreadCrumb />
-				</Col>
-			</Row>
-		</Container>
+		<div className='navbar--wrap'>
+			<Container>
+				<Row className='align-items-center'>
+					<Col xl='3'>
+						<Navbar expand className='py-0'>
+							<NavbarToggler />
+							<Collapse navbar>
+								<Nav navbar className='w-100'>
+									<UncontrolledDropdown inNavbar nav>
+										<DropdownToggle nav>
+											<i className='fas fa-bars nav__icon'></i>
+											Danh mục
+										</DropdownToggle>
+										<DropdownMenu end>
+											{categories.map((item, index) => {
+												return (
+													<DropdownItem key={index}>
+														{item.name}
+													</DropdownItem>
+												);
+											})}
+										</DropdownMenu>
+									</UncontrolledDropdown>
+								</Nav>
+							</Collapse>
+						</Navbar>
+					</Col>
+					<Col>
+						<BreadCrumb />
+					</Col>
+				</Row>
+			</Container>
+		</div>
 	);
 }
 

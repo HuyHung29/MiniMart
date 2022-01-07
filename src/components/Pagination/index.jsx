@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Pagination as PaginationRT, PaginationItem } from "reactstrap";
 import { Link } from "react-router-dom";
+import qs from "query-string";
 
 Pagination.propTypes = {
 	pagination: PropTypes.object.isRequired,
@@ -16,14 +17,17 @@ Pagination.defaultProps = {
 function Pagination({ pagination, location }) {
 	const { next, prev, limit, total } = pagination;
 	const { pathname, search } = location;
+	const { page } = qs.parse(search);
 
 	const numberOfPage = Math.ceil(total / limit);
 
-	const deleteSearch = () => {
-		return search.includes("page=")
-			? search.substr(0, search.indexOf("page=")) +
-					search.substr(search.indexOf("page=") + 6)
-			: search + "&";
+	const changePage = (number) => {
+		if (search) {
+			return page
+				? search.replace(`page=${page}`, `page=${number}`)
+				: search + "&page=" + number;
+		}
+		return "?page=" + number;
 	};
 
 	const renderPagination = () => {
@@ -32,24 +36,63 @@ function Pagination({ pagination, location }) {
 			pagination.push(i);
 		}
 
-		return pagination.map((item, index) => (
-			<PaginationItem
-				key={index}
-				active={prev + 1 === item || next - 1 === item}>
-				<Link
-					className='page-link'
-					to={`${pathname}${
-						search ? deleteSearch() : "?"
-					}page=${item}`}
-					onClick={(e) => {
-						if (prev + 1 === item || next - 1 === item) {
-							e.preventDefault();
-						}
-					}}>
-					{item}
-				</Link>
-			</PaginationItem>
-		));
+		return pagination.map((item, index) => {
+			return (
+				<PaginationItem
+					key={index}
+					active={
+						prev || next
+							? page === item ||
+							  prev + 1 === item ||
+							  next - 1 === item
+							: true
+					}>
+					<Link
+						className='page-link'
+						to={`${pathname}${
+							search ? changePage(item) : `?page=${item}`
+						}`}
+						onClick={(e) => {
+							if (prev + 1 === item || next - 1 === item) {
+								e.preventDefault();
+							}
+						}}>
+						{item}
+					</Link>
+				</PaginationItem>
+			);
+			// return next || prev ? (
+			// 	<PaginationItem
+			// 		key={index}
+			// 		active={prev + 1 === item || next - 1 === item}>
+			// 		<Link
+			// 			className='page-link'
+			// 			to={`${pathname}${
+			// 				search ? changePage(item) : `?page=${item}`
+			// 			}`}
+			// 			onClick={(e) => {
+			// 				if (prev + 1 === item || next - 1 === item) {
+			// 					e.preventDefault();
+			// 				}
+			// 			}}>
+			// 			{item}
+			// 		</Link>
+			// 	</PaginationItem>
+			// ) : (
+			// 	<PaginationItem key={index} active>
+			// 		<Link
+			// 			className='page-link'
+			// 			to={`${pathname}${
+			// 				search ? changePage(item) : `?page=${item}`
+			// 			}`}
+			// 			onClick={(e) => {
+			// 				e.preventDefault();
+			// 			}}>
+			// 			{item}
+			// 		</Link>
+			// 	</PaginationItem>
+			// );
+		});
 	};
 
 	return (
@@ -59,8 +102,8 @@ function Pagination({ pagination, location }) {
 					className='page-link'
 					aria-label='Previous'
 					to={`${pathname}${
-						search ? deleteSearch() : "?"
-					}page=${prev}`}
+						search ? changePage(prev) : `?page=${prev}`
+					}`}
 					onClick={(e) => {
 						if (!prev) e.preventDefault();
 					}}>
@@ -74,8 +117,8 @@ function Pagination({ pagination, location }) {
 					className='page-link'
 					aria-label='Next'
 					to={`${pathname}${
-						search ? deleteSearch() : "?"
-					}page=${next}`}
+						search ? changePage(next) : `?page=${next}`
+					}`}
 					onClick={(e) => {
 						if (!next) e.preventDefault();
 					}}>

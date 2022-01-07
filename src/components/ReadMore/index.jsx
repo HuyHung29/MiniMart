@@ -4,9 +4,15 @@ import PropTypes from "prop-types";
 ReadMore.propTypes = {
 	children: PropTypes.string.isRequired,
 	row: PropTypes.number.isRequired,
+	readMore: PropTypes.bool,
+	className: PropTypes.string,
 };
 
-function ReadMore({ children, row }) {
+ReadMore.defaultProps = {
+	readMore: true,
+};
+
+function ReadMore({ children, row, readMore, className }) {
 	const [isReadMore, setIsReadMore] = useState(true);
 
 	const style = {
@@ -20,12 +26,18 @@ function ReadMore({ children, row }) {
 
 	return (
 		<>
-			<p className='read-more' style={style}>
+			<p className={className + " read-more"} style={style}>
 				{children}
 			</p>
-			<span onClick={() => toggleReadMore()} className='read-more__btn'>
-				{isReadMore ? "Xem thêm" : "Ẩn"}
-			</span>
+			{readMore ? (
+				<span
+					onClick={() => toggleReadMore()}
+					className='read-more__btn'>
+					{isReadMore ? "Xem thêm" : "Ẩn"}
+				</span>
+			) : (
+				""
+			)}
 		</>
 	);
 }

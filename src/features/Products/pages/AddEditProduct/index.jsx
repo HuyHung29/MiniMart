@@ -12,12 +12,13 @@ import * as yup from "yup";
 function AddEditProduct() {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
-	const { productId } = useParams();
+	const { editProductId } = useParams();
+	console.log(editProductId);
 	const history = useHistory();
 	const editProduct = useSelector((state) =>
-		state.products.find((product) => product._id === productId)
+		state.products.find((product) => product._id === editProductId)
 	);
-	const isEdit = !!productId;
+	const isEdit = !!editProductId;
 
 	const schema = yup
 		.object({
@@ -34,10 +35,12 @@ function AddEditProduct() {
 				: yup.array().required(),
 			price: yup
 				.number()
+				.typeError("Giá sản phầm phải là số")
 				.min(0, "Giá phải là số dương")
 				.required("Vui lòng nhập trường này"),
 			discount: yup
 				.number()
+				.typeError("Giá sản phầm phải là số")
 				.min(0, "Giá phải là số dương")
 				.required("Vui lòng nhập trường này"),
 			country: yup.string().required("Vui lòng nhập trường này"),
@@ -96,14 +99,14 @@ function AddEditProduct() {
 		const fetchAddEditProduct = async () => {
 			let action = "";
 			if (isEdit) {
-				action = updateProduct({ productId, formData });
+				action = updateProduct({ editProductId, formData });
 			} else {
 				action = createProduct(formData);
 			}
 			try {
 				const response = await dispatch(action);
 				unwrapResult(response);
-				history.push("/products");
+				history.goBack();
 			} catch (error) {
 				throw error;
 			}

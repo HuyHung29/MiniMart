@@ -53,3 +53,12 @@ export const itemTitle = {
 	updatedAt: "Ngày cập nhật",
 	sellNumber: "Số lượng bán",
 };
+
+export const listTitle = [
+	"name",
+	"title",
+	"pictures",
+	"price",
+	"country",
+	"category",
+];

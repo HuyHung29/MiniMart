@@ -27,10 +27,10 @@ export const createProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
 	"products/updateProduct",
-	async ({ productId, formData }) => {
+	async ({ editProductId, formData }) => {
 		try {
 			const response = await productsApi.updateProduct(
-				productId,
+				editProductId,
 				formData
 			);
 			return response.data;

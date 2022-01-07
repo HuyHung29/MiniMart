@@ -1,17 +1,21 @@
-import NotFound from "components/NotFound";
-import React, { useEffect, useState } from "react";
-import { Route, Redirect, Switch, useRouteMatch } from "react-router-dom";
-import AddEditProduct from "./pages/AddEditProduct";
-import MainPage from "./pages/MainPage";
-import PropTypes from "prop-types";
-import { fetchProducts } from "app/productsSlice";
-import { useDispatch } from "react-redux";
-import qs from "query-string";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { useLocation } from "react-router-dom";
+import { fetchProducts } from "app/productsSlice";
+import PropTypes from "prop-types";
+import qs from "query-string";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import AddEditProduct from "./pages/AddEditProduct";
+import AdminMainPage from "./pages/AdminMainPage";
+import ProductDetail from "./pages/ProductDetail";
+import ProductList from "./pages/ProductList";
 
 Products.propTypes = {
 	role: PropTypes.string.isRequired,
+};
+
+Products.defaultProps = {
+	role: "",
 };
 
 function Products({ role }) {
@@ -22,14 +26,13 @@ function Products({ role }) {
 	const [pagination, setPagination] = useState({});
 	const [loading, setLoading] = useState(false);
 
-	const { page, sort, field, search, limit } = qs.parse(location.search);
+	const { page, sort, search, limit, ...rest } = qs.parse(location.search);
 
 	const [filter, setFilter] = useState({
 		page: page ? page : 1,
 		sort: sort ? sort : "",
-		field: field ? field : {},
 		search: search ? search : "",
-		limit: limit ? limit : 5,
+		limit: limit ? limit : 20,
 	});
 
 	useEffect(() => {
@@ -38,11 +41,12 @@ function Products({ role }) {
 			...e,
 			page: page ? page : 1,
 			sort: sort ? sort : "",
-			field: field ? field : {},
 			search: search ? search : "",
-			limit: limit ? limit : 5,
+			limit: limit ? limit : 20,
+			...rest,
 		}));
-	}, [page, sort, field, search, limit]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page, sort, search, limit]);
 
 	useEffect(() => {
 		const fetchProductWithFilter = async () => {
@@ -65,9 +69,9 @@ function Products({ role }) {
 		<Switch>
 			<Route exact path={`${match.url}`}>
 				{role === "admin" ? (
-					<MainPage pagination={pagination} loading={loading} />
+					<AdminMainPage pagination={pagination} loading={loading} />
 				) : (
-					""
+					<ProductList pagination={pagination} loading={loading} />
 				)}
 			</Route>
 			{role === "admin" ? (
@@ -77,16 +81,15 @@ function Products({ role }) {
 						component={AddEditProduct}
 					/>
 					<Route
-						path={`${match.url}/edit/:productId`}
+						path={`${match.url}/edit/:editProductId`}
 						component={AddEditProduct}
 					/>
-					<Route path={`${match.url}/:productId`} />
 				</Switch>
 			) : (
-				<Redirect to='/' />
+				""
 			)}
 
-			<Route component={NotFound} />
+			<Route path={`${match.url}/:productId`} component={ProductDetail} />
 		</Switch>
 	);
 }

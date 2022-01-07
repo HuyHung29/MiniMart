@@ -1,4 +1,3 @@
-import NotFound from "components/NotFound";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
@@ -55,7 +54,6 @@ function User() {
 					<Redirect to={`${match.url}`} />
 				)}
 			</Route>
-			<Route component={NotFound} />
 		</Switch>
 	);
 }
