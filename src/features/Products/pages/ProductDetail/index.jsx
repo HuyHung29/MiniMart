@@ -26,14 +26,16 @@ function ProductDetail(props) {
 			<Row>
 				{product ? (
 					<>
-						<Col>
+						<Col md='4'>
 							<ImageSlider
 								pictures={product.pictures}
-								slidesToScroll={4}
+								slidesToScroll={1}
 								slidesToShow={4}
+								withModal={true}
+								dots={false}
 							/>
 						</Col>
-						<Col></Col>
+						<Col md='8'>a</Col>
 					</>
 				) : (
 					""

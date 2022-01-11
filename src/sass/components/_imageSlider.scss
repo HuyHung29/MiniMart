@@ -1,7 +1,3 @@
-.slick-arrow {
-	visibility: hidden;
-}
-
 .slick-slide {
 	cursor: pointer;
 }
@@ -14,8 +10,120 @@
 	margin-right: -15px;
 }
 
+.slick-arrow {
+	border: 1px solid;
+	border-color: rgba($color: #000000, $alpha: 0.5);
+
+	&.slick-prev,
+	&.slick-next {
+		width: unset;
+		height: unset;
+		padding: 10px 5px;
+		z-index: 99;
+		border-radius: 2px;
+	}
+
+	&.slick-prev::before,
+	&.slick-next::before {
+		content: unset;
+	}
+
+	& i {
+		color: $text-color;
+		font-size: 2rem;
+	}
+}
+
+.slider-modal {
+	display: flex;
+	width: 100%;
+
+	& .slick-arrow {
+		visibility: visible;
+		@include flex(center, center);
+		background-color: rgba($color: #000000, $alpha: 0.5);
+
+		&.slick-prev,
+		&.slick-next {
+			width: unset;
+			height: unset;
+			padding: 20px 5px;
+			z-index: 99;
+			border-radius: 2px;
+		}
+
+		&.slick-prev::before,
+		&.slick-next::before {
+			content: unset;
+		}
+
+		&.slick-prev {
+			left: 0;
+		}
+
+		&.slick-next {
+			left: calc(65% - 15px);
+			right: unset;
+			transform: translate(-100%, -50%);
+		}
+
+		& i {
+			color: white;
+			font-size: 4rem;
+		}
+	}
+
+	& .slick-list {
+		width: 65%;
+		margin-right: 20px;
+	}
+
+	.slick-dots.slick-thumb {
+		position: relative;
+		inset: 0;
+
+		height: fit-content;
+		margin: 0 -15px;
+
+		display: flex !important;
+		flex-wrap: wrap;
+		flex: 1;
+		row-gap: 10px;
+		column-gap: 10px;
+
+		& li {
+			width: 80px;
+			height: 80px;
+			margin: 0;
+
+			&.slick-active {
+				border: 1px solid $secondary-color;
+			}
+
+			& img {
+				width: 100%;
+				height: 100%;
+				border: 1px solid $border-color;
+			}
+		}
+	}
+}
+
 .image-slider {
 	.image-active {
+		position: relative;
+
+		&.image-has-modal {
+			cursor: pointer;
+		}
+
+		&__icon {
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+			font-size: 2rem;
+		}
+
 		& img {
 			border: 1px solid $border-color;
 		}
@@ -46,6 +154,25 @@
 
 		&:focus:not(:focus-visible) {
 			outline: none;
+		}
+	}
+
+	&--modal {
+		position: fixed;
+		inset: 0;
+		background-color: rgba($color: #000000, $alpha: 0.2);
+		z-index: 99;
+		@include flex(center, center);
+
+		&__content {
+			padding: 10px;
+			width: 60%;
+			background-color: white;
+			border-radius: 5px;
+		}
+
+		&__pictures {
+			border: 1px solid $border-color;
 		}
 	}
 }

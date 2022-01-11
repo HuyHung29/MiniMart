@@ -1,3 +1,5 @@
+import ImageSliderModal from "components/ImageSliderModal";
+import NextPrevBtn from "components/NextPrevBtn";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
@@ -8,14 +10,16 @@ ImageSlider.propTypes = {
 	slidesToShow: PropTypes.number,
 	slidesToScroll: PropTypes.number,
 	pictures: PropTypes.array.isRequired,
+	withModal: PropTypes.bool,
 };
 
 ImageSlider.defaultProps = {
 	dots: true,
-	infinite: true,
+	infinite: false,
 	slidesToShow: 1,
 	slidesToScroll: 1,
 	pictures: [],
+	withModal: false,
 };
 
 function ImageSlider({
@@ -24,15 +28,23 @@ function ImageSlider({
 	slidesToShow,
 	slidesToScroll,
 	pictures,
+	withModal,
 	...props
 }) {
 	const [imgActive, setImgActive] = useState(pictures[0] ? pictures[0] : "");
+	const [openModal, SetOpenModal] = useState(false);
 	const settings = {
 		dots: dots,
 		infinite: infinite,
 		speed: 500,
-		slidesToShow: slidesToShow,
+		slidesToShow: slidesToShow || pictures.length,
 		slidesToScroll: slidesToScroll,
+		nextArrow: <NextPrevBtn next={true} />,
+		prevArrow: <NextPrevBtn next={false} />,
+	};
+
+	const toggleModal = () => {
+		SetOpenModal(!openModal);
 	};
 
 	useEffect(() => {
@@ -49,7 +61,7 @@ function ImageSlider({
 							? "image-slider__item--active"
 							: ""
 					}`}
-					onClick={() => {
+					onMouseMove={() => {
 						setImgActive(picture);
 					}}>
 					<img src={picture} alt='anh' />
@@ -60,12 +72,24 @@ function ImageSlider({
 
 	return (
 		<div className='image-slider'>
-			<div className='image-active'>
-				<img src={imgActive} alt='' />
+			<div
+				className={`image-active ${withModal ? "image-has-modal" : ""}`}
+				onClick={toggleModal}>
+				<img src={imgActive} alt='anh' />
+				<i className='fas fa-search-plus image-active__icon'></i>
 			</div>
 			<div className='image-slider__list'>
 				<Slider {...settings}>{renderPictures()}</Slider>
 			</div>
+			{withModal && openModal ? (
+				<ImageSliderModal
+					pictures={pictures}
+					toggle={toggleModal}
+					index={pictures.indexOf(imgActive)}
+				/>
+			) : (
+				""
+			)}
 		</div>
 	);
 }
