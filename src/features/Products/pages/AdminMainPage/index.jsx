@@ -16,7 +16,7 @@ MainPage.propTypes = {
 };
 
 function MainPage({ pagination, loading }) {
-	const products = useSelector((state) => state.products);
+	const products = useSelector((state) => state.products.listProduct);
 	const categories = useSelector((state) => state.categories);
 	const dispatch = useDispatch();
 	const location = useLocation();

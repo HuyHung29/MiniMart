@@ -12,9 +12,11 @@ ProductCard.propTypes = {
 function ProductCard({ product, width }) {
 	const [isLoved, setIsLoved] = useState(false);
 	const [isShowModal, setIsShowModal] = useState(false);
+	const { title, price, discount, pictures, _id } = product;
+
 	const productCurrentPrice = (
-		product.price -
-		product.price * (product.discount / 100)
+		price -
+		price * (discount / 100)
 	).toLocaleString();
 
 	const showModal = () => {
@@ -25,36 +27,32 @@ function ProductCard({ product, width }) {
 		<Col md={width} className='product-card--wrap'>
 			<div className='product-card'>
 				<Link
-					to={`/products/${product.title.replaceAll(" ", "-")}?id=${
-						product._id
-					}`}
+					to={`/products/${title.replaceAll(" ", "-")}?id=${_id}`}
 					className='product-card__link'>
 					<div className='product-card__img'>
-						<img src={product.pictures[0]} alt='anh' />
+						<img src={pictures[0]} alt='anh' />
 					</div>
 					<div className='product-card__info'>
 						<ReadMore
 							className='product-card__name'
 							row={1}
-							readMore={false}>
-							{product.title}
-						</ReadMore>
+							readMore={false}
+							content={title}
+						/>
 
 						<div className='product-card__price--wrap'>
-							{product.discount > 0 ? (
+							{discount > 0 ? (
 								<>
-									<p className='product-card__price'>
+									<p className='product__price'>
 										{productCurrentPrice} <sup>đ</sup>/kg
 									</p>
-									<p className='product-card__price--old'>
-										{product.price.toLocaleString()}{" "}
-										<sup>đ</sup>/kg
+									<p className='product__price--old'>
+										{price.toLocaleString()} <sup>đ</sup>/kg
 									</p>
 								</>
 							) : (
-								<p className='product-card__price'>
-									{product.price.toLocaleString()}{" "}
-									<sup>đ</sup>/kg
+								<p className='product__price'>
+									{price.toLocaleString()} <sup>đ</sup>/kg
 								</p>
 							)}
 						</div>

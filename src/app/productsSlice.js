@@ -13,6 +13,18 @@ export const fetchProducts = createAsyncThunk(
 	}
 );
 
+export const fetchCurrentProduct = createAsyncThunk(
+	"products/fetchCurrentProduct",
+	async (id) => {
+		try {
+			const response = await productsApi.getProductById(id);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
 export const createProduct = createAsyncThunk(
 	"products/createProduct",
 	async (data) => {
@@ -64,36 +76,47 @@ export const deleteMultiProduct = createAsyncThunk(
 
 const productsSlice = createSlice({
 	name: "products",
-	initialState: [],
+	initialState: {
+		listProduct: [],
+		currentProduct: {},
+	},
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchProducts.fulfilled, (state, action) => {
-				return (state = [...action.payload.products]);
+				state.listProduct = [...action.payload.products];
+			})
+			.addCase(fetchCurrentProduct.pending, (state) => {
+				state.currentProduct = {};
+			})
+			.addCase(fetchCurrentProduct.fulfilled, (state, action) => {
+				state.currentProduct = { ...action.payload.product };
 			})
 			.addCase(createProduct.fulfilled, (state, action) => {
-				state.push(action.payload.product);
+				state.listProduct.unshift(action.payload.product);
 			})
 			.addCase(updateProduct.fulfilled, (state, { payload }) => {
 				const { product } = payload;
-				const index = state.findIndex(
+				const index = state.listProduct.findIndex(
 					(item) => item._id === product._id
 				);
-				state[index] = product;
+				state.listProduct[index] = product;
 			})
 			.addCase(deleteProduct.fulfilled, (state, action) => {
-				const index = state.findIndex(
+				const index = state.listProduct.findIndex(
 					(item) => item._id === action.meta.arg
 				);
 				if (index !== -1) {
-					state.splice(index, 1);
+					state.listProduct.splice(index, 1);
 				}
 			})
 			.addCase(deleteMultiProduct.fulfilled, (state, { meta }) => {
 				const { productIds } = meta.arg;
 				productIds.forEach((item) => {
-					state.splice(
-						state.findIndex((product) => product._id === item),
+					state.listProduct.splice(
+						state.listProduct.findIndex(
+							(product) => product._id === item
+						),
 						1
 					);
 				});

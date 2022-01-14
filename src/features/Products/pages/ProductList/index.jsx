@@ -15,7 +15,7 @@ ProductList.propTypes = {
 
 function ProductList({ pagination, loading }) {
 	const location = useLocation();
-	const products = useSelector((state) => state.products);
+	const products = useSelector((state) => state.products.listProduct);
 
 	return (
 		<Container className='product-list--wrap'>

@@ -1,106 +1,109 @@
 .input {
-    flex: 1;
+	flex: 1;
 
-    margin: 15px 0;
-    &__label {
-        font-size: 1.5rem;
-        font-weight: 500;
-        text-transform: capitalize;
+	margin: 15px 0;
+	&__label {
+		font-size: 1.5rem;
+		font-weight: 500;
+		text-transform: capitalize;
 
-        &::after {
-            content: '*';
-            color: red;
-            margin-left: 5px;
-            font-size: 1.4rem;
-        }
-    }
+		&::after {
+			content: "*";
+			color: red;
+			margin-left: 5px;
+			font-size: 1.4rem;
+		}
+	}
 
-    &__control {
-        font-size: 1.4rem;
-        padding: 10px;
-        max-height: 500px;
-        width: 100%;
+	&__control {
+		font-size: 1.4rem;
+		padding: 10px;
+		max-height: 500px;
+		width: 100%;
 
-        &::-webkit-scrollbar-track {
-            border-radius: 10px;
-            background-color: transparent;
-        }
+		&::-webkit-scrollbar-track {
+			border-radius: 10px;
+			background-color: transparent;
+		}
 
-        &::-webkit-scrollbar {
-            width: 6px;
-            background-color: transparent;
-        }
+		&::-webkit-scrollbar {
+			width: 6px;
+			background-color: transparent;
+		}
 
-        &::-webkit-scrollbar-thumb {
-            border-radius: 10px;
-            background-color: #ccc;
-        }
-    }
+		&::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			background-color: #ccc;
+		}
+	}
 
-    &__error {
-        font-size: 1.2rem;
-        margin-top: 5px;
-    }
+	&__error {
+		font-size: 1.2rem;
+		margin-top: 5px;
+	}
 }
 
 .select {
-    flex: 1;
-    font-size: 1.4rem;
+	flex: 1;
+	font-size: 1.4rem;
 
-    margin: 15px 0;
-    &__label {
-        font-size: 1.5rem;
-        font-weight: 500;
-        text-transform: capitalize;
+	margin: 15px 0;
+	&__label {
+		font-size: 1.5rem;
+		font-weight: 500;
+		text-transform: capitalize;
 
-        &::after {
-            content: '*';
-            color: red;
-            margin-left: 5px;
-            font-size: 1.4rem;
-        }
-    }
+		&::after {
+			content: "*";
+			color: red;
+			margin-left: 5px;
+			font-size: 1.4rem;
+		}
+	}
 
-    &__input__control {
-        padding: 4px;
-    }
+	&__input__control {
+		padding: 4px;
+	}
 
-    &__error {
-        font-size: 1.2rem;
-        margin-top: 5px;
-    }
-
+	&__error {
+		font-size: 1.2rem;
+		margin-top: 5px;
+	}
 }
 
 .preview {
-    overflow-x: scroll;
-    &__list {
-        @include flex();
-        margin-top: 20px;
-        column-gap: 15px;
-    }
+	overflow-x: scroll;
+	&__list {
+		@include flex();
+		margin-top: 20px;
+		column-gap: 15px;
+	}
 
-    &__item {
-        position: relative;
-    }
+	&__item {
+		position: relative;
+	}
 
-    &__btn {
-        position: absolute;
-        top: 5px;
-        right: 5px;
+	&__btn {
+		position: absolute;
+		top: 5px;
+		right: 5px;
 
-        cursor: pointer;
-        font-size: 1.4rem;
-        transition: 0.25s ease-in-out;
+		cursor: pointer;
+		font-size: 1.4rem;
+		transition: 0.25s ease-in-out;
 
-        &:hover {
-            color: var(--bs-danger);
-        }
-    }
+		&:hover {
+			color: var(--bs-danger);
+		}
+	}
 
-    &__img {
-        max-width: 100px;
-        border-radius: 5px;
-        object-fit: contain;
-    }
+	&__img {
+		max-width: 100px;
+		border-radius: 5px;
+		object-fit: contain;
+	}
+}
+
+.ck.ck-reset.ck-editor.ck-rounded-corners {
+	z-index: 0;
 }

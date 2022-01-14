@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import CkEditor from "components/Custom/CkEditor";
 import FileField from "components/Custom/FileField";
 import InputField from "components/Custom/InputField";
 import SelectField from "components/Custom/SelectField";
@@ -29,6 +30,7 @@ function AddEditForm({
 		register,
 		control,
 		setValue,
+		getValues,
 		handleSubmit,
 		reset,
 		formState: { errors },
@@ -37,6 +39,8 @@ function AddEditForm({
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
+
+	console.log(getValues());
 
 	const options = categories.map((item) => {
 		return { value: item._id, label: item.name };
@@ -138,11 +142,10 @@ function AddEditForm({
 							name={item}
 							control={control}
 							render={({ field }) => (
-								<InputField
+								<CkEditor
 									{...field}
-									errors={errors}
 									label={itemTitle[item]}
-									type='textarea'
+									setFormValue={setValue}
 									ref={null}
 								/>
 							)}

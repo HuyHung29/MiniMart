@@ -26,13 +26,13 @@ function Products({ role }) {
 	const [pagination, setPagination] = useState({});
 	const [loading, setLoading] = useState(false);
 
-	const { page, sort, search, limit, ...rest } = qs.parse(location.search);
+	const { page, sort, search, limit } = qs.parse(location.search);
 
 	const [filter, setFilter] = useState({
 		page: page ? page : 1,
 		sort: sort ? sort : "",
 		search: search ? search : "",
-		limit: limit ? limit : 20,
+		limit: limit ? limit : 10,
 	});
 
 	useEffect(() => {
@@ -42,10 +42,8 @@ function Products({ role }) {
 			page: page ? page : 1,
 			sort: sort ? sort : "",
 			search: search ? search : "",
-			limit: limit ? limit : 20,
-			...rest,
+			limit: limit ? limit : 10,
 		}));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, sort, search, limit]);
 
 	useEffect(() => {

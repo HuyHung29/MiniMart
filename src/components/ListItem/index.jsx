@@ -46,11 +46,6 @@ function ListItem({
 	};
 
 	const replaceLimit = (number) => {
-		if (search) {
-			return limit
-				? search.replace(`limit=${limit}`, `limit=${number}`)
-				: search + "&limit=" + number;
-		}
 		return "?limit=" + number;
 	};
 
@@ -114,14 +109,39 @@ function ListItem({
 							return (
 								<td key={number} className='listItem__item'>
 									<div className='listItem__listImg'>
-										{item[key].map((img, index) => (
-											<img
-												src={img}
-												alt='anh'
-												key={index}
-												className='listItem__img'
-											/>
-										))}
+										{item[key].map((img, index) => {
+											if (index > 2) return null;
+											if (
+												index === 2 &&
+												item[key].length > 3
+											) {
+												return (
+													<div
+														className='listItem__img listItem__img--last'
+														key={index}>
+														<img
+															src={img}
+															alt='anh'
+															key={index}
+															className=''
+														/>
+														<p>
+															+
+															{item[key].length -
+																3}
+														</p>
+													</div>
+												);
+											} else
+												return (
+													<img
+														src={img}
+														alt='anh'
+														key={index}
+														className='listItem__img'
+													/>
+												);
+										})}
 									</div>
 								</td>
 							);
@@ -284,7 +304,6 @@ function ListItem({
 						<Select
 							className='limit__select'
 							onChange={(val) => {
-								console.log(val.value);
 								history.push(
 									`${pathname}${replaceLimit(val.value)}`
 								);
@@ -294,7 +313,7 @@ function ListItem({
 									? limitPerPage.find((item) => {
 											return item.value === +limit;
 									  })
-									: limitPerPage[0]
+									: limitPerPage[1]
 							}
 							options={limitPerPage}
 						/>

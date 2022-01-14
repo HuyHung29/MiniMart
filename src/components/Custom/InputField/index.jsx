@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
 import { FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
 InputField.propTypes = {
@@ -23,9 +23,7 @@ InputField.defaultProps = {
 function InputField(props) {
 	const { name, errors, label, type, className, setFormValue, ...rest } =
 		props;
-	const [value, setValue] = useState(props.value);
-
-	// console.log(value);
+	const [value, setValue] = useState(props.value ? props.value : []);
 
 	const renderPreviewList = () => {
 		if (name === "pictures") {
@@ -68,40 +66,6 @@ function InputField(props) {
 						autoComplete={type === "password" ? "off" : "on"}
 					/>
 					<ul className='preview__list'>{renderPreviewList()}</ul>
-				</FormGroup>
-			);
-		}
-		if (type === "textarea") {
-			return (
-				<FormGroup className='input'>
-					{className ? (
-						""
-					) : (
-						<Label for={name} className='input__label'>
-							{label}
-						</Label>
-					)}
-					<Input
-						name={name}
-						invalid={!!errors[name]}
-						type={type}
-						{...rest}
-						className='input__control'
-						autoComplete={type === "password" ? "off" : "on"}
-						style={{
-							minHeight: "500px",
-						}}
-						onKeyUp={(e) => {
-							e.target.style.height = `${e.target.scrollHeight}px`;
-						}}
-					/>
-					{errors[name] ? (
-						<FormFeedback className='input__error'>
-							{errors[name]?.message}
-						</FormFeedback>
-					) : (
-						""
-					)}
 				</FormGroup>
 			);
 		}

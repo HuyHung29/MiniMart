@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 ReadMore.propTypes = {
-	children: PropTypes.string.isRequired,
 	row: PropTypes.number.isRequired,
 	readMore: PropTypes.bool,
 	className: PropTypes.string,
@@ -12,7 +11,7 @@ ReadMore.defaultProps = {
 	readMore: true,
 };
 
-function ReadMore({ children, row, readMore, className }) {
+function ReadMore({ content, row, readMore, className }) {
 	const [isReadMore, setIsReadMore] = useState(true);
 
 	const style = {
@@ -26,9 +25,9 @@ function ReadMore({ children, row, readMore, className }) {
 
 	return (
 		<>
-			<p className={className + " read-more"} style={style}>
-				{children}
-			</p>
+			<div className={className + " read-more"} style={style}>
+				{content}
+			</div>
 			{readMore ? (
 				<span
 					onClick={() => toggleReadMore()}

@@ -1,8 +1,12 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { createProduct, updateProduct } from "app/productsSlice";
+import {
+	createProduct,
+	fetchCurrentProduct,
+	updateProduct,
+} from "app/productsSlice";
 import AddEditForm from "components/AddEditForm";
 import Loading from "components/Loading";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { toast } from "react-toastify";
@@ -13,12 +17,22 @@ function AddEditProduct() {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
 	const { editProductId } = useParams();
-	console.log(editProductId);
 	const history = useHistory();
-	const editProduct = useSelector((state) =>
-		state.products.find((product) => product._id === editProductId)
-	);
 	const isEdit = !!editProductId;
+	const editProduct = useSelector((state) => state.products.currentProduct);
+
+	useEffect(() => {
+		if (isEdit) {
+			const fetchEditProduct = async () => {
+				try {
+					const action = fetchCurrentProduct(editProductId);
+					await dispatch(action);
+				} catch (error) {}
+			};
+
+			fetchEditProduct();
+		}
+	}, [isEdit, editProductId, dispatch]);
 
 	const schema = yup
 		.object({
@@ -136,7 +150,7 @@ function AddEditProduct() {
 				/>
 			);
 		} else {
-			if (editProduct) {
+			if (Object.entries(editProduct).length !== 0) {
 				return (
 					<AddEditForm
 						schema={schema}
