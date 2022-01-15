@@ -7,6 +7,7 @@ import Loading from "components/Loading";
 import NavBar from "components/NavBar";
 import NotFound from "components/NotFound";
 import ScrollToTop from "components/ScrollToTop";
+import ProductPreview from "features/Products/components/ProductPreview";
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -70,6 +71,7 @@ function Layout() {
 							<Route component={NotFound} />
 						</Switch>
 					</div>
+					<ProductPreview />
 					<Footer />
 					<ToastContainer autoClose={3000} />
 				</div>

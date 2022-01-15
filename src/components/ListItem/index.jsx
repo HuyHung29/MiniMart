@@ -181,10 +181,13 @@ function ListItem({
 
 	return (
 		<>
+			{/* add btm */}
 			<Link to={`${pathname}/add`} className='btn btn-primary add-btn'>
 				<i className='fas fa-plus'></i>
 				<span>Thêm mới</span>
 			</Link>
+
+			{/* filter item */}
 			<div className='filter'>
 				{checkList.length !== 0 ? (
 					<>
@@ -272,10 +275,12 @@ function ListItem({
 					</>
 				)}
 			</div>
+
+			{/* list item */}
 			{listItem.length === 0 ? (
 				<div className='listItem--empty'>Chưa có sản phẩm nào</div>
 			) : (
-				<>
+				<div className='listItem--wrap'>
 					<Table bordered size='xl' className='listItem'>
 						<thead className='listItem__header'>
 							<tr>
@@ -318,7 +323,7 @@ function ListItem({
 							options={limitPerPage}
 						/>
 					</div>
-				</>
+				</div>
 			)}
 		</>
 	);

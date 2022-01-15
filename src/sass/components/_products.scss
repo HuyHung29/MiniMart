@@ -1,11 +1,9 @@
 @keyframes fadeIn {
 	from {
 		opacity: 0;
-		transform: translateY(-100%);
 	}
 	to {
 		opacity: 1;
-		transform: translateY(0);
 	}
 }
 
@@ -54,6 +52,10 @@
 			border-color: $secondary-color;
 			box-shadow: 0px 5px 10px rgba($color: #000000, $alpha: 0.2);
 			transform: translateY(-1px);
+		}
+
+		&:hover &__img {
+			opacity: 0.5;
 		}
 
 		&__link {
@@ -178,6 +180,44 @@
 		}
 	}
 
+	&__btn--wrap {
+		position: absolute;
+		margin: 0;
+		z-index: 50;
+		top: 50%;
+		left: 0;
+		right: 0;
+
+		text-align: center;
+
+		& .product__btn {
+			margin: 0;
+			transform: scale(0);
+			transition: 0.2s ease-in;
+			transform-origin: center;
+
+			&:focus {
+				background-color: $primary-color;
+				color: white;
+				box-shadow: none;
+				outline: none;
+				border-color: $primary-color;
+			}
+
+			&:hover {
+				background-color: $primary-color;
+				color: white;
+				border-color: $primary-color;
+			}
+		}
+	}
+
+	&-card:hover &__btn--wrap {
+		& .product__btn {
+			transform: scale(1);
+		}
+	}
+
 	&__btn {
 		font-size: 1.6rem;
 		padding: 10px 15px;
@@ -227,6 +267,7 @@
 
 	&-list {
 		row-gap: 20px;
+		margin-bottom: 20px;
 
 		&__title {
 			font-size: 1.8rem;

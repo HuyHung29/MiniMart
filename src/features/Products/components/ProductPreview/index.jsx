@@ -1,45 +1,46 @@
+import { removePreview } from "app/productsSlice";
 import ImageSlider from "components/ImageSlider";
 import ReadMore from "components/ReadMore";
-import PropTypes from "prop-types";
-import React, { useRef, useState } from "react";
-import { Button } from "reactstrap";
 import parse from "html-react-parser";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "reactstrap";
 
-ProductPreview.propTypes = {
-	product: PropTypes.object.isRequired,
-	isShow: PropTypes.bool.isRequired,
-	setIsShowModal: PropTypes.func.isRequired,
-};
-
-ProductPreview.defaultProps = {
-	product: {},
-	isShow: false,
-};
-
-function ProductPreview({ product, isShow, setIsShowModal }) {
+function ProductPreview() {
 	const modalRef = useRef();
+	const [preview, setPreview] = useState({
+		product: {},
+		isShow: false,
+	});
 	const [quantity, setQuantity] = useState(1);
+	const previewProduct = useSelector(
+		(state) => state.products.previewProduct
+	);
+	const dispatch = useDispatch();
 
-	const { price, discount, description, title, country, pictures } = product;
+	const { price, discount, description, title, country, pictures } =
+		preview.product;
+
+	useEffect(() => {
+		setPreview({
+			...previewProduct,
+		});
+	}, [previewProduct]);
 
 	const productCurrentPrice = (
 		price -
 		price * (discount / 100)
 	).toLocaleString();
 
-	const closeModal = () => {
-		setIsShowModal(false);
-	};
-
 	return (
 		<>
-			{isShow ? (
+			{preview.isShow ? (
 				<div
 					className='product-preview--wrap'
 					ref={modalRef}
 					onClick={(e) => {
 						if (modalRef.current === e.target) {
-							closeModal();
+							dispatch(removePreview());
 						}
 					}}>
 					<div className='product-preview'>
@@ -121,7 +122,7 @@ function ProductPreview({ product, isShow, setIsShowModal }) {
 						<p
 							className='close-btn'
 							onClick={() => {
-								closeModal();
+								dispatch(removePreview());
 							}}>
 							<i className='fas fa-times'></i>
 						</p>

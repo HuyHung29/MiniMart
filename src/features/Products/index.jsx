@@ -29,20 +29,19 @@ function Products({ role }) {
 	const { page, sort, search, limit } = qs.parse(location.search);
 
 	const [filter, setFilter] = useState({
-		page: page ? page : 1,
-		sort: sort ? sort : "",
-		search: search ? search : "",
-		limit: limit ? limit : 10,
+		page: page,
+		sort: sort,
+		search: search,
+		limit: limit || 20,
 	});
 
 	useEffect(() => {
-		window.scrollTo(0, 0);
-		setFilter((e) => ({
-			...e,
-			page: page ? page : 1,
-			sort: sort ? sort : "",
-			search: search ? search : "",
-			limit: limit ? limit : 10,
+		setFilter((prev) => ({
+			...prev,
+			page: page,
+			sort: sort,
+			search: search,
+			limit: limit,
 		}));
 	}, [page, sort, search, limit]);
 

@@ -1,4 +1,4 @@
-import Cart from "components/Cart";
+import Cart from "features/Purchase/components/Cart";
 import { images } from "constant";
 import PropTypes from "prop-types";
 import React from "react";

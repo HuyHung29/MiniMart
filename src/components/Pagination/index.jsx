@@ -61,42 +61,11 @@ function Pagination({ pagination, location }) {
 					</Link>
 				</PaginationItem>
 			);
-			// return next || prev ? (
-			// 	<PaginationItem
-			// 		key={index}
-			// 		active={prev + 1 === item || next - 1 === item}>
-			// 		<Link
-			// 			className='page-link'
-			// 			to={`${pathname}${
-			// 				search ? changePage(item) : `?page=${item}`
-			// 			}`}
-			// 			onClick={(e) => {
-			// 				if (prev + 1 === item || next - 1 === item) {
-			// 					e.preventDefault();
-			// 				}
-			// 			}}>
-			// 			{item}
-			// 		</Link>
-			// 	</PaginationItem>
-			// ) : (
-			// 	<PaginationItem key={index} active>
-			// 		<Link
-			// 			className='page-link'
-			// 			to={`${pathname}${
-			// 				search ? changePage(item) : `?page=${item}`
-			// 			}`}
-			// 			onClick={(e) => {
-			// 				e.preventDefault();
-			// 			}}>
-			// 			{item}
-			// 		</Link>
-			// 	</PaginationItem>
-			// );
 		});
 	};
 
 	return (
-		<PaginationRT size='lg'>
+		<PaginationRT size='lg' className='pagination--wrap'>
 			<PaginationItem disabled={prev ? false : true}>
 				<Link
 					className='page-link'
@@ -108,7 +77,9 @@ function Pagination({ pagination, location }) {
 						if (!prev) e.preventDefault();
 					}}>
 					{" "}
-					<span aria-hidden='true'>&laquo;</span>
+					<span aria-hidden='true' className='pagination-previous'>
+						<i className='fas fa-chevron-left'></i>
+					</span>
 				</Link>
 			</PaginationItem>
 			{renderPagination()}
@@ -122,7 +93,9 @@ function Pagination({ pagination, location }) {
 					onClick={(e) => {
 						if (!next) e.preventDefault();
 					}}>
-					<span aria-hidden='true'>&raquo;</span>
+					<span aria-hidden='true'>
+						<i className='fas fa-chevron-right'></i>
+					</span>
 				</Link>
 			</PaginationItem>
 		</PaginationRT>

@@ -88,17 +88,22 @@ function MainPage({ pagination, loading }) {
 							<div style={{ height: "500px" }}></div>
 						</>
 					) : (
-						<ListItem
-							listItem={products}
-							categories={categories}
-							location={location}
-							handleDeleteItem={handleDeleteProduct}
-							handleDeleteSelectedItem={
-								handleDeleteSelectedProduct
-							}
-						/>
+						<>
+							<ListItem
+								listItem={products}
+								categories={categories}
+								location={location}
+								handleDeleteItem={handleDeleteProduct}
+								handleDeleteSelectedItem={
+									handleDeleteSelectedProduct
+								}
+							/>
+							<Pagination
+								pagination={pagination}
+								location={location}
+							/>
+						</>
 					)}
-					<Pagination pagination={pagination} location={location} />
 				</Col>
 			</Row>
 		</Container>

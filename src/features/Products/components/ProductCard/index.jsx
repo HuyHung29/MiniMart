@@ -1,9 +1,10 @@
+import { addPreview } from "app/productsSlice";
 import ReadMore from "components/ReadMore";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Col } from "reactstrap";
-import ProductPreview from "../ProductPreview";
+import { Button, Col } from "reactstrap";
 
 ProductCard.propTypes = {
 	product: PropTypes.object.isRequired,
@@ -11,17 +12,13 @@ ProductCard.propTypes = {
 
 function ProductCard({ product, width }) {
 	const [isLoved, setIsLoved] = useState(false);
-	const [isShowModal, setIsShowModal] = useState(false);
 	const { title, price, discount, pictures, _id } = product;
+	const dispatch = useDispatch();
 
 	const productCurrentPrice = (
 		price -
 		price * (discount / 100)
 	).toLocaleString();
-
-	const showModal = () => {
-		setIsShowModal((prev) => !prev);
-	};
 
 	return (
 		<Col md={width} className='product-card--wrap'>
@@ -58,7 +55,11 @@ function ProductCard({ product, width }) {
 						</div>
 					</div>
 				</Link>
-				<p className='product-card__view--btn' onClick={showModal}>
+				<p
+					className='product-card__view--btn'
+					onClick={() => {
+						dispatch(addPreview(product));
+					}}>
 					<i className='fas fa-eye'></i>
 				</p>
 				<p className='product-card__favorite--btn'>
@@ -72,12 +73,10 @@ function ProductCard({ product, width }) {
 							onClick={() => setIsLoved(!isLoved)}></i>
 					)}
 				</p>
+				<div className='product__btn--wrap'>
+					<Button className='product__btn'>Thêm vào giỏ hàng</Button>
+				</div>
 			</div>
-			<ProductPreview
-				product={product}
-				isShow={isShowModal}
-				setIsShowModal={setIsShowModal}
-			/>
 		</Col>
 	);
 }

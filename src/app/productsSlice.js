@@ -79,8 +79,23 @@ const productsSlice = createSlice({
 	initialState: {
 		listProduct: [],
 		currentProduct: {},
+		previewProduct: {
+			product: {},
+			isShow: false,
+		},
 	},
-	reducers: {},
+	reducers: {
+		addPreview(state, action) {
+			state.previewProduct.product = action.payload;
+			state.previewProduct.isShow = true;
+		},
+		removePreview(state) {
+			state.previewProduct = {
+				product: {},
+				isShow: false,
+			};
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchProducts.fulfilled, (state, action) => {
@@ -124,6 +139,6 @@ const productsSlice = createSlice({
 	},
 });
 
-// export const {} = productsSlice.actions;
+export const { addPreview, removePreview } = productsSlice.actions;
 
 export default productsSlice.reducer;
