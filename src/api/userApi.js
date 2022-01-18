@@ -1,6 +1,7 @@
 import axiosClient from "./axiosClient";
 
 const baseUrl = "auth/";
+const address = "address/";
 
 const userApi = {
 	register: (data) => {
@@ -36,6 +37,18 @@ const userApi = {
 	changePassword: (data) => {
 		const url = baseUrl + "change-password";
 		return axiosClient.put(url, data);
+	},
+	getUserAddress: () => {
+		return axiosClient.get(address);
+	},
+	createAddress: (data) => {
+		return axiosClient.post(address, data);
+	},
+	updateAddress: (id, data) => {
+		return axiosClient.put(address + id, data);
+	},
+	deleteAddress: (id) => {
+		return axiosClient.delete(address + id);
 	},
 };
 

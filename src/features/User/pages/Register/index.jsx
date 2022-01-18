@@ -10,6 +10,7 @@ function Register() {
 	const history = useHistory();
 	const onSubmit = (data) => {
 		const register = async () => {
+			console.log(data);
 			try {
 				const response = await userApi.register(data);
 				const id = response.data.user._id;
@@ -30,8 +31,6 @@ function Register() {
 				},
 			},
 		});
-
-		register();
 	};
 
 	const defaultValues = {

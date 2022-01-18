@@ -72,7 +72,7 @@ function InputField(props) {
 
 		return (
 			<FormGroup className='input'>
-				{className ? (
+				{className || !label ? (
 					""
 				) : (
 					<Label for={name} className='input__label'>

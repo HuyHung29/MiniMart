@@ -24,7 +24,6 @@ function Products({ role }) {
 	const location = useLocation();
 
 	const [pagination, setPagination] = useState({});
-	const [loading, setLoading] = useState(false);
 
 	const { page, sort, search, limit } = qs.parse(location.search);
 
@@ -41,20 +40,17 @@ function Products({ role }) {
 			page: page,
 			sort: sort,
 			search: search,
-			limit: limit,
+			limit: limit || 20,
 		}));
 	}, [page, sort, search, limit]);
 
 	useEffect(() => {
 		const fetchProductWithFilter = async () => {
 			try {
-				setLoading(true);
 				const response = await dispatch(fetchProducts(filter));
 				unwrapResult(response);
 				setPagination(response.payload.pagination);
-				setLoading(false);
 			} catch (error) {
-				setLoading(false);
 				console.log(error);
 			}
 		};
@@ -66,9 +62,9 @@ function Products({ role }) {
 		<Switch>
 			<Route exact path={`${match.url}`}>
 				{role === "admin" ? (
-					<AdminMainPage pagination={pagination} loading={loading} />
+					<AdminMainPage pagination={pagination} />
 				) : (
-					<ProductList pagination={pagination} loading={loading} />
+					<ProductList pagination={pagination} />
 				)}
 			</Route>
 			{role === "admin" ? (

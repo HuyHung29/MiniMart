@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FormFeedback, FormGroup, Label } from "reactstrap";
-import Select from "react-select";
 import Classnames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+import Select from "react-select";
+import { FormFeedback, FormGroup, Label } from "reactstrap";
 
 SelectField.propTypes = {
 	name: PropTypes.string.isRequired,
@@ -32,6 +32,8 @@ function SelectField(props) {
 		options,
 		onChange,
 		value,
+		setDistrict,
+		setVillage,
 		...rest
 	} = props;
 
@@ -39,9 +41,21 @@ function SelectField(props) {
 		control: (styles) => ({ ...styles, borderColor: "#dc3545" }),
 	};
 
+	const setDistrictOpt = (city) => {
+		if (setDistrict) {
+			setDistrict(city);
+		}
+	};
+
+	const setVillageOpt = (district) => {
+		if (setVillage) {
+			setVillage(district);
+		}
+	};
+
 	return (
 		<FormGroup className='select'>
-			{className ? (
+			{className || !label ? (
 				""
 			) : (
 				<Label for={name} className='select__label'>
@@ -50,14 +64,19 @@ function SelectField(props) {
 			)}
 			<Select
 				name={name}
-				value={options.find((c) => c.value === value)}
-				onChange={(val) => onChange(val.value)}
+				value={options.find((c) => c.value === value) || ""}
+				onChange={(val) => {
+					setDistrictOpt(val.value);
+					setVillageOpt(val.value);
+					onChange(val.value);
+				}}
 				options={options}
 				className={Classnames({
 					"is-invalid": !!errors[name],
 				})}
 				classNamePrefix='select__input'
 				styles={!!errors[name] ? coloursStyles : {}}
+				maxMenuHeight={160}
 				autoComplete={type === "password" ? "off" : "on"}
 				{...rest}
 			/>

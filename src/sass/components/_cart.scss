@@ -1,6 +1,17 @@
 .cart {
 	z-index: 80;
 
+	&--empty {
+		@include flex(center, center);
+		flex-direction: column;
+		padding: 50px 100px;
+		font-size: 1.4rem;
+
+		& img {
+			margin-bottom: 20px;
+		}
+	}
+
 	&__group {
 		position: relative;
 
@@ -56,11 +67,19 @@
 		color: $secondary-color;
 		cursor: pointer;
 
+		&:hover {
+			color: $secondary-color;
+		}
+
 		& i {
 			margin-right: 5px;
 			font-size: 1.8rem;
 			position: relative;
 			top: -3px;
+		}
+
+		& p {
+			font-weight: 500;
 		}
 	}
 
@@ -173,18 +192,210 @@
 		}
 	}
 
-	&__pay {
-		color: white;
-		font-size: 1.6rem;
-		background-color: $secondary-color;
-		border-radius: 5px;
-		padding: 10px;
-		margin: 25px 0 10px;
-		border: unset;
-		transition: background-color 0.2s ease-in;
+	&-page {
+		&--empty {
+			padding: 50px 0;
 
-		&:hover {
-			background-color: $text-color;
+			@include flex(center, center);
+			flex-direction: column;
+
+			& img {
+				width: 300px;
+			}
+
+			& p {
+				font-size: 1.6rem;
+				color: $sub-text-color;
+				margin-bottom: 20px;
+			}
+
+			& a {
+				min-width: 200px;
+			}
+		}
+
+		&--margin {
+			&.cart-page__item {
+				margin: 20px 0;
+				padding: 20px 40px;
+				color: $sub-text-color;
+				text-transform: capitalize;
+			}
+		}
+
+		&__list {
+			padding: 20px 40px;
+		}
+
+		&__list &__item {
+			padding: 20px 0;
+			border-bottom: 1px solid $border-color;
+
+			&__product {
+				flex: 0 0 35%;
+				color: $text-color;
+				@include flex(center);
+
+				& img {
+					width: 80px;
+					height: 80px;
+					object-fit: cover;
+					border: 1px solid $border-color;
+				}
+
+				& p {
+					margin-left: 20px;
+				}
+			}
+
+			&__price,
+			&__total {
+				color: $secondary-color;
+				font-weight: 500;
+			}
+
+			&__quantity {
+				&__calculate {
+					max-width: 100%;
+					@include flex(stretch, center);
+
+					& p {
+						color: $sub-text-color;
+						border: 1px solid $border-color;
+						font-size: 1.2rem;
+						padding: 6px 10px;
+						text-align: center;
+						cursor: pointer;
+
+						&:first-child {
+							border-top-left-radius: 3px;
+							border-bottom-left-radius: 3px;
+							border-right: none;
+						}
+
+						&:last-child {
+							border-top-right-radius: 3px;
+							border-bottom-right-radius: 3px;
+							border-left: none;
+						}
+					}
+
+					& input {
+						flex: 0 0 40%;
+						max-width: 40%;
+						text-align: center;
+						border: 1px solid $border-color;
+
+						&::-webkit-outer-spin-button,
+						&::-webkit-inner-spin-button {
+							-webkit-appearance: none;
+							margin: 0;
+						}
+
+						&[type="number"] {
+							-moz-appearance: textfield;
+						}
+					}
+				}
+			}
+
+			&__action {
+				& p {
+					font-size: 1.8rem;
+					color: $sub-text-color;
+					cursor: pointer;
+
+					& i:hover {
+						color: $secondary-color;
+					}
+				}
+			}
+		}
+
+		&__item {
+			@include flex(center);
+			font-size: 1.5rem;
+			border-radius: 3px;
+
+			&__checkbox {
+				flex: 0 0 5%;
+				max-width: 5%;
+				text-align: center;
+			}
+
+			&__product {
+				flex: 0 0 35%;
+				max-width: 35%;
+				color: $text-color;
+			}
+
+			&__price {
+				flex: 0 0 17%;
+				max-width: 17%;
+				text-align: center;
+			}
+
+			&__quantity {
+				flex: 0 0 17%;
+				max-width: 17%;
+				text-align: center;
+			}
+
+			&__total {
+				flex: 0 0 10%;
+				max-width: 10%;
+				text-align: center;
+			}
+
+			&__action {
+				flex: 0 0 16%;
+				max-width: 16%;
+				text-align: center;
+			}
+
+			&__footer-action {
+				flex: 0 0 45%;
+				max-width: 45%;
+
+				@include flex(center);
+				column-gap: 20px;
+
+				font-size: 1.6rem;
+				color: $text-color;
+
+				& p,
+				& label {
+					cursor: pointer;
+					user-select: none;
+				}
+
+				& .color {
+					color: $secondary-color;
+				}
+			}
+
+			&__summary {
+				flex: 0 0 50%;
+				max-width: 50%;
+				text-transform: none;
+
+				@include flex(center);
+				font-size: 1.6rem;
+
+				& p {
+					margin-right: 20px;
+					color: $text-color;
+
+					& span {
+						color: $secondary-color;
+						font-weight: 500;
+					}
+				}
+
+				& button {
+					flex: 1;
+				}
+			}
 		}
 	}
 }

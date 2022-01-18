@@ -34,5 +34,10 @@
 		border: unset;
 		color: $text-color;
 		background-color: transparent;
+
+		&:focus {
+			outline: unset;
+			box-shadow: none;
+		}
 	}
 }

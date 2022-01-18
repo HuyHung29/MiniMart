@@ -12,10 +12,9 @@ import { Col, Container, Row } from "reactstrap";
 
 MainPage.propTypes = {
 	pagination: PropTypes.object.isRequired,
-	loading: PropTypes.bool.isRequired,
 };
 
-function MainPage({ pagination, loading }) {
+function MainPage({ pagination }) {
 	const products = useSelector((state) => state.products.listProduct);
 	const categories = useSelector((state) => state.categories);
 	const dispatch = useDispatch();
@@ -82,7 +81,7 @@ function MainPage({ pagination, loading }) {
 			<Row>
 				<Col md='12'>
 					<h1 className='text-center my-5'>Danh Sách Sản Phẩm</h1>
-					{loading ? (
+					{products.length === 0 ? (
 						<>
 							<Loading />
 							<div style={{ height: "500px" }}></div>

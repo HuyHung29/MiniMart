@@ -30,7 +30,6 @@ function AddEditForm({
 		register,
 		control,
 		setValue,
-		getValues,
 		handleSubmit,
 		reset,
 		formState: { errors },
@@ -39,8 +38,6 @@ function AddEditForm({
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
-
-	console.log(getValues());
 
 	const options = categories.map((item) => {
 		return { value: item._id, label: item.name };

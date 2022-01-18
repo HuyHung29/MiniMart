@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function Loading() {
+	const loading = useSelector((state) => state.ui.loading);
+	const [isLoading, setIsLoading] = useState(loading);
+
+	useEffect(() => {
+		setIsLoading(loading);
+	}, [loading]);
+
 	return (
-		<div className='loader-wrap'>
-			<div className='loader'></div>
-		</div>
+		<>
+			{isLoading ? (
+				<div className='loader-wrap'>
+					<div className='loader'></div>
+				</div>
+			) : null}
+		</>
 	);
 }
 

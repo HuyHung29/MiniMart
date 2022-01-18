@@ -1,99 +1,64 @@
-import React from "react";
-import PropTypes from "prop-types";
+import BuyBtn from "components/BuyBtn";
 import { images } from "constant/index";
-import { Button } from "reactstrap";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import CartItem from "../CartItem";
 
-Cart.propTypes = {
-	product: PropTypes.object,
-};
+function Cart() {
+	const cart = useSelector((state) => state.purchase.cart);
 
-function Cart(props) {
+	const totalPrice = cart
+		.reduce((prev, curr) => {
+			return prev + curr.price * curr.quantity;
+		}, 0)
+		.toLocaleString();
+
+	const renderCartItem = () => {
+		return cart.map((item, index) => {
+			return <CartItem product={item} key={index} />;
+		});
+	};
+
 	return (
 		<div className='cart'>
 			<div className='cart__group'>
-				<div
+				<Link
+					to='/cart'
 					className='cart__button'
 					style={{ backgroundImage: `url(${images.BG_SEARCH})` }}>
 					<i className='fas fa-shopping-bag'></i>
 					<p>
-						GIỎ HÀNG <span className='cart__quantity'>(0)</span>
+						GIỎ HÀNG{" "}
+						<span className='cart__quantity'>{`(${cart.length})`}</span>
 					</p>
-				</div>
+				</Link>
 
 				<div className='cart__group__menu'>
-					{/* <p>Không có sản phẩm nào</p> */}
-					<ul className='cart__list'>
-						<li className='cart__item'>
-							<div className='cart__item__img'>
-								<img src={images.PRODUCT} alt='anh' />
-							</div>
-							<div className='cart__item__info'>
-								<div className='cart__item__info--wrap'>
-									<h3 className='cart__item__name'>Táo mỹ</h3>
-									<p className='cart__item__price'>
-										300.000 <small>đ/kg</small>
-									</p>
-									<p className='cart__item__quantity'>
-										Số lượng: 1
-									</p>
-								</div>
-								<div className='cart__item__action'>
-									<i className='fas fa-trash-alt'></i>
-								</div>
-							</div>
-						</li>
-						<li className='cart__item'>
-							<div className='cart__item__img'>
-								<img src={images.PRODUCT} alt='anh' />
-							</div>
-							<div className='cart__item__info'>
-								<div className='cart__item__info--wrap'>
-									<h3 className='cart__item__name'>Táo mỹ</h3>
-									<p className='cart__item__price'>
-										300.000 <small>đ/kg</small>
-									</p>
-									<p className='cart__item__quantity'>
-										Số lượng: 1
-									</p>
-								</div>
-								<div className='cart__item__action'>
-									<i className='fas fa-trash-alt'></i>
-								</div>
-							</div>
-						</li>
-						<li className='cart__item'>
-							<div className='cart__item__img'>
-								<img src={images.PRODUCT} alt='anh' />
-							</div>
-							<div className='cart__item__info'>
-								<div className='cart__item__info--wrap'>
-									<h3 className='cart__item__name'>Táo mỹ</h3>
-									<p className='cart__item__price'>
-										300.000 <small>đ/kg</small>
-									</p>
-									<p className='cart__item__quantity'>
-										Số lượng: 1
-									</p>
-								</div>
-								<div className='cart__item__action'>
-									<i className='fas fa-trash-alt'></i>
-								</div>
-							</div>
-						</li>
-					</ul>
-
-					<div className='cart__bottom'>
-						<div className='cart__total-price'>
-							<p>Tổng tiền</p>
-							<span>
-								1.400.000<small>đ</small>
-							</span>
+					{cart.length === 0 ? (
+						<div className='cart--empty'>
+							<img src={images.EMPTYCART} alt='empty cart' />
+							<p>Chưa có sản phẩm</p>
 						</div>
+					) : (
+						<>
+							<ul className='cart__list'>{renderCartItem()}</ul>
+							<div className='cart__bottom'>
+								<div className='cart__total-price'>
+									<p>Tổng tiền</p>
+									<span>
+										{totalPrice}
+										<small>đ</small>
+									</span>
+								</div>
 
-						<Button block className='cart__pay'>
-							Tiến hành đặt hàng
-						</Button>
-					</div>
+								<BuyBtn
+									content={"Tiến hành đặt hàng"}
+									className={"w-100"}
+								/>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

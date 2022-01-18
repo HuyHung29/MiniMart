@@ -14,46 +14,46 @@ function User() {
 
 	return (
 		<Switch>
-			<Route exact path={`${match.url}`}>
-				{isLogin ? (
-					<Redirect to={`${match.url}/profile`} />
-				) : (
-					<Redirect to={`${match.url}/login`} />
-				)}
-			</Route>
-			<Route path={`${match.url}/register`}>
-				{isLogin ? <Redirect to={`${match.url}`} /> : <Register />}
-			</Route>
-			<Route path={`${match.url}/login`}>
-				{isLogin ? <Redirect to={`${match.url}`} /> : <Login />}
-			</Route>
-			<Route path={`${match.url}/profile`}>
-				{isLogin ? (
-					<MainPage>
-						<Profile key='profile' />
-					</MainPage>
-				) : (
-					<Redirect to={`${match.url}`} />
-				)}
-			</Route>
-			<Route path={`${match.url}/address`}>
-				{isLogin ? (
-					<MainPage>
-						<Address key='address' />
-					</MainPage>
-				) : (
-					<Redirect to={`${match.url}`} />
-				)}
-			</Route>
-			<Route path={`${match.url}/password`}>
-				{isLogin ? (
-					<MainPage>
-						<Password />
-					</MainPage>
-				) : (
-					<Redirect to={`${match.url}`} />
-				)}
-			</Route>
+			{isLogin ? (
+				<Switch>
+					<Route exact path={`${match.url}`}>
+						<Redirect to={`${match.url}/profile`} />
+					</Route>
+					<Route path={`${match.url}/register`}>
+						<Redirect to={`${match.url}`} />
+					</Route>
+					<Route path={`${match.url}/login`}>
+						<Redirect to={`${match.url}`} />
+					</Route>
+					<Route path={`${match.url}/profile`}>
+						<MainPage>
+							<Profile key='profile' />
+						</MainPage>
+					</Route>
+					<Route path={`${match.url}/address`}>
+						<MainPage>
+							<Address key='address' />
+						</MainPage>
+					</Route>
+					<Route path={`${match.url}/password`}>
+						<MainPage>
+							<Password />
+						</MainPage>
+					</Route>
+				</Switch>
+			) : (
+				<Switch>
+					<Route path={`${match.url}/register`}>
+						<Register />
+					</Route>
+					<Route path={`${match.url}/login`}>
+						<Login />
+					</Route>
+					<Route>
+						<Redirect to={`${match.url}/login`} />
+					</Route>
+				</Switch>
+			)}
 		</Switch>
 	);
 }

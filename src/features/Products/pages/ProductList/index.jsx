@@ -10,10 +10,9 @@ import { Col, Container, Input, Label, Row } from "reactstrap";
 
 ProductList.propTypes = {
 	pagination: PropTypes.object.isRequired,
-	loading: PropTypes.bool.isRequired,
 };
 
-function ProductList({ pagination, loading }) {
+function ProductList({ pagination }) {
 	const location = useLocation();
 	const products = useSelector((state) => state.products.listProduct);
 
@@ -63,7 +62,7 @@ function ProductList({ pagination, loading }) {
 						</li>
 					</ul>
 				</Col>
-				{loading ? (
+				{products.length === 0 ? (
 					<Loading />
 				) : (
 					<Col>

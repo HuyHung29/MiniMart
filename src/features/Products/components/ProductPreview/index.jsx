@@ -1,10 +1,10 @@
 import { removePreview } from "app/productsSlice";
+import AddToCartBtn from "components/AddToCartBtn";
 import ImageSlider from "components/ImageSlider";
 import ReadMore from "components/ReadMore";
 import parse from "html-react-parser";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "reactstrap";
 
 function ProductPreview() {
 	const modalRef = useRef();
@@ -32,6 +32,10 @@ function ProductPreview() {
 		price * (discount / 100)
 	).toLocaleString();
 
+	const onClosePreview = () => {
+		dispatch(removePreview());
+	};
+
 	return (
 		<>
 			{preview.isShow ? (
@@ -40,7 +44,7 @@ function ProductPreview() {
 					ref={modalRef}
 					onClick={(e) => {
 						if (modalRef.current === e.target) {
-							dispatch(removePreview());
+							onClosePreview();
 						}
 					}}>
 					<div className='product-preview'>
@@ -115,15 +119,13 @@ function ProductPreview() {
 									<i className='fas fa-plus'></i>
 								</p>
 							</div>
-							<Button className='product__btn shadow-none'>
-								Thêm vào giỏ hàng
-							</Button>
+							<AddToCartBtn
+								product={preview.product}
+								quantity={quantity}
+								onClose={onClosePreview}
+							/>
 						</div>
-						<p
-							className='close-btn'
-							onClick={() => {
-								dispatch(removePreview());
-							}}>
+						<p className='close-btn' onClick={onClosePreview}>
 							<i className='fas fa-times'></i>
 						</p>
 					</div>

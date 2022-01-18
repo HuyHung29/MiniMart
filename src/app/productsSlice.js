@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import productsApi from "api/productsApi";
+import { hideLoading, showLoading } from "./uiSlice";
 
 export const fetchProducts = createAsyncThunk(
 	"products/fetchProducts",
-	async (params) => {
+	async (params, { dispatch }) => {
 		try {
+			dispatch(showLoading());
 			const response = await productsApi.getAllProduct(params);
+			dispatch(hideLoading());
 			return response.data;
 		} catch (error) {
 			throw error.response.data.message;

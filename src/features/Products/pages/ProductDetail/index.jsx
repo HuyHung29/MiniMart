@@ -1,4 +1,6 @@
 import { fetchCurrentProduct } from "app/productsSlice";
+import AddToCartBtn from "components/AddToCartBtn";
+import BuyBtn from "components/BuyBtn";
 import ImageSlider from "components/ImageSlider";
 import Loading from "components/Loading";
 import ProductSlider from "components/ProductSlider";
@@ -7,7 +9,7 @@ import qs from "query-string";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { Button, Col, Container, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import { findItemById } from "utils";
 
 function ProductDetail() {
@@ -17,7 +19,6 @@ function ProductDetail() {
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products.listProduct);
 	const product = useSelector((state) => state.products.currentProduct);
-	const [loading, setLoading] = useState(false);
 	const [quantity, setQuantity] = useState(1);
 	const {
 		title,
@@ -43,10 +44,8 @@ function ProductDetail() {
 	useEffect(() => {
 		const fetchEditProduct = async () => {
 			try {
-				setLoading(true);
 				const action = fetchCurrentProduct(id);
 				await dispatch(action);
-				setLoading(false);
 			} catch (error) {}
 		};
 
@@ -56,13 +55,14 @@ function ProductDetail() {
 	return (
 		<Container className='product-detail'>
 			<Row>
-				{loading ? (
+				{Object.entries(product).length === 0 ? (
 					<Loading />
 				) : (
 					<>
 						<Col md='12'>
 							<section className='bg-white product-detail__page'>
 								<Row>
+									{/* Product image slider */}
 									<Col md='4'>
 										<ImageSlider
 											pictures={pictures}
@@ -72,9 +72,13 @@ function ProductDetail() {
 											dots={false}
 										/>
 									</Col>
+
+									{/* Product detail content */}
 									<Col md='8'>
 										<div className='product-detail__page__info'>
 											<h2>{title}</h2>
+
+											{/* Product evaluate */}
 											<div className='product-detail__page__info__evaluate'>
 												<div className='product-detail__page__info__evaluate__item'>
 													<p>
@@ -98,6 +102,8 @@ function ProductDetail() {
 													</p>
 												</div>
 											</div>
+
+											{/* Product price */}
 											<div className='product-detail__page__info__bg'>
 												<p className='product__price--old product__price--detail--old'>
 													<sup>đ</sup>
@@ -111,6 +117,8 @@ function ProductDetail() {
 													{discount}% GIẢM
 												</span>
 											</div>
+
+											{/* Product category */}
 											<div className='d-flex align-items-center mt-4'>
 												<p className='product-detail__page__info__text'>
 													Phân loại{" "}
@@ -119,6 +127,8 @@ function ProductDetail() {
 													{productCategory}
 												</p>
 											</div>
+
+											{/* Product original */}
 											<div className='d-flex align-items-center mt-4'>
 												<p className='product-detail__page__info__text'>
 													Xuất sứ
@@ -128,6 +138,7 @@ function ProductDetail() {
 												</p>
 											</div>
 
+											{/* Product quantity */}
 											<div className='product-detail__page__info__quantity'>
 												<p className='product-detail__page__info__text'>
 													Số lượng{" "}
@@ -195,13 +206,15 @@ function ProductDetail() {
 													</p>
 												</div>
 											</div>
-											<Button className='product__btn shadow-none'>
-												Thêm vào giỏ hàng
-											</Button>
-											<Button className='product__btn product__btn--buy shadow-none'>
-												Mua ngay
-											</Button>
 
+											<AddToCartBtn product={product} />
+
+											<BuyBtn
+												content={"Mua ngay"}
+												className={`buy-btn--margin`}
+											/>
+
+											{/* Share social */}
 											<div className='product-detail__page__info__share'>
 												<h3 className='product-detail__page__info__share__title'>
 													Chia sẻ
@@ -227,6 +240,8 @@ function ProductDetail() {
 								</Row>
 							</section>
 						</Col>
+
+						{/* Product description */}
 						<Col md='12'>
 							<section className='bg-white product-detail__page'>
 								<div className='product-detail__page__info__bg'>
@@ -235,6 +250,8 @@ function ProductDetail() {
 								<div className='description'>{productDesc}</div>
 							</section>
 						</Col>
+
+						{/* Slider products */}
 						<Col md='12'>
 							<h2 className='slider__title'>
 								Sản phẩm cùng loại

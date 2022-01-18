@@ -1,10 +1,11 @@
 import { addPreview } from "app/productsSlice";
+import AddToCartBtn from "components/AddToCartBtn";
 import ReadMore from "components/ReadMore";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Col } from "reactstrap";
+import { Col } from "reactstrap";
 
 ProductCard.propTypes = {
 	product: PropTypes.object.isRequired,
@@ -73,9 +74,7 @@ function ProductCard({ product, width }) {
 							onClick={() => setIsLoved(!isLoved)}></i>
 					)}
 				</p>
-				<div className='product__btn--wrap'>
-					<Button className='product__btn'>Thêm vào giỏ hàng</Button>
-				</div>
+				<AddToCartBtn absolute={true} product={product} />
 			</div>
 		</Col>
 	);

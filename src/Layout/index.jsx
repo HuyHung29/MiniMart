@@ -8,9 +8,15 @@ import NavBar from "components/NavBar";
 import NotFound from "components/NotFound";
 import ScrollToTop from "components/ScrollToTop";
 import ProductPreview from "features/Products/components/ProductPreview";
+import CartMainPage from "features/Purchase/page/CartMainPage";
 import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Redirect,
+	Route,
+	Switch,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 const Home = React.lazy(() => import("./pages/Home"));
@@ -68,12 +74,18 @@ function Layout() {
 							<Route path='/products'>
 								<Products role={role} />
 							</Route>
+							{loginStatus ? (
+								<Route to='/cart' component={CartMainPage} />
+							) : (
+								<Redirect to='/user/login' />
+							)}
 							<Route component={NotFound} />
 						</Switch>
 					</div>
+					<Loading />
 					<ProductPreview />
 					<Footer />
-					<ToastContainer autoClose={3000} />
+					<ToastContainer autoClose={2000} />
 				</div>
 			</Suspense>
 		</Router>

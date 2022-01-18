@@ -16,23 +16,24 @@ export const userLogin = createAsyncThunk("user/userLogin", async (data) => {
 
 export const fetchUserInfo = createAsyncThunk(
 	"users/fetchUserInfo",
-	async (data, thunkApi) => {
+	async ({ dispatch, rejectWithValue }) => {
 		try {
 			const response = await userApi.getUser();
 			return response.data;
 		} catch (error) {
-			thunkApi.dispatch(
+			dispatch(
 				getNewAccessToken(JSON.parse(localStorage.getItem("refresh")))
 			);
-			throw thunkApi.rejectWithValue();
+			throw rejectWithValue();
 		}
 	}
 );
 
 export const getNewAccessToken = createAsyncThunk(
 	"users/getNewAccessToken",
-	async (refreshToken) => {
+	async () => {
 		try {
+			const refreshToken = JSON.parse(localStorage.getItem("refresh"));
 			const response = await userApi.getAccessToken(refreshToken);
 			return response.data;
 		} catch (error) {
@@ -50,12 +51,60 @@ export const updateUser = createAsyncThunk("users/updateUser", async (data) => {
 	}
 });
 
+export const fetchUserAddress = createAsyncThunk(
+	"users/fetchUserAddress",
+	async () => {
+		try {
+			const response = await userApi.getUserAddress();
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const addNewAddress = createAsyncThunk(
+	"users/addNewAddress",
+	async (data) => {
+		try {
+			const response = await userApi.createAddress(data);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const updateUserAddress = createAsyncThunk(
+	"users/updateUserAddress",
+	async ({ id, data }) => {
+		try {
+			const response = await userApi.updateAddress(id, data);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const deleteUserAddress = createAsyncThunk(
+	"users/deleteUserAddress",
+	async (id) => {
+		try {
+			await userApi.deleteAddress(id);
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
 const userSlice = createSlice({
 	name: "users",
 	initialState: {
 		isLogin: loginStatus ? loginStatus : false,
 		user: userInfo ? userInfo.user : {},
 		accessToken: accessToken ? accessToken : "",
+		address: [],
 	},
 	reducers: {
 		userLogout: (state) => {
@@ -81,35 +130,6 @@ const userSlice = createSlice({
 				state.user = action.payload.user;
 				localStorage.setItem("user", JSON.stringify(action.payload));
 			})
-			// .addCase(fetchUserInfo.rejected, (state, action) => {
-			// 	console.log(action);
-			// 	if (action.error.message === "401") {
-			// 		const refreshToken = JSON.parse(
-			// 			localStorage.getItem("refresh")
-			// 		);
-			// 		const resetPassword = async () => {
-			// 			try {
-			// 				const response = await userApi.getAccessToken(
-			// 					refreshToken
-			// 				);
-			// 				console.log(response);
-			// 				const { accessToken: newAccessToken } =
-			// 					response.data;
-			// 				state.accessToken = newAccessToken;
-			// 				localStorage.setItem(
-			// 					"token",
-			// 					JSON.stringify(newAccessToken)
-			// 				);
-			// 			} catch (error) {
-			// 				throw error;
-			// 			}
-			// 		};
-
-			// 		resetPassword();
-			// 	} else {
-			// 		console.log(action.error.message);
-			// 	}
-			// })
 			.addCase(updateUser.fulfilled, (state, action) => {
 				state.user = action.payload.user;
 				localStorage.setItem("user", JSON.stringify(action.payload));
@@ -120,6 +140,27 @@ const userSlice = createSlice({
 					"token",
 					JSON.stringify(state.accessToken)
 				);
+			})
+			.addCase(fetchUserAddress.fulfilled, (state, action) => {
+				state.address = action.payload.address;
+			})
+			.addCase(addNewAddress.fulfilled, (state, action) => {
+				state.address.push({ ...action.payload.address });
+			})
+			.addCase(updateUserAddress.fulfilled, (state, { payload }) => {
+				const { address } = payload;
+				const index = state.address.findIndex(
+					(item) => item._id === address._id
+				);
+				state.address[index] = address;
+			})
+			.addCase(deleteUserAddress.fulfilled, (state, { meta }) => {
+				const index = state.address.findIndex(
+					(item) => item._id === meta.arg
+				);
+				if (index !== -1) {
+					state.address.splice(index, 1);
+				}
 			});
 	},
 });

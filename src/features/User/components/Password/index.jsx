@@ -5,6 +5,8 @@ import { Controller, useForm } from "react-hook-form";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
 import { formValidateData } from "constant";
+import { toast } from "react-toastify";
+import userApi from "api/userApi";
 
 const schema = yup
 	.object({
@@ -27,7 +29,7 @@ const schema = yup
 	})
 	.required();
 
-function Password({ onUserChangePassword }) {
+function Password() {
 	const defaultValues = {
 		password: "",
 		newPassword: "",
@@ -45,6 +47,28 @@ function Password({ onUserChangePassword }) {
 		defaultValues: defaultValues,
 	});
 
+	const onUserChangePassword = (data) => {
+		const changePassword = async () => {
+			try {
+				console.log(data);
+				await userApi.changePassword(data);
+				reset();
+			} catch (error) {
+				throw error.response.data;
+			}
+		};
+
+		toast.promise(changePassword, {
+			pending: "Đang xử lý",
+			success: "Đổi mật khẩu thành công",
+			error: {
+				render: ({ data }) => {
+					return <p>{data.message}</p>;
+				},
+			},
+		});
+	};
+
 	return (
 		<div className='profile'>
 			<div className='profile__header'>
@@ -57,9 +81,7 @@ function Password({ onUserChangePassword }) {
 			<Form
 				className='profile__user'
 				id='profile-form'
-				onSubmit={handleSubmit((data) => {
-					onUserChangePassword(data, reset);
-				})}>
+				onSubmit={handleSubmit(onUserChangePassword)}>
 				<div className='profile__user__field'>
 					<p className='profile__user__label xl'>Mật khẩu hiện tại</p>
 					<Controller

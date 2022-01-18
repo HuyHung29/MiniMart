@@ -1,8 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { updateUser } from "app/userSlice";
 import InputField from "components/Custom/InputField";
 import { formValidateData } from "constant";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
 
@@ -33,7 +37,9 @@ const schema = yup
 	})
 	.required();
 
-function Profile({ user, onUserChangeInfo }) {
+function Profile() {
+	const user = useSelector((state) => state.users.user);
+	const dispatch = useDispatch();
 	const defaultValues = {
 		name: user.name,
 		surname: user.surname,
@@ -50,6 +56,28 @@ function Profile({ user, onUserChangeInfo }) {
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
+
+	const onUserChangeInfo = (data) => {
+		const updateUserInfo = async () => {
+			const action = updateUser(data);
+			try {
+				const response = await dispatch(action);
+				unwrapResult(response);
+			} catch (error) {
+				throw error;
+			}
+		};
+
+		toast.promise(updateUserInfo, {
+			pending: "Đang xử lý",
+			success: "Cập nhật thành công",
+			error: {
+				render({ data }) {
+					return data.message;
+				},
+			},
+		});
+	};
 
 	return (
 		<div className='profile'>

@@ -1,60 +1,12 @@
-import { unwrapResult } from "@reduxjs/toolkit";
-import userApi from "api/userApi";
 import classNames from "classnames";
-import { updateUser } from "app/userSlice";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 
 function MainPage(props) {
 	const { user } = useSelector((state) => state.users);
 	const [isOpen, setIsOpen] = useState(true);
-	const dispatch = useDispatch();
-
-	const onUserChangeInfo = (data) => {
-		const updateUserInfo = async () => {
-			try {
-				const response = await dispatch(updateUser(data));
-				const originalResult = unwrapResult(response);
-				console.log(originalResult);
-			} catch (error) {
-				throw error;
-			}
-		};
-
-		toast.promise(updateUserInfo, {
-			pending: "Đang xử lý",
-			success: "Cập nhật thành công",
-			error: {
-				render({ data }) {
-					return data.message;
-				},
-			},
-		});
-	};
-
-	const onUserChangePassword = (data, reset) => {
-		const changePassword = async () => {
-			try {
-				await userApi.changePassword(data);
-				reset();
-			} catch (error) {
-				throw error.response.data;
-			}
-		};
-
-		toast.promise(changePassword, {
-			pending: "Đang xử lý",
-			success: "Đổi mật khẩu thành công",
-			error: {
-				render: ({ data }) => {
-					return <p>{data.message}</p>;
-				},
-			},
-		});
-	};
 
 	return (
 		<Container className='user'>
@@ -130,20 +82,7 @@ function MainPage(props) {
 				<Col>
 					<div className='user__content'>
 						{React.Children.map(props.children, (child) => {
-							if (child.key === "profile") {
-								return React.cloneElement(child, {
-									user,
-									onUserChangeInfo,
-								});
-							}
-							if (child.key === "address") {
-								return React.cloneElement(child, {
-									user,
-								});
-							}
-							return React.cloneElement(child, {
-								onUserChangePassword,
-							});
+							return React.cloneElement(child);
 						})}
 					</div>
 				</Col>

@@ -1,6 +1,5 @@
 import logo from "assets/img/logo.png";
 import logoBlack from "assets/img/logo_footer.png";
-import product from "assets/img/test.jpg";
 import bgMidHeader from "assets/img/bg_midheader.png";
 import bgSearchBtn from "assets/img/bg_search.png";
 import bgFooter from "assets/img/bg_footer.png";
@@ -8,15 +7,16 @@ import sliderImg from "assets/img/slider_1.jpeg";
 import banner1 from "assets/img/banner/banner_1.jpg";
 import banner2 from "assets/img/banner/banner_2.jpg";
 import banner3 from "assets/img/banner/banner_3.jpg";
+import emptyCart from "assets/img/emptyCart.png";
 
 export const images = {
 	LOGO: logo,
 	LOGO_B: logoBlack,
-	PRODUCT: product,
 	BG_MID_HEADER: bgMidHeader,
 	BG_SEARCH: bgSearchBtn,
 	BG_FOOTER: bgFooter,
 	SLIDER_IMG: sliderImg,
+	EMPTYCART: emptyCart,
 };
 
 export const bannerImg = [banner1, banner2, banner3];
@@ -31,6 +31,8 @@ export const breadcrumbNames = {
 	products: "Sản phẩm",
 	add: "Thêm mới",
 	edit: "Chỉnh sửa",
+	cart: "Giỏ hàng",
+	purchase: "Đơn hàng",
 };
 
 export const formValidateData = {
@@ -62,3 +64,12 @@ export const listTitle = [
 	"country",
 	"category",
 ];
+
+export const addressField = {
+	name: "Họ và tên",
+	phone: "Số điện thoại",
+	company: "Công ty",
+	city: "Tỉnh/Thành phố",
+	district: "Quận/Huyện",
+	village: "Phường/Xã",
+};
