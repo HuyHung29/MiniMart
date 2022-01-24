@@ -15,24 +15,10 @@ import * as yup from "yup";
 
 function AddEditProduct() {
 	const dispatch = useDispatch();
-	const categories = useSelector((state) => state.categories);
 	const { editProductId } = useParams();
 	const history = useHistory();
 	const isEdit = !!editProductId;
 	const editProduct = useSelector((state) => state.products.currentProduct);
-
-	useEffect(() => {
-		if (isEdit) {
-			const fetchEditProduct = async () => {
-				try {
-					const action = fetchCurrentProduct(editProductId);
-					await dispatch(action);
-				} catch (error) {}
-			};
-
-			fetchEditProduct();
-		}
-	}, [isEdit, editProductId, dispatch]);
 
 	const schema = yup
 		.object({
@@ -62,6 +48,19 @@ function AddEditProduct() {
 			category: yup.string().required("Vui lòng nhập trường này"),
 		})
 		.required();
+
+	useEffect(() => {
+		if (isEdit) {
+			const fetchEditProduct = async () => {
+				try {
+					const action = fetchCurrentProduct(editProductId);
+					await dispatch(action);
+				} catch (error) {}
+			};
+
+			fetchEditProduct();
+		}
+	}, [isEdit, editProductId, dispatch]);
 
 	const defaultValues =
 		isEdit && !!editProduct
@@ -145,7 +144,6 @@ function AddEditProduct() {
 				<AddEditForm
 					schema={schema}
 					defaultValues={defaultValues}
-					categories={categories}
 					onSubmit={onSubmit}
 				/>
 			);
@@ -155,7 +153,6 @@ function AddEditProduct() {
 					<AddEditForm
 						schema={schema}
 						defaultValues={defaultValues}
-						categories={categories}
 						onSubmit={onSubmit}
 						editItem={editProduct ? editProduct : undefined}
 					/>

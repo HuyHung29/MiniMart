@@ -6,7 +6,7 @@
 }
 
 .listItem--wrap {
-	padding: 15px;
+	margin-top: 20px;
 	background-color: white;
 	border-radius: 2px;
 }
@@ -17,9 +17,10 @@
 	font-size: 1.5rem;
 	margin-bottom: 0;
 
-	&__header {
+	&__heading {
 		text-align: center;
 		text-transform: capitalize;
+		padding: 10px 0;
 	}
 
 	&__title {
@@ -58,6 +59,7 @@
 			position: relative;
 
 			& p {
+				user-select: none;
 				position: absolute;
 				inset: 0;
 				@include flex(center, center);
@@ -77,6 +79,7 @@
 
 	&-quantity {
 		font-size: 1.6rem;
+		padding: 6px 0;
 		animation: bla 0.25s ease-in-out;
 	}
 

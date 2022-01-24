@@ -4,11 +4,12 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import Address from "./components/Address";
 import Password from "./components/Password";
 import Profile from "./components/Profile";
+import Purchase from "./components/Purchase";
 import Login from "./pages/Login";
 import MainPage from "./pages/Main";
 import Register from "./pages/Register";
 
-function User() {
+function User(props) {
 	const { isLogin } = useSelector((state) => state.users);
 	const match = useRouteMatch();
 
@@ -27,17 +28,22 @@ function User() {
 					</Route>
 					<Route path={`${match.url}/profile`}>
 						<MainPage>
-							<Profile key='profile' />
+							<Profile />
 						</MainPage>
 					</Route>
 					<Route path={`${match.url}/address`}>
 						<MainPage>
-							<Address key='address' />
+							<Address />
 						</MainPage>
 					</Route>
 					<Route path={`${match.url}/password`}>
 						<MainPage>
 							<Password />
+						</MainPage>
+					</Route>
+					<Route path={`${match.url}/purchase`}>
+						<MainPage>
+							<Purchase />
 						</MainPage>
 					</Route>
 				</Switch>

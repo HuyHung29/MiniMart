@@ -61,9 +61,13 @@ function FileField(props) {
 				""
 			)}
 
-			<div className='preview'>
-				<ul className='preview__list'>{renderPreviewList()}</ul>
-			</div>
+			{files.length > 0 ? (
+				<div className='preview'>
+					<ul className='preview__list'>{renderPreviewList()}</ul>
+				</div>
+			) : (
+				""
+			)}
 		</FormGroup>
 	);
 }

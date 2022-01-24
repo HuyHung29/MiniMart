@@ -86,6 +86,7 @@ const productsSlice = createSlice({
 			product: {},
 			isShow: false,
 		},
+		pagination: {},
 	},
 	reducers: {
 		addPreview(state, action) {
@@ -102,13 +103,14 @@ const productsSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchProducts.fulfilled, (state, action) => {
-				state.listProduct = [...action.payload.products];
+				state.listProduct = action.payload.products;
+				state.pagination = action.payload.pagination;
 			})
 			.addCase(fetchCurrentProduct.pending, (state) => {
 				state.currentProduct = {};
 			})
 			.addCase(fetchCurrentProduct.fulfilled, (state, action) => {
-				state.currentProduct = { ...action.payload.product };
+				state.currentProduct = action.payload.product;
 			})
 			.addCase(createProduct.fulfilled, (state, action) => {
 				state.listProduct.unshift(action.payload.product);

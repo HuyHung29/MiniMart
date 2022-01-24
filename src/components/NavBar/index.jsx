@@ -1,5 +1,6 @@
 import BreadCrumb from "components/BreadCrumb";
 import React from "react";
+import { useSelector } from "react-redux";
 import {
 	Col,
 	Collapse,
@@ -13,12 +14,10 @@ import {
 	Row,
 	UncontrolledDropdown,
 } from "reactstrap";
-import PropTypes from "prop-types";
 
-NavBar.propTypes = {
-	categories: PropTypes.array.isRequired,
-};
-function NavBar({ categories }) {
+function NavBar() {
+	const categories = useSelector((state) => state.categories);
+
 	return (
 		<div className='navbar--wrap'>
 			<Container>

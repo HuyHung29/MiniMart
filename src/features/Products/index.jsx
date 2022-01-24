@@ -1,29 +1,17 @@
-import { unwrapResult } from "@reduxjs/toolkit";
 import { fetchProducts } from "app/productsSlice";
-import PropTypes from "prop-types";
 import qs from "query-string";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, useLocation } from "react-router-dom";
 import AddEditProduct from "./pages/AddEditProduct";
-import AdminMainPage from "./pages/AdminMainPage";
+import AdminProductPage from "./pages/AdminMainPage";
 import ProductDetail from "./pages/ProductDetail";
 import ProductList from "./pages/ProductList";
 
-Products.propTypes = {
-	role: PropTypes.string.isRequired,
-};
-
-Products.defaultProps = {
-	role: "",
-};
-
-function Products({ role }) {
-	const match = useRouteMatch();
+function Products() {
 	const dispatch = useDispatch();
 	const location = useLocation();
-
-	const [pagination, setPagination] = useState({});
+	const { role } = useSelector((state) => state.users.user);
 
 	const { page, sort, search, limit } = qs.parse(location.search);
 
@@ -47,9 +35,7 @@ function Products({ role }) {
 	useEffect(() => {
 		const fetchProductWithFilter = async () => {
 			try {
-				const response = await dispatch(fetchProducts(filter));
-				unwrapResult(response);
-				setPagination(response.payload.pagination);
+				await dispatch(fetchProducts(filter));
 			} catch (error) {
 				console.log(error);
 			}
@@ -59,31 +45,38 @@ function Products({ role }) {
 	}, [dispatch, filter]);
 
 	return (
-		<Switch>
-			<Route exact path={`${match.url}`}>
-				{role === "admin" ? (
-					<AdminMainPage pagination={pagination} />
-				) : (
-					<ProductList pagination={pagination} />
-				)}
-			</Route>
+		<>
 			{role === "admin" ? (
 				<Switch>
 					<Route
-						path={`${match.url}/add`}
+						path='/admin/products'
+						exact
+						component={AdminProductPage}
+					/>
+					<Route
+						path='/admin/products/add'
 						component={AddEditProduct}
 					/>
 					<Route
-						path={`${match.url}/edit/:editProductId`}
+						path='/admin/products/edit/:editProductId'
 						component={AddEditProduct}
+					/>
+					<Route path='/products' exact component={ProductList} />
+					<Route
+						path='/products/:productId'
+						component={ProductDetail}
 					/>
 				</Switch>
 			) : (
-				""
+				<Switch>
+					<Route path='/products' exact component={ProductList} />
+					<Route
+						path='/products/:productId'
+						component={ProductDetail}
+					/>
+				</Switch>
 			)}
-
-			<Route path={`${match.url}/:productId`} component={ProductDetail} />
-		</Switch>
+		</>
 	);
 }
 

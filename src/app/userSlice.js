@@ -16,15 +16,16 @@ export const userLogin = createAsyncThunk("user/userLogin", async (data) => {
 
 export const fetchUserInfo = createAsyncThunk(
 	"users/fetchUserInfo",
-	async ({ dispatch, rejectWithValue }) => {
+	async (_, thunkApi) => {
 		try {
 			const response = await userApi.getUser();
 			return response.data;
 		} catch (error) {
-			dispatch(
+			console.log(JSON.stringify(error));
+			thunkApi.dispatch(
 				getNewAccessToken(JSON.parse(localStorage.getItem("refresh")))
 			);
-			throw rejectWithValue();
+			throw thunkApi.rejectWithValue();
 		}
 	}
 );
@@ -110,6 +111,7 @@ const userSlice = createSlice({
 		userLogout: (state) => {
 			state.isLogin = false;
 			state.user = {};
+			localStorage.clear();
 		},
 	},
 	extraReducers: (builder) => {

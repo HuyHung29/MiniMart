@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import { Pagination as PaginationRT, PaginationItem } from "reactstrap";
 import { Link } from "react-router-dom";
 import qs from "query-string";
+import { useSelector } from "react-redux";
 
 Pagination.propTypes = {
-	pagination: PropTypes.object.isRequired,
 	location: PropTypes.object.isRequired,
 };
 
 Pagination.defaultProps = {
-	pagination: {},
 	location: {},
 };
 
-function Pagination({ pagination, location }) {
+function Pagination({ location }) {
+	const pagination = useSelector((state) => state.products.pagination);
 	const { next, prev, limit, total } = pagination;
 	const { pathname, search } = location;
 	const { page } = qs.parse(search);

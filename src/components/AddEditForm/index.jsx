@@ -7,6 +7,7 @@ import { itemTitle } from "constant";
 import PropTypes from "prop-types";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, Col, Form, Row } from "reactstrap";
 
@@ -14,25 +15,19 @@ AddEditForm.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
 	defaultValues: PropTypes.object.isRequired,
 	schema: PropTypes.object.isRequired,
-	categories: PropTypes.array.isRequired,
 	editItem: PropTypes.object,
 };
 
-function AddEditForm({
-	onSubmit,
-	schema,
-	defaultValues,
-	categories,
-	editItem,
-}) {
+function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 	const history = useHistory();
+	const categories = useSelector((state) => state.categories);
 	const {
 		register,
 		control,
 		setValue,
 		handleSubmit,
 		reset,
-		formState: { errors },
+		formState: { errors, isSubmitted },
 	} = useForm({
 		mode: "all",
 		resolver: yupResolver(schema),
@@ -149,7 +144,22 @@ function AddEditForm({
 						/>
 					</Col>
 				);
-			return (
+			return key.length < 3 ? (
+				<Col md='12' key={index}>
+					<Controller
+						name={item}
+						control={control}
+						render={({ field }) => (
+							<InputField
+								{...field}
+								errors={errors}
+								label={itemTitle[item]}
+								ref={null}
+							/>
+						)}
+					/>
+				</Col>
+			) : (
 				<Col md='6' key={index}>
 					<Controller
 						name={item}
@@ -175,14 +185,17 @@ function AddEditForm({
 			})}>
 			<Row>
 				{renderController()}
-				<Col className='text-center'>
+				<Col className='text-center' md='12'>
 					<Button
+						disabled={isSubmitted}
 						type='submit'
 						className='form__btn form__btn--success'>
 						{editItem ? "Cập nhật" : "Tạo mới"}
 					</Button>
 					<Button
+						disabled={isSubmitted}
 						className='form__btn form__btn--danger'
+						type='reset'
 						onClick={() => {
 							if (editItem) {
 								history.goBack();

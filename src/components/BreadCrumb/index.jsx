@@ -1,16 +1,18 @@
 import { breadcrumbNames } from "constant";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 
 function BreadCrumb() {
 	const location = useLocation();
 	const { pathname } = location;
+	const title = useSelector((state) => state.products.currentProduct.title);
 
 	const renderBreadcrumb = () => {
 		const pathNames = pathname.split("/").filter((x) => x);
 
-		if (pathname !== "/") {
+		if (pathname !== "/" && pathname !== "/admin") {
 			return (
 				<Breadcrumb>
 					<BreadcrumbItem>
@@ -21,6 +23,9 @@ function BreadCrumb() {
 					</BreadcrumbItem>
 					{pathNames.map((name, index) => {
 						if (name === "user" && pathname !== "/user") return "";
+						if (name === "admin" && pathname === "/admin")
+							return "";
+						if (name === "edit" && pathname !== "/edit") return "";
 						if (name === "user" && pathname === "/user") {
 							return (
 								<BreadcrumbItem key={index} active>
@@ -34,7 +39,7 @@ function BreadCrumb() {
 							<BreadcrumbItem key={index} active>
 								{breadcrumbNames[name]
 									? breadcrumbNames[name]
-									: name.replaceAll("-", " ")}
+									: title || name.replaceAll("-", " ")}
 								<i className='fas fa-caret-right breadcrumb-item-icon'></i>
 							</BreadcrumbItem>
 						) : (
@@ -44,7 +49,7 @@ function BreadCrumb() {
 									className='breadcrumb-item-link'>
 									{breadcrumbNames[name]
 										? breadcrumbNames[name]
-										: name.replaceAll("-", " ")}
+										: title || name.replaceAll("-", " ")}
 								</Link>
 								<i className='fas fa-caret-right breadcrumb-item-icon'></i>
 							</BreadcrumbItem>

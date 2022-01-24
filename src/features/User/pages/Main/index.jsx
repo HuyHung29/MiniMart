@@ -8,6 +8,8 @@ function MainPage(props) {
 	const { user } = useSelector((state) => state.users);
 	const [isOpen, setIsOpen] = useState(true);
 
+	console.log(props);
+
 	return (
 		<Container className='user'>
 			<Row>
@@ -29,6 +31,7 @@ function MainPage(props) {
 							<li className='user__nav__item'>
 								<i className='fas fa-user'></i>
 								<Link
+									onClick={() => setIsOpen(true)}
 									to='/user/profile'
 									className='user__nav__link'>
 									Tài khoản của tôi

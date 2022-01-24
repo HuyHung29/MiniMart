@@ -1,5 +1,6 @@
 .cart {
 	z-index: 80;
+	margin-left: 15px;
 
 	&--empty {
 		@include flex(center, center);
@@ -13,6 +14,7 @@
 	}
 
 	&__group {
+		z-index: 50;
 		position: relative;
 
 		&__menu {
@@ -60,7 +62,7 @@
 	}
 
 	&__button {
-		@include flex(center);
+		@include flex(center, center);
 		background-color: white;
 		padding: 12px 15px;
 		border-radius: 5px;
@@ -80,6 +82,7 @@
 
 		& p {
 			font-weight: 500;
+			font-size: 1.6rem;
 		}
 	}
 

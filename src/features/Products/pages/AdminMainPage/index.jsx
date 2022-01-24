@@ -1,22 +1,15 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { deleteMultiProduct, deleteProduct } from "app/productsSlice";
 import ListItem from "components/ListItem";
-import Loading from "components/Loading";
 import Pagination from "components/Pagination";
-import PropTypes from "prop-types";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 
-MainPage.propTypes = {
-	pagination: PropTypes.object.isRequired,
-};
-
-function MainPage({ pagination }) {
+function AdminProductPage() {
 	const products = useSelector((state) => state.products.listProduct);
-	const categories = useSelector((state) => state.categories);
 	const dispatch = useDispatch();
 	const location = useLocation();
 
@@ -80,27 +73,17 @@ function MainPage({ pagination }) {
 		<Container fluid>
 			<Row>
 				<Col md='12'>
-					<h1 className='text-center my-5'>Danh Sách Sản Phẩm</h1>
-					{products.length === 0 ? (
-						<>
-							<Loading />
-							<div style={{ height: "500px" }}></div>
-						</>
-					) : (
+					{products.length === 0 ? null : (
 						<>
 							<ListItem
-								listItem={products}
-								categories={categories}
+								productList={products}
 								location={location}
 								handleDeleteItem={handleDeleteProduct}
 								handleDeleteSelectedItem={
 									handleDeleteSelectedProduct
 								}
 							/>
-							<Pagination
-								pagination={pagination}
-								location={location}
-							/>
+							<Pagination location={location} />
 						</>
 					)}
 				</Col>
@@ -109,4 +92,4 @@ function MainPage({ pagination }) {
 	);
 }
 
-export default MainPage;
+export default AdminProductPage;

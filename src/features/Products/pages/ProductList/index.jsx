@@ -2,17 +2,12 @@ import Loading from "components/Loading";
 import Pagination from "components/Pagination";
 import SubMenu from "components/SubMenu";
 import ListProducts from "features/Products/components/ListProducts";
-import PropTypes from "prop-types";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Col, Container, Input, Label, Row } from "reactstrap";
 
-ProductList.propTypes = {
-	pagination: PropTypes.object.isRequired,
-};
-
-function ProductList({ pagination }) {
+function ProductList() {
 	const location = useLocation();
 	const products = useSelector((state) => state.products.listProduct);
 
@@ -68,10 +63,7 @@ function ProductList({ pagination }) {
 					<Col>
 						<h3 className='product-list__title'>Tất cả sản phẩm</h3>
 						<ListProducts products={products} />
-						<Pagination
-							pagination={pagination}
-							location={location}
-						/>
+						<Pagination location={location} />
 					</Col>
 				)}
 			</Row>

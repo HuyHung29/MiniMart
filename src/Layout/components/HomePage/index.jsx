@@ -1,0 +1,32 @@
+import { bannerImg, images } from "constant";
+import React from "react";
+import { Col, Container, Row } from "reactstrap";
+
+function HomePage() {
+	return (
+		<>
+			<div className='top-slider'>
+				<img src={images.SLIDER_IMG} alt='slider' />
+			</div>
+			<Container className='home'>
+				<Row className='home__banner'>
+					{bannerImg.map((item, index) => {
+						return (
+							<Col key={index}>
+								<div className='home__banner__item'>
+									<img
+										src={item}
+										alt='banner'
+										className='home__banner__img'
+									/>
+								</div>
+							</Col>
+						);
+					})}
+				</Row>
+			</Container>
+		</>
+	);
+}
+
+export default HomePage;
