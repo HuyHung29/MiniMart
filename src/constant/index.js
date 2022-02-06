@@ -7,6 +7,7 @@ import emptyCart from "assets/img/emptyCart.png";
 import logo from "assets/img/logo.png";
 import logoBlack from "assets/img/logo_footer.png";
 import sliderImg from "assets/img/slider_1.jpeg";
+import listEmpty from "assets/img/list-empty.png";
 
 export const images = {
 	LOGO: logo,
@@ -15,6 +16,7 @@ export const images = {
 	BG_FOOTER: bgFooter,
 	SLIDER_IMG: sliderImg,
 	EMPTYCART: emptyCart,
+	LIST_EMPTY: listEmpty,
 };
 
 export const bannerImg = [banner1, banner2, banner3];

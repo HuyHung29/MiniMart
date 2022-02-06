@@ -1,12 +1,10 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { deleteMultiProduct, deleteProduct } from "app/productsSlice";
-import ListItem from "components/ListItem";
-import Pagination from "components/Pagination";
+import ProductsList from "features/Products/components/ProductsList";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Col, Container, Row } from "reactstrap";
 
 function AdminProductPage() {
 	const products = useSelector((state) => state.products.listProduct);
@@ -70,25 +68,17 @@ function AdminProductPage() {
 
 	// Render main
 	return (
-		<Container fluid>
-			<Row>
-				<Col md='12'>
-					{products.length === 0 ? null : (
-						<>
-							<ListItem
-								productList={products}
-								location={location}
-								handleDeleteItem={handleDeleteProduct}
-								handleDeleteSelectedItem={
-									handleDeleteSelectedProduct
-								}
-							/>
-							<Pagination location={location} />
-						</>
-					)}
-				</Col>
-			</Row>
-		</Container>
+		<>
+			{products.length === 0 ? null : (
+				<>
+					<ProductsList
+						location={location}
+						handleDeleteItem={handleDeleteProduct}
+						handleDeleteSelectedItem={handleDeleteSelectedProduct}
+					/>
+				</>
+			)}
+		</>
 	);
 }
 

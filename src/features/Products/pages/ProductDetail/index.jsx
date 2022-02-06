@@ -31,9 +31,7 @@ function ProductDetail() {
 		sellNumber,
 	} = product ? product : {};
 
-	const productCategory = category
-		? findItemById(category, categories).name
-		: "";
+	const productCategory = category ? findItemById(category, categories) : "";
 
 	const productCurrentPrice = product
 		? (price - price * (discount / 100)).toLocaleString()
@@ -124,7 +122,9 @@ function ProductDetail() {
 													Phân loại{" "}
 												</p>
 												<p className='product-detail__page__info__text--dark'>
-													{productCategory}
+													{productCategory
+														? productCategory.name
+														: ""}
 												</p>
 											</div>
 

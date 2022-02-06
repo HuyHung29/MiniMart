@@ -1,16 +1,22 @@
 import NotFound from "components/NotFound";
+import CategoriesPosts from "features/Other";
+import AddCategories from "features/Other/page/AddCategories";
+import AddEditPosts from "features/Other/page/AddEditPosts";
 import Categories from "features/Other/page/Categories";
 import Posts from "features/Other/page/Posts";
 import Products from "features/Products";
-import ListProducts from "features/Products/components/ListProducts";
 import AddEditProduct from "features/Products/pages/AddEditProduct";
+import AdminProductPage from "features/Products/pages/AdminProductPage";
 import ProductDetail from "features/Products/pages/ProductDetail";
+import ProductList from "features/Products/pages/ProductList";
+import User from "features/User";
 import Address from "features/User/components/Address";
 import Password from "features/User/components/Password";
 import Profile from "features/User/components/Profile";
 import Login from "features/User/pages/Login";
 import MainPage from "features/User/pages/Main";
 import Register from "features/User/pages/Register";
+import AdminHomePage from "Layout/components/AdminHomePage";
 import HomePage from "Layout/components/HomePage";
 import Admin from "Layout/pages/Admin";
 import React from "react";
@@ -20,45 +26,84 @@ export const adminRoutes = [
 	{
 		path: "/",
 		exact: true,
+		common: true,
 		component: HomePage,
+	},
+	{
+		path: "/products",
+		component: Products,
+		common: true,
+		routes: [
+			{
+				path: "/products",
+				exact: true,
+				component: ProductList,
+			},
+			{
+				path: "/products/:productId",
+				component: ProductDetail,
+			},
+		],
 	},
 	{
 		path: "/admin",
 		component: Admin,
 		routes: [
 			{
+				path: "/admin",
+				exact: true,
+				component: AdminHomePage,
+			},
+			{
 				path: "/admin/products",
 				component: Products,
 				routes: [
+					{
+						path: "/admin/products",
+						exact: true,
+						component: AdminProductPage,
+					},
 					{
 						path: "/admin/products/add",
 						component: AddEditProduct,
 					},
 					{
 						path: "/admin/products/edit/:editProductId",
+						component: AddEditProduct,
 					},
 				],
 			},
 			{
 				path: "/admin/posts",
-				component: Posts,
+				component: CategoriesPosts,
 				routes: [
 					{
+						path: "/admin/posts",
+						exact: true,
+						component: Posts,
+					},
+					{
 						path: "/admin/posts/add",
-						component: AddEditProduct,
+						component: AddEditPosts,
 					},
 					{
 						path: "/admin/posts/edit/:editPostId",
+						component: AddEditPosts,
 					},
 				],
 			},
 			{
 				path: "/admin/categories",
-				component: Categories,
+				component: CategoriesPosts,
 				routes: [
 					{
+						path: "/admin/categories",
+						exact: true,
+						component: Categories,
+					},
+					{
 						path: "/admin/categories/add",
-						component: AddEditProduct,
+						component: AddCategories,
 					},
 				],
 			},
@@ -70,15 +115,9 @@ export const adminRoutes = [
 				path: "/admin/address",
 				component: Address,
 			},
-		],
-	},
-	{
-		path: "/products",
-		component: ListProducts,
-		routes: [
 			{
-				path: "/products/:productId",
-				component: ProductDetail,
+				path: "/admin/password",
+				component: Password,
 			},
 		],
 	},
@@ -95,8 +134,13 @@ export const userRoutes = [
 	},
 	{
 		path: "/user",
-		component: MainPage,
+		component: User,
 		routes: [
+			{
+				path: "/user",
+				exact: true,
+				component: () => <Redirect to='/user/profile' />,
+			},
 			{
 				path: "/user/login",
 				component: () => <Redirect to='/user/profile' />,
@@ -107,22 +151,39 @@ export const userRoutes = [
 			},
 			{
 				path: "/user/profile",
-				component: Profile,
+				component: () => (
+					<MainPage>
+						<Profile />
+					</MainPage>
+				),
 			},
 			{
 				path: "/user/address",
-				component: Address,
+				component: () => (
+					<MainPage>
+						<Address />
+					</MainPage>
+				),
 			},
 			{
 				path: "/user/password",
-				component: Password,
+				component: () => (
+					<MainPage>
+						<Password />
+					</MainPage>
+				),
 			},
 		],
 	},
 	{
 		path: "/products",
-		component: ListProducts,
+		component: Products,
 		routes: [
+			{
+				path: "/products",
+				exact: true,
+				component: ProductList,
+			},
 			{
 				path: "/products/:productId",
 				component: ProductDetail,
@@ -134,16 +195,11 @@ export const userRoutes = [
 	},
 ];
 
-export const guestRoute = [
+export const guestRoutes = [
 	{
 		path: "/",
 		exact: true,
 		component: HomePage,
-	},
-	{
-		path: "/user",
-		exact: true,
-		component: () => <Redirect to='/user/login' />,
 	},
 	{
 		path: "/user/login",
@@ -155,8 +211,13 @@ export const guestRoute = [
 	},
 	{
 		path: "/products",
-		component: ListProducts,
+		component: Products,
 		routes: [
+			{
+				path: "/products",
+				exact: true,
+				component: ProductList,
+			},
 			{
 				path: "/products/:productId",
 				component: ProductDetail,

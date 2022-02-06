@@ -80,6 +80,17 @@ function HeaderAdmin() {
 									Tài khoản
 								</p>
 							</div>
+							<div className='header--admin__task__menu__item'>
+								<Link
+									to='/'
+									className='header--admin__task__menu__icon yellow'>
+									<i className='fas fa-sign-out-alt'></i>
+								</Link>
+
+								<p className='header--admin__task__menu__title'>
+									Trang chủ
+								</p>
+							</div>
 						</div>
 					</div>
 					<p className='header--admin__task__notification'>

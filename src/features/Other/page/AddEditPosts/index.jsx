@@ -1,9 +1,5 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import {
-	createProduct,
-	fetchCurrentProduct,
-	updateProduct,
-} from "app/productsSlice";
+import { createPost, fetchCurrentPost, updatePost } from "app/postsSlice";
 import AddEditForm from "components/AddEditForm";
 import Loading from "components/Loading";
 import React, { useEffect } from "react";
@@ -13,12 +9,12 @@ import { toast } from "react-toastify";
 import { Col, Container, Row } from "reactstrap";
 import * as yup from "yup";
 
-function AddEditProduct() {
+function AddEditPosts() {
 	const dispatch = useDispatch();
-	const { editProductId } = useParams();
+	const { editPostId } = useParams();
 	const history = useHistory();
-	const isEdit = !!editProductId;
-	const editProduct = useSelector((state) => state.products.currentProduct);
+	const isEdit = !!editPostId;
+	const editPost = useSelector((state) => state.posts.currentPost);
 
 	const schema = yup
 		.object({
@@ -33,55 +29,34 @@ function AddEditProduct() {
 						})
 						.required("CHọn ảnh cho sản phẩm")
 				: yup.array().required(),
-			price: yup
-				.number()
-				.typeError("Giá sản phầm phải là số")
-				.min(0, "Giá phải là số dương")
-				.required("Vui lòng nhập trường này"),
-			discount: yup
-				.number()
-				.typeError("Giá sản phầm phải là số")
-				.min(0, "Giá phải là số dương")
-				.required("Vui lòng nhập trường này"),
-			country: yup.string().required("Vui lòng nhập trường này"),
-			unit: yup.string().required("Vui lòng nhập trường này"),
-			category: yup.string().required("Vui lòng nhập trường này"),
 		})
 		.required();
 
 	useEffect(() => {
 		if (isEdit) {
-			const fetchEditProduct = async () => {
+			const fetchEditPost = async () => {
 				try {
-					const action = fetchCurrentProduct(editProductId);
+					const action = fetchCurrentPost(editPostId);
 					await dispatch(action);
 				} catch (error) {}
 			};
 
-			fetchEditProduct();
+			fetchEditPost();
 		}
-	}, [isEdit, editProductId, dispatch]);
+	}, [isEdit, editPostId, dispatch]);
 
 	const defaultValues =
-		isEdit && !!editProduct
+		isEdit && !!editPost
 			? {
-					title: editProduct.title,
-					price: editProduct.price,
-					discount: editProduct.discount,
-					country: editProduct.country,
-					unit: editProduct.unit,
-					category: editProduct.category,
-					pictures: editProduct.pictures,
+					title: editPost.title,
+					pictures: editPost.pictures,
 					newPictures: "",
-					description: editProduct.description,
+					description: editPost.description
+						? editPost.description
+						: "",
 			  }
 			: {
 					title: "",
-					price: "",
-					discount: "",
-					country: "",
-					unit: "",
-					category: "",
 					pictures: "",
 					description: "",
 			  };
@@ -109,12 +84,12 @@ function AddEditProduct() {
 			}
 		}
 
-		const fetchAddEditProduct = async () => {
+		const fetchAddEditPosts = async () => {
 			let action = "";
 			if (isEdit) {
-				action = updateProduct({ editProductId, formData });
+				action = updatePost({ editPostId, formData });
 			} else {
-				action = createProduct(formData);
+				action = createPost(formData);
 			}
 			try {
 				const response = await dispatch(action);
@@ -125,11 +100,11 @@ function AddEditProduct() {
 			}
 		};
 
-		toast.promise(fetchAddEditProduct, {
+		toast.promise(fetchAddEditPosts, {
 			pending: "Đang xử lý",
 			success: isEdit
 				? "Cập nhật thành công"
-				: "Thêm sản phẩm thành công",
+				: "Thêm bài viết thành công",
 			error: {
 				render({ data }) {
 					return data.message;
@@ -148,13 +123,13 @@ function AddEditProduct() {
 				/>
 			);
 		} else {
-			if (Object.entries(editProduct).length !== 0) {
+			if (Object.entries(editPost).length !== 0) {
 				return (
 					<AddEditForm
 						schema={schema}
 						defaultValues={defaultValues}
 						onSubmit={onSubmit}
-						editItem={editProduct ? editProduct : undefined}
+						editItem={editPost ? editPost : undefined}
 					/>
 				);
 			} else return <Loading />;
@@ -167,10 +142,10 @@ function AddEditProduct() {
 				<Col className='bg-white shadow-sm p-5'>
 					<div className='add-edit__header'>
 						<h1 className='add-edit__heading'>
-							{isEdit ? "Sửa sản phẩm" : "Thêm 1 sản phẩm mới"}
+							{isEdit ? "Sửa bài viết" : "Thêm 1 bài viết mới"}
 						</h1>
 						<p className='add-edit__sub-heading'>
-							Vui lòng điền thông tin sản phẩm
+							Vui lòng điền thông tin bài viết
 						</p>
 					</div>
 					{renderForm()}
@@ -180,4 +155,4 @@ function AddEditProduct() {
 	);
 }
 
-export default AddEditProduct;
+export default AddEditPosts;

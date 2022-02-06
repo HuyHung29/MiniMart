@@ -1,4 +1,10 @@
+.admin__component .profile {
+	padding: 40px 30px;
+}
+
 .profile {
+	background-color: white;
+
 	&__header {
 		padding: 0 0 18px;
 		border-bottom: 1px solid $border-color;

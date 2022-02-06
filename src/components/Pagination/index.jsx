@@ -22,6 +22,7 @@ function Pagination({ location }) {
 	const numberOfPage = Math.ceil(total / limit);
 
 	const changePage = (number) => {
+		window.scrollTo(0, 0);
 		if (search) {
 			return page
 				? search.replace(`page=${page}`, `page=${number}`)

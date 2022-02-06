@@ -1,22 +1,13 @@
-import NotFound from "components/NotFound";
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import AddCategoriesPage from "./page/AddEditCategories";
-import Categories from "./page/Categories";
-import Posts from "./page/Posts";
+import { Switch } from "react-router-dom";
+import RouteWithSubRoutes from "routes/components/RouteWithSubRoutes";
 
-function CategoriesPosts() {
+function CategoriesPosts({ routes }) {
 	return (
 		<Switch>
-			<Route path='/admin/categories' exact component={Categories} />
-			<Route path='/admin/categories/add' component={AddCategoriesPage} />
-			<Route path='/admin/posts' exact component={Posts} />
-			<Route path='/admin/posts/add' component={AddCategoriesPage} />
-			<Route
-				path='/admin/posts/edit/:editPostId'
-				component={AddCategoriesPage}
-			/>
-			<Route component={NotFound} />
+			{routes.map((route, i) => (
+				<RouteWithSubRoutes key={i} {...route} />
+			))}
 		</Switch>
 	);
 }

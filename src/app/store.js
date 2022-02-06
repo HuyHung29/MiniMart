@@ -4,6 +4,7 @@ import categoriesReducer from "app/categoriesSlice";
 import productsReducer from "app/productsSlice";
 import purchaseReducer from "app/purchaseSlide";
 import uiReducer from "app/uiSlice";
+import postsReducer from "app/postsSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
 		categories: categoriesReducer,
 		products: productsReducer,
 		purchase: purchaseReducer,
+		posts: postsReducer,
 		ui: uiReducer,
 	},
 });

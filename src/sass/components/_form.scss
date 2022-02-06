@@ -1,125 +1,146 @@
 .form {
-    margin-top: 20px;
-    margin-bottom: 50px;
+	margin-top: 20px;
+	margin-bottom: 50px;
 
-    &__wrap {
-        padding: 0 40px;
-    }
+	&__wrap {
+		padding: 0 40px;
+	}
 
-    &__title {
-        text-transform: uppercase;
-        text-align: center;
-        margin-bottom: 15px;
-    }
+	&__title {
+		text-transform: uppercase;
+		text-align: center;
+		margin-bottom: 15px;
+	}
 
-    &__btn {
-        font-size: 1.5rem;
-        margin: 20px 0;
-        padding: 6px 15px;
-        min-width: 100px;
+	&__btn {
+		font-size: 1.5rem;
+		margin: 20px 0;
+		padding: 6px 15px;
+		min-width: 100px;
 
-        & + & {
-            margin-left: 15px;
-        }
+		& + & {
+			margin-left: 15px;
+		}
 
-        &--block {
-            display: block;
-            width: 100%;
-        }
+		&--block {
+			display: block;
+			width: 100%;
+		}
 
-        &:hover, &:focus {
-            background-color: white;
-            color: $secondary-color;
-            border-color: $secondary-color;
-        }
+		&:hover,
+		&:focus {
+			background-color: white;
+			color: $secondary-color;
+			border-color: $secondary-color;
+		}
 
-        &:focus {
-            box-shadow: 0 0 0 0.25rem rgba($color: $secondary-color, $alpha: 0.5);
-        }
+		&:focus {
+			box-shadow: 0 0 0 0.25rem
+				rgba($color: $secondary-color, $alpha: 0.5);
+		}
 
-        &--success {
-            background-color: $secondary-color;
-            border-color: $secondary-color;
-        }
+		&--success {
+			background-color: $secondary-color;
+			border-color: $secondary-color;
+		}
 
-        &--danger {
-            background-color: var(--bs-danger);
-            border-color: var(--bs-danger);
+		&--danger {
+			background-color: var(--bs-danger);
+			border-color: var(--bs-danger);
 
-            &:hover, &:focus {
-                background-color: white;
-                color: var(--bs-danger);
-                border-color: var(--bs-danger);
-            }
-    
-            &:focus {
-                box-shadow: 0 0 0 0.25rem rgba($color: var(--bs-danger), $alpha: 0.5);
-            }
-        }
-    }
+			&:hover,
+			&:focus {
+				background-color: white;
+				color: var(--bs-danger);
+				border-color: var(--bs-danger);
+			}
 
-    &__redirect {
-        font-size: 1.4rem;
-        margin-bottom: 10px;
-        text-align: center;
+			&:focus {
+				box-shadow: 0 0 0 0.25rem
+					rgba($color: var(--bs-danger), $alpha: 0.5);
+			}
+		}
+	}
 
-        &__link {
-            color: $secondary-color;
-            transition: color 0.2s ease-in;
-            cursor: pointer;
+	&__redirect {
+		font-size: 1.4rem;
+		margin-bottom: 10px;
+		text-align: center;
 
-            &:hover {
-                color: $primary-color;
-            }
-        }
-    }
+		&__link {
+			color: $secondary-color;
+			transition: color 0.2s ease-in;
+			cursor: pointer;
 
-    &__social-login {
-        margin-top: 40px;
-        text-align: center;
+			&:hover {
+				color: $primary-color;
+			}
+		}
+	}
 
-        &__title {
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-        }
+	&__social-login {
+		margin-top: 40px;
+		text-align: center;
 
-        &__list {
-            @include flex(center, center);
-            column-gap: 15px;
-        }
+		&__title {
+			font-size: 1.5rem;
+			font-weight: 500;
+			margin-bottom: 20px;
+		}
 
-        &__item {
-            @include flex(center);
-            font-size: 1.4rem;
-            color: white;
-            padding: 10px;
-            min-width: 120px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.2s ease-in;
+		&__list {
+			@include flex(center, center);
+			column-gap: 15px;
+		}
 
-            &__icon {
-                font-size: 2rem;
-                margin-right: 5px;
-            }
+		&__item {
+			@include flex(center);
+			font-size: 1.4rem;
+			color: white;
+			padding: 10px;
+			min-width: 120px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all 0.2s ease-in;
 
-            &__text {
-                flex: 1;
-                text-align: center;
-            }
+			&__icon {
+				font-size: 2rem;
+				margin-right: 5px;
+			}
 
-            &--facebook {
-                background-color: #3B5999;
-            }
+			&__text {
+				flex: 1;
+				text-align: center;
+			}
 
-            &--google {
-                background-color: #F4574C;
-            }
+			&--facebook {
+				background-color: #3b5999;
+			}
 
-            &:hover {
-                opacity: 0.6;
-            }
-        }
-    }
+			&--google {
+				background-color: #f4574c;
+			}
+
+			&:hover {
+				opacity: 0.6;
+			}
+		}
+	}
+}
+
+.add-edit {
+	&__header {
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid $border-color;
+	}
+
+	&__heading {
+		font-weight: 400;
+	}
+
+	&__sub-heading {
+		font-size: 1.3rem;
+		color: $sub-text-color;
+	}
 }

@@ -22,10 +22,10 @@ function NavBarAdmin() {
 	return (
 		<div className='navbar--admin'>
 			<ul className='navbar--admin__list'>
-				<li
-					className='navbar--admin__item'
-					onClick={() => toggleActiveTask("orders")}>
-					<div className='navbar--admin__item--wrap'>
+				<li className='navbar--admin__item'>
+					<div
+						className='navbar--admin__item--wrap'
+						onClick={() => toggleActiveTask("orders")}>
 						<p className='navbar--admin__item__title'>
 							<i className='fas fa-clipboard'></i> Quản lý đơn
 							hàng
@@ -65,10 +65,10 @@ function NavBarAdmin() {
 						</li>
 					</ul>
 				</li>
-				<li
-					className='navbar--admin__item'
-					onClick={() => toggleActiveTask("products")}>
-					<div className='navbar--admin__item--wrap'>
+				<li className='navbar--admin__item'>
+					<div
+						className='navbar--admin__item--wrap'
+						onClick={() => toggleActiveTask("products")}>
 						<p className='navbar--admin__item__title'>
 							<i className='fas fa-box'></i> Quản lý sản phẩm
 						</p>
@@ -87,6 +87,7 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/products'
+								exact
 								className='navbar--admin__sublink'>
 								Tất cả sản phẩm
 							</NavLink>
@@ -94,16 +95,17 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/products/add'
+								exact
 								className='navbar--admin__sublink'>
 								Thêm sản phẩm
 							</NavLink>
 						</li>
 					</ul>
 				</li>
-				<li
-					className='navbar--admin__item'
-					onClick={() => toggleActiveTask("posts")}>
-					<div className='navbar--admin__item--wrap'>
+				<li className='navbar--admin__item'>
+					<div
+						className='navbar--admin__item--wrap'
+						onClick={() => toggleActiveTask("posts")}>
 						<p className='navbar--admin__item__title'>
 							<i className='fab fa-megaport'></i> Quản lý bài viết
 						</p>
@@ -122,6 +124,7 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/posts'
+								exact
 								className='navbar--admin__sublink'>
 								Tất cả bài viết
 							</NavLink>
@@ -129,16 +132,17 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/posts/add'
+								exact
 								className='navbar--admin__sublink'>
 								Thêm bài viết
 							</NavLink>
 						</li>
 					</ul>
 				</li>
-				<li
-					className='navbar--admin__item'
-					onClick={() => toggleActiveTask("categories")}>
-					<div className='navbar--admin__item--wrap'>
+				<li className='navbar--admin__item'>
+					<div
+						className='navbar--admin__item--wrap'
+						onClick={() => toggleActiveTask("categories")}>
 						<p className='navbar--admin__item__title'>
 							<i className='fas fa-thumbtack'></i> Quản lý danh
 							mục
@@ -158,6 +162,7 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/categories'
+								exact
 								className='navbar--admin__sublink'>
 								Tất cả danh mục
 							</NavLink>
@@ -165,16 +170,17 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/categories/add'
+								exact
 								className='navbar--admin__sublink'>
 								Thêm danh mục
 							</NavLink>
 						</li>
 					</ul>
 				</li>
-				<li
-					className='navbar--admin__item'
-					onClick={() => toggleActiveTask("account")}>
-					<div className='navbar--admin__item--wrap'>
+				<li className='navbar--admin__item'>
+					<div
+						className='navbar--admin__item--wrap'
+						onClick={() => toggleActiveTask("account")}>
 						<p className='navbar--admin__item__title'>
 							<i className='fas fa-user-cog'></i> Quản lý tài
 							khoản
@@ -194,6 +200,7 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/address'
+								exact
 								className='navbar--admin__sublink'>
 								Địa chỉ
 							</NavLink>
@@ -201,8 +208,17 @@ function NavBarAdmin() {
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/info'
+								exact
 								className='navbar--admin__sublink'>
 								Tài khoản
+							</NavLink>
+						</li>
+						<li className='navbar--admin__subitem'>
+							<NavLink
+								to='/admin/password'
+								exact
+								className='navbar--admin__sublink'>
+								Mật khẩu
 							</NavLink>
 						</li>
 					</ul>

@@ -19,13 +19,6 @@
 		font-size: 1.5rem;
 		font-weight: 500;
 		text-transform: capitalize;
-
-		&::after {
-			content: "*";
-			color: red;
-			margin-left: 5px;
-			font-size: 1.4rem;
-		}
 	}
 
 	&__control {
@@ -59,23 +52,27 @@
 .select {
 	flex: 1;
 	font-size: 1.4rem;
+	cursor: pointer;
 
 	margin: 15px 0;
 	&__label {
 		font-size: 1.5rem;
 		font-weight: 500;
 		text-transform: capitalize;
-
-		&::after {
-			content: "*";
-			color: red;
-			margin-left: 5px;
-			font-size: 1.4rem;
-		}
 	}
 
 	&__input__control {
 		padding: 4px;
+	}
+
+	.is-invalid &__input__control {
+		&:hover {
+			border-color: #dc3545;
+		}
+
+		&--is-focused {
+			box-shadow: 0 0 1px #dc3545;
+		}
 	}
 
 	&__error {

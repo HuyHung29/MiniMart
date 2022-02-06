@@ -1,17 +1,13 @@
 import { fetchProducts } from "app/productsSlice";
 import qs from "query-string";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Route, Switch, useLocation } from "react-router-dom";
-import AddEditProduct from "./pages/AddEditProduct";
-import AdminProductPage from "./pages/AdminMainPage";
-import ProductDetail from "./pages/ProductDetail";
-import ProductList from "./pages/ProductList";
+import { useDispatch } from "react-redux";
+import { Switch, useLocation } from "react-router-dom";
+import RouteWithSubRoutes from "routes/components/RouteWithSubRoutes";
 
-function Products() {
+function Products({ routes }) {
 	const dispatch = useDispatch();
 	const location = useLocation();
-	const { role } = useSelector((state) => state.users.user);
 
 	const { page, sort, search, limit } = qs.parse(location.search);
 
@@ -45,38 +41,11 @@ function Products() {
 	}, [dispatch, filter]);
 
 	return (
-		<>
-			{role === "admin" ? (
-				<Switch>
-					<Route
-						path='/admin/products'
-						exact
-						component={AdminProductPage}
-					/>
-					<Route
-						path='/admin/products/add'
-						component={AddEditProduct}
-					/>
-					<Route
-						path='/admin/products/edit/:editProductId'
-						component={AddEditProduct}
-					/>
-					<Route path='/products' exact component={ProductList} />
-					<Route
-						path='/products/:productId'
-						component={ProductDetail}
-					/>
-				</Switch>
-			) : (
-				<Switch>
-					<Route path='/products' exact component={ProductList} />
-					<Route
-						path='/products/:productId'
-						component={ProductDetail}
-					/>
-				</Switch>
-			)}
-		</>
+		<Switch>
+			{routes.map((route, i) => (
+				<RouteWithSubRoutes key={i} {...route} />
+			))}
+		</Switch>
 	);
 }
 

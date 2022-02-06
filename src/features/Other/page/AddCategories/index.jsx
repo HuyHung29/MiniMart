@@ -7,10 +7,11 @@ const schema = yup.object({
 	name: yup.string().required("Vui lòng nhập tên danh mục"),
 });
 
-function AddCategoriesPage() {
+function AddCategories() {
 	const defaultValues = {
 		name: "",
 	};
+
 	const onSubmit = (data) => {
 		console.log(data);
 	};
@@ -18,21 +19,24 @@ function AddCategoriesPage() {
 	return (
 		<Container>
 			<Row>
-				<Col />
-				<Col md='8'>
-					<h2 className='add-edit-page text-center my-5'>
-						"Thêm danh mục"
-					</h2>
+				<Col className='bg-white shadow-sm p-5'>
+					<div className='add-edit__header'>
+						<h1 className='add-edit__heading'>
+							Thêm 1 danh mục mới
+						</h1>
+						<p className='add-edit__sub-heading'>
+							Vui lòng điền thông tin danh mục
+						</p>
+					</div>
 					<AddEditForm
-						onSubmit={onSubmit}
-						defaultValues={defaultValues}
 						schema={schema}
+						defaultValues={defaultValues}
+						onSubmit={onSubmit}
 					/>
 				</Col>
-				<Col />
 			</Row>
 		</Container>
 	);
 }
 
-export default AddCategoriesPage;
+export default AddCategories;
