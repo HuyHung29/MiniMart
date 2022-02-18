@@ -9,12 +9,11 @@ function Products({ routes }) {
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	const { page, sort, search, limit } = qs.parse(location.search);
+	const { page, sort, limit } = qs.parse(location.search);
 
 	const [filter, setFilter] = useState({
 		page: page,
 		sort: sort,
-		search: search,
 		limit: limit || 20,
 	});
 
@@ -23,10 +22,9 @@ function Products({ routes }) {
 			...prev,
 			page: page,
 			sort: sort,
-			search: search,
 			limit: limit || 20,
 		}));
-	}, [page, sort, search, limit]);
+	}, [page, sort, limit]);
 
 	useEffect(() => {
 		const fetchProductWithFilter = async () => {
