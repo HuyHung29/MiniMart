@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Col } from "reactstrap";
+import cls from "classnames";
 
 ProductCard.propTypes = {
 	product: PropTypes.object.isRequired,
@@ -22,7 +23,12 @@ function ProductCard({ product, width }) {
 	).toLocaleString();
 
 	return (
-		<Col md={width} className='product-card--wrap'>
+		<Col
+			md={width !== "2-4" ? width : ""}
+			className={cls({
+				"product-card--wrap": true,
+				"col-2-4": width === "2-4",
+			})}>
 			<div className='product-card'>
 				<Link
 					to={`/products/${title.replaceAll(" ", "-")}?id=${_id}`}

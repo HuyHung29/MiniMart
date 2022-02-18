@@ -27,10 +27,11 @@
 
 	&__icon {
 		font-size: 1.2rem;
+		margin-right: 40px;
+		transition: transform 0.25s ease-in;
 
 		&.active {
 			transform: rotate(90deg);
-			transition: transform 0.25s ease-in;
 		}
 	}
 }

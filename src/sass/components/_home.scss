@@ -1,19 +1,105 @@
 .home {
-    &__banner {
-        margin-top: 30px;
+	&__banner {
+		margin-top: 30px;
 
-        &__item {
-            overflow: hidden;
-        }
+		&__item {
+			overflow: hidden;
+		}
 
-        &__img {
-            transition: all 0.25s ease-in-out;
-            transform-origin: center;cursor: pointer;
+		&__img {
+			transition: all 0.25s ease-in-out;
+			transform-origin: center;
+			cursor: pointer;
+			width: 100%;
+			object-fit: contain;
 
-            &:hover {
-                transform: scale(1.1);
-                filter: opacity(0.8);
-            }
-        }
-    }
+			&:hover {
+				transform: scale(1.1);
+				filter: opacity(0.8);
+			}
+		}
+	}
+
+	&__link--wrap {
+		padding: 15px 0;
+		margin-bottom: 20px;
+		position: relative;
+		border-bottom: 1px solid $border-color;
+
+		&::before {
+			content: "";
+			display: block;
+			border: 3px solid $primary-color;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 50px;
+		}
+	}
+
+	&__link {
+		display: inline-block;
+		font-size: 2.8rem;
+		font-weight: 500;
+		transition: 0.25s ease-in;
+
+		&:hover {
+			color: $primary-color;
+		}
+	}
+
+	&__slider {
+		margin: 20px 0;
+
+		& .slick-slide {
+			padding-right: 0;
+		}
+
+		& .product-card--wrap {
+			padding: 0 15px 0 0;
+		}
+	}
+
+	&__post {
+		&__list {
+			background-color: white;
+			padding: 20px 15px;
+			margin-bottom: 50px;
+		}
+
+		&__item {
+			@include flex();
+
+			&__img {
+				display: block;
+				flex: 0 0 40%;
+				max-width: 40%;
+
+				& img {
+					border-radius: 3px;
+				}
+			}
+
+			&__content {
+				margin-left: 10px;
+			}
+
+			&__link {
+				display: -webkit-box;
+				font-size: 1.6rem;
+				font-weight: 500;
+				width: 100%; // chiều rộng bằng khối bao nó
+				overflow: hidden; // ẩn các nội dung khi kích thước lớn hơn chiều rộng khối bên ngoài
+				text-overflow: ellipsis; //thêm 3 dấu chấm ở cuối
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				margin-bottom: 10px;
+				transition: 0.25s ease-in;
+
+				&:hover {
+					color: $primary-color;
+				}
+			}
+		}
+	}
 }

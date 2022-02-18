@@ -24,7 +24,10 @@ const schema = yup
 			.required("Vui lòng nhập trường này"),
 		confirmNewPassword: yup
 			.string()
-			.oneOf([yup.ref("newPassword"), null], "Password must match")
+			.oneOf(
+				[yup.ref("newPassword"), null],
+				"Mật khẩu và Mật khẩu xác nhận không giống nhau"
+			)
 			.required("Vui lòng nhập trường này"),
 	})
 	.required();
@@ -79,67 +82,71 @@ function Password() {
 				</p>
 			</div>
 			<Form
-				className='profile__user'
+				className='profile__user d-flex'
 				id='profile-form'
 				onSubmit={handleSubmit(onUserChangePassword)}>
-				<div className='profile__user__field'>
-					<p className='profile__user__label xl'>Mật khẩu hiện tại</p>
-					<Controller
-						name='password'
-						control={control}
-						render={({ field }) => (
-							<InputField
-								{...field}
-								errors={errors}
-								label=''
-								placeholder='Mật khẩu hiện tại'
-								ref={null}
-								className='profile__user__input'
-							/>
-						)}
-					/>
-				</div>
-				<div className='profile__user__field'>
-					<p className='profile__user__label xl'>Mật khẩu mới</p>
-					<Controller
-						name='newPassword'
-						control={control}
-						render={({ field }) => (
-							<InputField
-								{...field}
-								errors={errors}
-								label=''
-								placeholder='Mật khẩu mới'
-								ref={null}
-								className='profile__user__input'
-							/>
-						)}
-					/>
-				</div>
-				<div className='profile__user__field'>
-					<p className='profile__user__label xl'>Xác nhận mật khẩu</p>
-					<Controller
-						name='confirmNewPassword'
-						control={control}
-						render={({ field }) => (
-							<InputField
-								{...field}
-								errors={errors}
-								label=''
-								placeholder='Xác nhận khẩu mới'
-								ref={null}
-								className='profile__user__input'
-							/>
-						)}
-					/>
-				</div>
+				<div className='profile__user__contain'>
+					<div className='profile__user__field'>
+						<p className='profile__user__label xl'>
+							Mật khẩu hiện tại
+						</p>
+						<Controller
+							name='password'
+							control={control}
+							render={({ field }) => (
+								<InputField
+									{...field}
+									errors={errors}
+									label=''
+									ref={null}
+									className='profile__user__input'
+								/>
+							)}
+						/>
+					</div>
+					<div className='profile__user__field'>
+						<p className='profile__user__label xl'>Mật khẩu mới</p>
+						<Controller
+							name='newPassword'
+							control={control}
+							render={({ field }) => (
+								<InputField
+									{...field}
+									errors={errors}
+									label=''
+									ref={null}
+									className='profile__user__input'
+								/>
+							)}
+						/>
+					</div>
+					<div className='profile__user__field'>
+						<p className='profile__user__label xl'>
+							Xác nhận mật khẩu
+						</p>
+						<Controller
+							name='confirmNewPassword'
+							control={control}
+							render={({ field }) => (
+								<InputField
+									{...field}
+									errors={errors}
+									label=''
+									ref={null}
+									className='profile__user__input'
+								/>
+							)}
+						/>
+					</div>
 
-				<Button
-					className='profile__user__action xl'
-					type='submit'
-					disabled={!isDirty || !isValid}>
-					Xác nhận
-				</Button>
+					<Button
+						className='profile__user__action xl'
+						type='submit'
+						disabled={!isDirty || !isValid}>
+						Xác nhận
+					</Button>
+				</div>
+				<p className='forget-password'>Quên mật khẩu?</p>
 			</Form>
 		</div>
 	);

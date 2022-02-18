@@ -19,16 +19,13 @@ AddToCartBtn.defaultProps = {
 
 function AddToCartBtn({ absolute, product, quantity, onClose }) {
 	const dispatch = useDispatch();
-	const { _id: id, title, pictures, price, discount } = product;
+	const { _id } = product;
 	const isInCart = !!useSelector((state) =>
-		state.purchase.cart.find((item) => item.id === id)
+		state.purchase.cart.find((item) => item._id === _id)
 	);
 
 	const productCart = {
-		id,
-		name: title,
-		picture: pictures[0],
-		price: price - price * (discount / 100),
+		productId: _id,
 		quantity,
 	};
 

@@ -12,20 +12,20 @@ CartPageItem.propTypes = {
 
 function CartPageItem({ item, handleCheck, checkList }) {
 	const dispatch = useDispatch();
-	const { id, name, price, quantity, picture } = item;
+	const { _id, title, price, quantity, pictures } = item;
 
 	const onDeleteFromCart = () => {
-		dispatch(deleteFromCart(id));
+		dispatch(deleteFromCart(_id));
 	};
 
 	const onUpdateCartPlus = () => {
 		const newQuantity = quantity + 1;
-		dispatch(updateCart({ id, newQuantity }));
+		dispatch(updateCart({ id: _id, newQuantity }));
 	};
 
 	const onUpdateCartMinus = () => {
 		const newQuantity = quantity > 0 ? quantity - 1 : 0;
-		dispatch(updateCart({ id, newQuantity }));
+		dispatch(updateCart({ id: _id, newQuantity }));
 	};
 
 	const onUpdateCartTyping = (e) => {
@@ -33,10 +33,11 @@ function CartPageItem({ item, handleCheck, checkList }) {
 		const value = +target.value;
 		if (value === 0) {
 			const newQuantity = 0;
-			dispatch(updateCart({ id, newQuantity }));
+			dispatch(updateCart({ id: _id, newQuantity }));
 		} else if (value && value < 999) {
 			const newQuantity = value;
-			dispatch(updateCart({ id, newQuantity }));
+			dispatch(updateCart({ id: _id, newQuantity }));
+			e.target.value = newQuantity;
 		}
 	};
 
@@ -46,17 +47,17 @@ function CartPageItem({ item, handleCheck, checkList }) {
 				<input
 					type='checkbox'
 					name='checkbox'
-					value={id}
+					value={_id}
 					onChange={handleCheck}
-					checked={checkList.includes(id)}
+					checked={checkList.includes(_id)}
 				/>
 			</div>
 			<div className='cart-page__item__product'>
-				<Link to={`/products/${name.replaceAll(" ", "-")}?id=${id}`}>
-					<img src={picture} alt='anh' />
+				<Link to={`/products/${title.replaceAll(" ", "-")}?id=${_id}`}>
+					<img src={pictures[0]} alt='anh' />
 				</Link>
-				<Link to={`/products/${name.replaceAll(" ", "-")}?id=${id}`}>
-					<p>{name}</p>
+				<Link to={`/products/${title.replaceAll(" ", "-")}?id=${_id}`}>
+					<p>{title}</p>
 				</Link>
 			</div>
 			<div className='cart-page__item__price'>
@@ -76,7 +77,7 @@ function CartPageItem({ item, handleCheck, checkList }) {
 						onBlur={(e) => {
 							if (+e.target.value === 0) {
 								const newQuantity = 1;
-								dispatch(updateCart({ id, newQuantity }));
+								dispatch(updateCart({ id: _id, newQuantity }));
 							}
 						}}
 						onChange={onUpdateCartTyping}

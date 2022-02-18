@@ -27,6 +27,34 @@ function Header() {
 		history.push("/");
 	};
 
+	const renderLink = () => {
+		return role === "admin" ? (
+			<ul className='header__top__item--sub'>
+				<li className='header__top__item--sub__item'>
+					<Link to='/admin/info'>Tài khoản của tôi</Link>
+				</li>
+				<li className='header__top__item--sub__item'>
+					<Link to='/admin/orders'>Đơn mua</Link>
+				</li>
+				<li className='header__top__item--sub__item' onClick={logout}>
+					Đăng xuất
+				</li>
+			</ul>
+		) : (
+			<ul className='header__top__item--sub'>
+				<li className='header__top__item--sub__item'>
+					<Link to='/user'>Tài khoản của tôi</Link>
+				</li>
+				<li className='header__top__item--sub__item'>
+					<Link to='/user/purchase'>Đơn mua</Link>
+				</li>
+				<li className='header__top__item--sub__item' onClick={logout}>
+					Đăng xuất
+				</li>
+			</ul>
+		);
+	};
+
 	return (
 		<header className='header'>
 			<Container>
@@ -76,21 +104,7 @@ function Header() {
 								<i className='header__top__icon fas fa-user-circle'></i>
 								<p>{name}</p>
 
-								<ul className='header__top__item--sub'>
-									<li className='header__top__item--sub__item'>
-										<Link to='/user'>
-											Tài khoản của tôi
-										</Link>
-									</li>
-									<li className='header__top__item--sub__item'>
-										<Link to='/user/purchase'>Đơn mua</Link>
-									</li>
-									<li
-										className='header__top__item--sub__item'
-										onClick={logout}>
-										Đăng xuất
-									</li>
-								</ul>
+								{renderLink()}
 							</div>
 						) : (
 							<>
@@ -122,8 +136,9 @@ function Header() {
 									onSubmit={(e) => {
 										e.preventDefault();
 										history.push(
-											`/products?search=${e.target.search.value}`
+											`/search?keyword=${e.target.search.value}`
 										);
+										e.target.reset();
 									}}>
 									<InputGroup>
 										<Input

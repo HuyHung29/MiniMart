@@ -1,35 +1,65 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import purchaseApi from "api/purchaseApi";
+import { hideLoading, showLoading } from "./uiSlice";
 
-localStorage.setItem(
-	"cart",
-	JSON.stringify([
-		{
-			id: "61e1b0c381a13684f4821187",
-			name: "Đào đỏ Mỹ",
-			picture:
-				"https://res.cloudinary.com/dt5zd3iz4/image/upload/v1642180802/MiniMart/Product/ulzqmctn6wtyhydnsoyi.jpg",
-			price: 31200,
-			quantity: 1,
-		},
-		{
-			id: "61e1b0f981a13684f482118c",
-			name: "Vải thiều Thanh Hà",
-			picture:
-				"https://res.cloudinary.com/dt5zd3iz4/image/upload/v1642180856/MiniMart/Product/vpfk5ma4i1mo8ckbz4n1.jpg",
-			price: 39500,
-			quantity: 1,
-		},
-	])
-);
-
-const cart = JSON.parse(localStorage.getItem("cart"));
+// const cart = JSON.parse(localStorage.getItem("cart"));
 
 export const fetchOrders = createAsyncThunk(
 	"purchase/fetchOrders",
-	async () => {
+	async (_, { dispatch }) => {
 		try {
+			dispatch(showLoading());
 			const response = await purchaseApi.getOrders();
+			dispatch(hideLoading());
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const changeOrderStatus = createAsyncThunk(
+	"purchase/changeOrderStatus",
+	async ({ status, orderId }) => {
+		console.log(status, orderId);
+		try {
+			const response = await purchaseApi.changeOrderStatus(
+				{ status },
+				orderId
+			);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const fetchCart = createAsyncThunk("purchase/fetchCart", async () => {
+	try {
+		const response = await purchaseApi.getCart();
+		return response.data;
+	} catch (error) {
+		throw error.response.data.message;
+	}
+});
+
+export const addToCart = createAsyncThunk(
+	"purchase/addToCart",
+	async (data) => {
+		try {
+			const response = await purchaseApi.addToCart(data);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const deleteFromCart = createAsyncThunk(
+	"purchase/deleteFromCart",
+	async (id) => {
+		try {
+			const response = await purchaseApi.deleteCartById(id);
 			return response.data;
 		} catch (error) {
 			throw error.response.data.message;
@@ -40,21 +70,10 @@ export const fetchOrders = createAsyncThunk(
 const purchaseSlice = createSlice({
 	name: "purchase",
 	initialState: {
-		cart: cart,
+		cart: [],
 		orders: [],
 	},
 	reducers: {
-		addToCart(state, action) {
-			const isInCart = !!state.cart.find(
-				(item) => item.id === action.payload.id
-			);
-			if (isInCart) {
-			} else {
-				state.cart.unshift(action.payload);
-			}
-
-			localStorage.setItem("cart", JSON.stringify(state.cart));
-		},
 		updateCart(state, action) {
 			const index = state.cart.findIndex(
 				(item) => item.id === action.payload.id
@@ -65,16 +84,7 @@ const purchaseSlice = createSlice({
 
 			localStorage.setItem("cart", JSON.stringify(state.cart));
 		},
-		deleteFromCart(state, action) {
-			const index = state.cart.findIndex(
-				(item) => item.id === action.payload
-			);
-			if (index !== -1) {
-				state.cart.splice(index, 1);
-			}
 
-			localStorage.setItem("cart", JSON.stringify(state.cart));
-		},
 		deleteMultiFromCart(state, action) {
 			const cartIds = action.payload;
 			cartIds.forEach((item) => {
@@ -87,10 +97,47 @@ const purchaseSlice = createSlice({
 			localStorage.setItem("cart", JSON.stringify(state.cart));
 		},
 	},
-	extraReducers: (builder) => {},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchOrders.fulfilled, (state, action) => {
+				state.orders = action.payload.orders;
+			})
+			.addCase(fetchCart.fulfilled, (state, action) => {
+				const cart = action.payload.cart;
+				const { products, quantity } = cart;
+				state.cart = products.map((product, index) => ({
+					...product,
+					quantity: quantity[index],
+				}));
+			})
+			.addCase(addToCart.fulfilled, (state, action) => {
+				const isInCart = !!state.cart.find(
+					(item) => item._id === action.meta.arg.productId
+				);
+				if (isInCart) {
+				} else {
+					const cart = action.payload.cart;
+					const { products, quantity } = cart;
+					state.cart = products.map((product, index) => ({
+						...product,
+						quantity: quantity[index],
+					}));
+				}
+			})
+			.addCase(deleteFromCart.fulfilled, (state, action) => {})
+			.addCase(changeOrderStatus.fulfilled, (state, action) => {
+				const id = action.meta.arg.orderId;
+				const index = state.orders.findIndex(
+					(order) => order._id === id
+				);
+
+				if (index !== -1) {
+					state.orders[index] = action.payload.order;
+				}
+			});
+	},
 });
 
-export const { addToCart, updateCart, deleteFromCart, deleteMultiFromCart } =
-	purchaseSlice.actions;
+export const { updateCart, deleteMultiFromCart } = purchaseSlice.actions;
 
 export default purchaseSlice.reducer;

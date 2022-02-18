@@ -1,19 +1,24 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 
 function MainPage(props) {
 	const { user } = useSelector((state) => state.users);
+	const { pathname } = useLocation();
 	const [isOpen, setIsOpen] = useState(true);
 
-	console.log(props);
+	useEffect(() => {
+		if (pathname.includes("purchase")) {
+			setIsOpen(false);
+		}
+	}, [pathname]);
 
 	return (
 		<Container className='user'>
 			<Row>
-				<Col md='3'>
+				<Col md='2'>
 					<div className='user__nav'>
 						<div className='user__nav__header'>
 							<div className='user__nav__img'>
@@ -21,9 +26,11 @@ function MainPage(props) {
 							</div>
 							<div className='user__nav__basic-info'>
 								<p className='user__nav__text'>{user.name}</p>
-								<p className='user__nav__sub-text'>
+								<Link
+									to='/user/profile'
+									className='user__nav__sub-text'>
 									<i className='fas fa-pen'></i> Sửa hồ sơ
-								</p>
+								</Link>
 							</div>
 						</div>
 
@@ -31,7 +38,6 @@ function MainPage(props) {
 							<li className='user__nav__item'>
 								<i className='fas fa-user'></i>
 								<Link
-									onClick={() => setIsOpen(true)}
 									to='/user/profile'
 									className='user__nav__link'>
 									Tài khoản của tôi
@@ -70,14 +76,12 @@ function MainPage(props) {
 
 							<li className='user__nav__item'>
 								<i className='fas fa-clipboard'></i>
-								<Link
+								<NavLink
+									exact
 									to='/user/purchase'
-									className='user__nav__link'
-									onClick={() => {
-										setIsOpen(false);
-									}}>
+									className='user__nav__link'>
 									Đơn hàng
-								</Link>
+								</NavLink>
 							</li>
 						</ul>
 					</div>

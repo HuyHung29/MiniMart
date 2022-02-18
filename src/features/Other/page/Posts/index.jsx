@@ -1,20 +1,38 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { Button, Input } from "reactstrap";
-import cls from "classnames";
+import { deletePost } from "app/postsSlice";
 import ReadMore from "components/ReadMore";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Button } from "reactstrap";
+import parse from "html-react-parser";
 
 function Posts() {
 	const posts = useSelector((state) => state.posts.listPosts);
+	const dispatch = useDispatch();
 	const { pathname } = useLocation();
-	const [checkList, setCheckList] = useState([]);
 
-	const handleDeleteItem = () => {};
+	const handleDeleteItem = (id) => {
+		if (window.confirm("Bạn có chắn chắn muốn xóa bài viết này")) {
+			const fetchDeletePost = async () => {
+				try {
+					await dispatch(deletePost(id));
+				} catch (error) {
+					throw error;
+				}
+			};
 
-	const handleDeleteSelectedItem = () => {};
-
-	const handleCheck = () => {};
+			toast.promise(fetchDeletePost, {
+				pending: "Đang xử lý",
+				success: "Xóa bài viết thành công",
+				error: {
+					render({ data }) {
+						return data.message;
+					},
+				},
+			});
+		}
+	};
 
 	const renderListPost = () => {
 		return posts.length === 0 ? (
@@ -24,21 +42,11 @@ function Posts() {
 		) : (
 			posts.map((post, index) => (
 				<div className='list__item' key={index}>
-					<div className='list__checkbox list__checkbox--body'>
-						<Input
-							className='check-input shadow-none'
-							type='checkbox'
-							name='checkbox'
-							value={post._id}
-							onChange={handleCheck}
-							checked={checkList.includes(post._id)}
-						/>
-					</div>
-					<div className='list__title'>
-						<p>{post.title}</p>
+					<div className='list__title list__title--post'>
+						<p className='list__title__text'>{post.title}</p>
 					</div>
 					<div className='list__pictures list__pictures--body'>
-						{post.pictures
+						{post.pictures && post.pictures.length > 1
 							? post.pictures.map((img, i) => (
 									<img
 										src={img}
@@ -47,12 +55,19 @@ function Posts() {
 										className='img'
 									/>
 							  ))
-							: ""}
+							: post.pictures.map((img, i) => (
+									<img
+										src={img}
+										key={i}
+										alt='anh'
+										className='img--w-100'
+									/>
+							  ))}
 					</div>
 					<div className='list__desc'>
 						<ReadMore
 							row={4}
-							content={post.description}
+							content={parse(post.description)}
 							readMore={false}
 						/>
 					</div>
@@ -83,23 +98,6 @@ function Posts() {
 			<div className='list-product__action'>
 				<div className='list-product__action__header'>
 					<h3>{posts.length} bài viết</h3>
-					<p
-						className={cls({
-							"list-product__action__header__selected": true,
-							"list-product__action__header__selected--visible":
-								checkList.length > 0,
-						})}>
-						{checkList.length} bài viết được chọn
-					</p>
-					<p
-						onClick={() => handleDeleteSelectedItem(checkList)}
-						className={cls({
-							"list-product__action__header__delete": true,
-							"list-product__action__header__delete--visible":
-								checkList.length > 0,
-						})}>
-						Xóa các bài viết
-					</p>
 				</div>
 
 				<Link className='ms-auto' to={pathname + "/add"}>
@@ -112,16 +110,7 @@ function Posts() {
 
 			<div className='list'>
 				<div className='list__header'>
-					<div className='list__checkbox'>
-						<Input
-							type='checkbox'
-							name='checkAll'
-							value={posts ? posts.map((item) => item._id) : ""}
-							onChange={handleCheck}
-							className='check-input shadow-none'
-						/>
-					</div>
-					<div className='list__title'>
+					<div className='list__title list__title--post'>
 						<p>Tiêu đề bài viết</p>
 					</div>
 					<div className='list__pictures'>

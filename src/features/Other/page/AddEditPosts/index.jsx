@@ -1,7 +1,6 @@
 import { unwrapResult } from "@reduxjs/toolkit";
 import { createPost, fetchCurrentPost, updatePost } from "app/postsSlice";
 import AddEditForm from "components/AddEditForm";
-import Loading from "components/Loading";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -28,7 +27,7 @@ function AddEditPosts() {
 							return value[0].size <= 2000000;
 						})
 						.required("CHọn ảnh cho sản phẩm")
-				: yup.array().required(),
+				: yup.array().nullable(),
 		})
 		.required();
 
@@ -49,7 +48,7 @@ function AddEditPosts() {
 		isEdit && !!editPost
 			? {
 					title: editPost.title,
-					pictures: editPost.pictures,
+					pictures: editPost.pictures ? editPost.pictures : "",
 					newPictures: "",
 					description: editPost.description
 						? editPost.description
@@ -132,7 +131,7 @@ function AddEditPosts() {
 						editItem={editPost ? editPost : undefined}
 					/>
 				);
-			} else return <Loading />;
+			} else return null;
 		}
 	};
 

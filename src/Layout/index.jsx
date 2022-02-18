@@ -1,5 +1,7 @@
 import { fetchCategories } from "app/categoriesSlice";
 import { fetchPosts } from "app/postsSlice";
+import { fetchProducts } from "app/productsSlice";
+import { fetchCart } from "app/purchaseSlide";
 import { fetchUserInfo } from "app/userSlice";
 import Loading from "components/Loading";
 import ScrollToTop from "components/ScrollToTop";
@@ -20,8 +22,10 @@ function Layout() {
 	useEffect(() => {
 		const getNeededInfo = async () => {
 			try {
-				await dispatch(fetchCategories());
-				await dispatch(fetchPosts());
+				dispatch(fetchCategories());
+				dispatch(fetchProducts({ limit: 10 }));
+				dispatch(fetchPosts());
+				dispatch(fetchCart());
 			} catch (error) {
 				throw error;
 			}

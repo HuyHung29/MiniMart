@@ -27,7 +27,7 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 		setValue,
 		handleSubmit,
 		reset,
-		formState: { errors, isSubmitted },
+		formState: { errors, isSubmitting },
 	} = useForm({
 		mode: "all",
 		resolver: yupResolver(schema),
@@ -187,13 +187,13 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 				{renderController()}
 				<Col className='text-center' md='12'>
 					<Button
-						disabled={isSubmitted}
+						disabled={isSubmitting}
 						type='submit'
 						className='form__btn form__btn--success'>
 						{editItem ? "Cập nhật" : "Tạo mới"}
 					</Button>
 					<Button
-						disabled={isSubmitted}
+						disabled={isSubmitting}
 						className='form__btn form__btn--danger'
 						type='reset'
 						onClick={() => {

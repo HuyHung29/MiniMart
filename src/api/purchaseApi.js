@@ -29,7 +29,7 @@ const purchaseApi = {
 		return axiosClient.post(ordersUrl, data);
 	},
 	changeOrderStatus: (data, id) => {
-		return axiosClient.put(ordersUrl + "change-status" + id, data);
+		return axiosClient.put(ordersUrl + "change-status/" + id, data);
 	},
 };
 

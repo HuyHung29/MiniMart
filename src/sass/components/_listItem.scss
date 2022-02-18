@@ -232,6 +232,17 @@
 	&__title {
 		flex: 0 0 20%;
 		max-width: 20%;
+
+		&--post {
+			flex: 0 0 25%;
+			max-width: 25%;
+			text-align: center;
+		}
+
+		&__text {
+			text-align: left;
+			margin-left: 15px;
+		}
 	}
 
 	&__name {
@@ -256,6 +267,13 @@
 				object-fit: cover;
 				border: 1px solid $border-color;
 				border-radius: 3px;
+
+				&--w-100 {
+					max-width: 100%;
+					object-fit: cover;
+					border-radius: 3px;
+					padding: 0 20px;
+				}
 			}
 		}
 	}
@@ -348,109 +366,6 @@
 
 		&:nth-child(even) {
 			background-color: rgba($color: #ccc, $alpha: 0.2);
-		}
-	}
-}
-
-.category-list {
-	background-color: white;
-
-	&__content {
-		padding: 20px 25px;
-
-		&__header {
-			padding-bottom: 20px;
-			border-bottom: 1px solid $border-color;
-
-			& p {
-				font-size: 1.2rem;
-				color: $sub-text-color;
-			}
-		}
-
-		&__body {
-			margin-top: 20px;
-
-			&__header {
-				@include flex(center, space-between);
-
-				&__add {
-					background-color: #ee4d2d;
-					border-color: #ee4d2d;
-					padding: 8px 20px;
-					font-size: 1.4rem;
-
-					&:hover {
-						color: #ee4d2d;
-						background-color: white;
-						border-color: #ee4d2d;
-					}
-
-					&:focus {
-						background-color: #ee4d2d;
-						border-color: #ee4d2d;
-						color: white;
-					}
-
-					& i {
-						margin-right: 5px;
-					}
-				}
-			}
-
-			&__list {
-				margin-top: 20px;
-				border: 1px solid $border-color;
-
-				&__header {
-					@include flex(center);
-					padding: 20px 0;
-					font-size: 1.4rem;
-					background-color: #f6f6f6;
-					border-radius: 3px;
-					color: $sub-text-color;
-				}
-
-				&__item {
-					@include flex(center);
-					padding: 20px 0;
-					font-size: 1.4rem;
-
-					&:nth-child(odd) {
-						background-color: $border-color;
-					}
-
-					&__index {
-						flex: 0 0 10%;
-						max-width: 10%;
-						text-align: center;
-					}
-
-					&__id {
-						flex: 0 0 20%;
-						max-width: 20%;
-						text-align: center;
-					}
-
-					&__name {
-						flex: 0 0 20%;
-						text-align: center;
-						max-width: 20%;
-					}
-
-					&__create {
-						flex: 0 0 25%;
-						text-align: center;
-						max-width: 25%;
-					}
-
-					&__update {
-						flex: 0 0 25%;
-						text-align: center;
-						max-width: 25%;
-					}
-				}
-			}
 		}
 	}
 }

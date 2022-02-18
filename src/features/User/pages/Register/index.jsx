@@ -12,9 +12,7 @@ function Register() {
 		const register = async () => {
 			console.log(data);
 			try {
-				const response = await userApi.register(data);
-				const id = response.data.user._id;
-				await userApi.confirm(id);
+				await userApi.register(data);
 				history.push("/user/login");
 			} catch (error) {
 				throw error;

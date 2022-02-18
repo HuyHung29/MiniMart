@@ -2,7 +2,7 @@ import { deleteMultiFromCart } from "app/purchaseSlide";
 import BuyBtn from "components/BuyBtn";
 import { images } from "constant";
 import CartPageItem from "features/Purchase/components/CartPageItem";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
@@ -11,6 +11,8 @@ function CartMainPage() {
 	const dispatch = useDispatch();
 	const cart = useSelector((state) => state.purchase.cart);
 	const [checkList, setCheckList] = useState([]);
+
+	useEffect(() => {}, [dispatch]);
 
 	const handleCheck = (e) => {
 		const target = e.target;

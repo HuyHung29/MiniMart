@@ -9,7 +9,10 @@ function Admin({ routes }) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (pathname.includes("add") || pathname.includes("edit")) {
+		if (
+			(!pathname.includes("address") && pathname.includes("add")) ||
+			pathname.includes("edit")
+		) {
 			dispatch(hideNavbar());
 		} else dispatch(showNavbar());
 	}, [dispatch, pathname]);

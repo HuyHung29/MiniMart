@@ -3,16 +3,22 @@ import CategoriesPosts from "features/Other";
 import AddCategories from "features/Other/page/AddCategories";
 import AddEditPosts from "features/Other/page/AddEditPosts";
 import Categories from "features/Other/page/Categories";
+import ListPost from "features/Other/page/ListPost";
+import PostDetail from "features/Other/page/PostDetail";
 import Posts from "features/Other/page/Posts";
 import Products from "features/Products";
 import AddEditProduct from "features/Products/pages/AddEditProduct";
 import AdminProductPage from "features/Products/pages/AdminProductPage";
 import ProductDetail from "features/Products/pages/ProductDetail";
 import ProductList from "features/Products/pages/ProductList";
+import ProductSearch from "features/Products/pages/ProductSearch";
+import CartMainPage from "features/Purchase/page/CartMainPage";
+import Orders from "features/Purchase/page/Orders";
 import User from "features/User";
 import Address from "features/User/components/Address";
 import Password from "features/User/components/Password";
 import Profile from "features/User/components/Profile";
+import Purchase from "features/User/components/Purchase";
 import Login from "features/User/pages/Login";
 import MainPage from "features/User/pages/Main";
 import Register from "features/User/pages/Register";
@@ -119,6 +125,36 @@ export const adminRoutes = [
 				path: "/admin/password",
 				component: Password,
 			},
+			{
+				path: "/admin/orders",
+				component: Orders,
+			},
+			{
+				path: "",
+				component: NotFound,
+			},
+		],
+	},
+	{
+		path: "/search",
+		exact: true,
+		common: true,
+		component: ProductSearch,
+	},
+	{
+		path: "/posts",
+		common: true,
+		component: CategoriesPosts,
+		routes: [
+			{
+				path: "/posts",
+				exact: true,
+				component: ListPost,
+			},
+			{
+				path: "/posts/",
+				component: PostDetail,
+			},
 		],
 	},
 	{
@@ -173,6 +209,14 @@ export const userRoutes = [
 					</MainPage>
 				),
 			},
+			{
+				path: "/user/purchase",
+				component: () => (
+					<MainPage>
+						<Purchase />
+					</MainPage>
+				),
+			},
 		],
 	},
 	{
@@ -187,6 +231,31 @@ export const userRoutes = [
 			{
 				path: "/products/:productId",
 				component: ProductDetail,
+			},
+		],
+	},
+	{
+		path: "/cart",
+		exact: true,
+		component: CartMainPage,
+	},
+	{
+		path: "/search",
+		exact: true,
+		component: ProductSearch,
+	},
+	{
+		path: "/posts",
+		component: CategoriesPosts,
+		routes: [
+			{
+				path: "/posts",
+				exact: true,
+				component: ListPost,
+			},
+			{
+				path: "/posts/",
+				component: PostDetail,
 			},
 		],
 	},
@@ -226,13 +295,23 @@ export const guestRoutes = [
 	},
 	{
 		path: "/posts",
-		component: Posts,
+		component: CategoriesPosts,
 		routes: [
 			{
-				path: "/posts/:postId",
-				component: Posts,
+				path: "/posts",
+				exact: true,
+				component: ListPost,
+			},
+			{
+				path: "/posts/",
+				component: PostDetail,
 			},
 		],
+	},
+	{
+		path: "/search",
+		exact: true,
+		component: ProductSearch,
 	},
 	{
 		component: NotFound,

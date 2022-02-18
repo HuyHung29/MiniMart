@@ -4,6 +4,7 @@
 	overflow: hidden; // ẩn các nội dung khi kích thước lớn hơn chiều rộng khối bên ngoài
 	text-overflow: ellipsis; //thêm 3 dấu chấm ở cuối
 	-webkit-box-orient: vertical;
+	text-align: justify;
 
 	font-size: 1.4rem;
 

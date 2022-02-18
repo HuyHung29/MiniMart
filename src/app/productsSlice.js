@@ -16,6 +16,20 @@ export const fetchProducts = createAsyncThunk(
 	}
 );
 
+export const fetchProductsSearch = createAsyncThunk(
+	"products/fetchProductsSearch",
+	async (params, { dispatch }) => {
+		try {
+			dispatch(showLoading());
+			const response = await productsApi.getAllProduct(params);
+			dispatch(hideLoading());
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
 export const fetchCurrentProduct = createAsyncThunk(
 	"products/fetchCurrentProduct",
 	async (id, { dispatch }) => {
@@ -88,6 +102,7 @@ const productsSlice = createSlice({
 			product: {},
 			isShow: false,
 		},
+		productsSearch: [],
 		pagination: {},
 	},
 	reducers: {
@@ -142,6 +157,10 @@ const productsSlice = createSlice({
 						1
 					);
 				});
+			})
+			.addCase(fetchProductsSearch.fulfilled, (state, action) => {
+				state.productsSearch = action.payload.products;
+				state.pagination = action.payload.pagination;
 			});
 	},
 });

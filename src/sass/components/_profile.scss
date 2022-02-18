@@ -29,6 +29,11 @@
 		padding: 20px 15px;
 		font-size: 1.4rem;
 
+		&__contain {
+			flex: 0 0 60%;
+			max-width: 60%;
+		}
+
 		&__field {
 			@include flex(center);
 			margin-bottom: 15px;
@@ -67,6 +72,14 @@
 			&.xl {
 				margin-left: 150px;
 			}
+		}
+
+		& .forget-password {
+			color: $sub-text-color;
+			margin-left: 30px;
+			margin-top: 25px;
+			cursor: pointer;
+			user-select: none;
 		}
 	}
 

@@ -78,6 +78,7 @@
 	}
 
 	&__item {
+		user-select: none;
 		margin-bottom: 10px;
 		color: $sub-text-color;
 

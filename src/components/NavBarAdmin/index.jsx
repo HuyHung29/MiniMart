@@ -1,6 +1,5 @@
-import React from "react";
 import cls from "classnames";
-import { useState } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function NavBarAdmin() {
@@ -44,21 +43,42 @@ function NavBarAdmin() {
 						})}>
 						<li className='navbar--admin__subitem'>
 							<NavLink
-								to='/admin/purchase'
+								to='/admin/orders'
+								isActive={(_, location) => {
+									if (
+										location.pathname + location.search ===
+										"/admin/orders"
+									)
+										return true;
+								}}
 								className='navbar--admin__sublink'>
 								Tất cả đơn hàng
 							</NavLink>
 						</li>
 						<li className='navbar--admin__subitem'>
 							<NavLink
-								to='/admin/purchase?status='
+								to='/admin/orders?status=processing'
+								isActive={(_, location) => {
+									if (
+										location.pathname + location.search ===
+										"/admin/orders?status=processing"
+									)
+										return true;
+								}}
 								className='navbar--admin__sublink'>
 								Đang giao
 							</NavLink>
 						</li>
 						<li className='navbar--admin__subitem'>
 							<NavLink
-								to='/admin/purchase?status='
+								to='/admin/orders?status=completed'
+								isActive={(_, location) => {
+									if (
+										location.pathname + location.search ===
+										"/admin/orders?status=completed"
+									)
+										return true;
+								}}
 								className='navbar--admin__sublink'>
 								Đã giao
 							</NavLink>

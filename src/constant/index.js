@@ -33,9 +33,10 @@ export const breadcrumbNames = {
 	add: "Thêm mới",
 	edit: "Chỉnh sửa",
 	cart: "Giỏ hàng",
-	purchase: "Đơn hàng",
+	purchase: "Đơn mua",
 	categories: "Danh mục",
 	posts: "Bài viết",
+	search: "Tìm kiếm",
 };
 
 export const formValidateData = {
@@ -85,3 +86,11 @@ export const limitPerPage = [
 	{ value: 50, label: "50" },
 	{ value: 100, label: "100" },
 ];
+
+export const orderStatus = {
+	Waiting: "Chờ xác nhận",
+	Goods: "Chờ lấy hàng",
+	Processing: "Đang giao",
+	Done: "Đã giao",
+	Deleted: "Đơn hủy",
+};

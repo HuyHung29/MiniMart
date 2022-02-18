@@ -19,7 +19,7 @@ const postsApi = {
 	},
 	deletePost: (id) => {
 		const url = `${baseUrl}/${id}`;
-		return axiosClient(url);
+		return axiosClient.delete(url);
 	},
 };
 

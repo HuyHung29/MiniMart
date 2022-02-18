@@ -5,7 +5,6 @@ import {
 	updateProduct,
 } from "app/productsSlice";
 import AddEditForm from "components/AddEditForm";
-import Loading from "components/Loading";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -157,7 +156,7 @@ function AddEditProduct() {
 						editItem={editProduct ? editProduct : undefined}
 					/>
 				);
-			} else return <Loading />;
+			} else return null;
 		}
 	};
 
