@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from "components/Custom/InputField";
+import { formValidateData } from "constant";
 import PropTypes from "prop-types";
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
-import { formValidateData } from "constant";
 
 LoginForm.propTypes = {
 	onSubmit: PropTypes.func.isRequired,
@@ -28,22 +28,24 @@ const schema = yup
 	})
 	.required();
 
-function LoginForm({ onSubmit, defaultValues }) {
+function LoginForm({ onSubmit, defaultValues, forgetClick }) {
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
 
 	return (
 		<Form
+			className='authen__form'
 			onSubmit={handleSubmit((data) => {
 				onSubmit(data);
 			})}>
+			<h2 className='authen__form__title'>Đăng nhập</h2>
 			<Controller
 				name='email'
 				control={control}
@@ -71,11 +73,22 @@ function LoginForm({ onSubmit, defaultValues }) {
 					/>
 				)}
 			/>
-			<Button
-				type='submit'
-				className='form__btn form__btn--success form__btn--block'>
-				Đăng nhập
-			</Button>
+			<div className='my-4'>
+				<Button type='submit' className='btn authen__btn shadow-none'>
+					đăng nhập
+				</Button>
+			</div>
+
+			<p className='authen__text'>
+				Bạn mới biết đến MiniMart?{" "}
+				<Link to='/user/register' className='authen__link'>
+					Đăng ký
+				</Link>
+			</p>
+
+			<p className='authen__text' onClick={forgetClick}>
+				<span className='authen__link'>Quên mật khẩu?</span>
+			</p>
 		</Form>
 	);
 }

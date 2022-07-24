@@ -1,33 +1,32 @@
 .breadcrumb {
-    margin-bottom: 0;
-    
-    &-item {
-        font-size: 1.4rem;
+	margin-bottom: 0;
 
-        &::before {
-            display: none;
-        }
+	&-item {
+		font-size: 1.4rem;
 
-        &.active {
-            color: $secondary-color;
-        }
+		&::before {
+			display: none;
+		}
 
-        &.active &-icon {
-            display: none;
-        }
+		&.active {
+			color: $primary-color;
+		}
 
-        &-link {
-            transition: color 0.25s ease-in;
+		&.active &-icon {
+			display: none;
+		}
 
-            &:hover {
-                color: $secondary-color;
-            }
-        }
+		&-link {
+			transition: color 0.25s ease-in;
 
-        &-icon {
-            font-size: 1.2rem;
-            padding: 0 10px;
-        }
+			&:hover {
+				color: $primary-color;
+			}
+		}
 
-    }
+		&-icon {
+			font-size: 1.2rem;
+			padding: 0 10px;
+		}
+	}
 }

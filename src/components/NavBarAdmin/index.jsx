@@ -66,7 +66,7 @@ function NavBarAdmin() {
 										return true;
 								}}
 								className='navbar--admin__sublink'>
-								Đang giao
+								Đang xử lý
 							</NavLink>
 						</li>
 						<li className='navbar--admin__subitem'>
@@ -217,14 +217,6 @@ function NavBarAdmin() {
 							"navbar--admin__subnav": true,
 							active: active.account,
 						})}>
-						<li className='navbar--admin__subitem'>
-							<NavLink
-								to='/admin/address'
-								exact
-								className='navbar--admin__sublink'>
-								Địa chỉ
-							</NavLink>
-						</li>
 						<li className='navbar--admin__subitem'>
 							<NavLink
 								to='/admin/info'

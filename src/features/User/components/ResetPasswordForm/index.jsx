@@ -14,10 +14,14 @@ ResetPasswordForm.propTypes = {
 
 const schema = yup
 	.object({
+		resetCode: yup.string().required("Vui lòng nhập trường này"),
 		resetPassword: yup.string().required("Vui lòng nhập trường này"),
 		confirmResetPassword: yup
 			.string()
-			.oneOf([yup.ref("resetPassword"), null], "Password must match"),
+			.oneOf(
+				[yup.ref("resetPassword"), null],
+				"Mật khẩu không chính xác"
+			),
 	})
 	.required();
 
@@ -27,16 +31,32 @@ function ResetPasswordForm({ onSubmit, defaultValues, goBack }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
 
 	return (
 		<Form
+			className='authen__form'
 			onSubmit={handleSubmit((data) => {
 				onSubmit(data);
 			})}>
+			<h2 className='authen__form__title'>Quên mật khẩu</h2>
+			<Controller
+				name='resetCode'
+				control={control}
+				render={({ field }) => (
+					<InputField
+						{...field}
+						errors={errors}
+						label='Mã xác thực'
+						placeholder=''
+						type='password'
+						ref={null}
+					/>
+				)}
+			/>
 			<Controller
 				name='resetPassword'
 				control={control}
@@ -44,8 +64,8 @@ function ResetPasswordForm({ onSubmit, defaultValues, goBack }) {
 					<InputField
 						{...field}
 						errors={errors}
-						label='NewPassword'
-						placeholder='NewPassword'
+						label='Mật khẩu mới'
+						placeholder=''
 						type='password'
 						ref={null}
 					/>
@@ -58,8 +78,8 @@ function ResetPasswordForm({ onSubmit, defaultValues, goBack }) {
 					<InputField
 						{...field}
 						errors={errors}
-						label='ConfirmPassword'
-						placeholder='ConfirmPassword'
+						label='Xác thực mật khẩu'
+						placeholder=''
 						type='password'
 						ref={null}
 					/>

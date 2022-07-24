@@ -4,6 +4,7 @@ import { fetchProducts } from "app/productsSlice";
 import { fetchCart } from "app/purchaseSlide";
 import { fetchUserInfo } from "app/userSlice";
 import Loading from "components/Loading";
+import ScrollTopBtn from "components/ScrollTopBtn";
 import ScrollToTop from "components/ScrollToTop";
 import ProductPreview from "features/Products/components/ProductPreview";
 import React, { Suspense, useEffect } from "react";
@@ -25,7 +26,6 @@ function Layout() {
 				dispatch(fetchCategories());
 				dispatch(fetchProducts({ limit: 10 }));
 				dispatch(fetchPosts());
-				dispatch(fetchCart());
 			} catch (error) {
 				throw error;
 			}
@@ -35,7 +35,10 @@ function Layout() {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (isLogin || accessToken) dispatch(fetchUserInfo());
+		if (isLogin || accessToken) {
+			dispatch(fetchUserInfo());
+			dispatch(fetchCart());
+		}
 	}, [dispatch, isLogin, accessToken]);
 
 	const renderRoutes = () => {
@@ -62,6 +65,7 @@ function Layout() {
 					<Switch>{renderRoutes()}</Switch>
 					<Loading />
 					<ProductPreview />
+					<ScrollTopBtn />
 					<ToastContainer autoClose={2000} />
 				</div>
 			</Suspense>

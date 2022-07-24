@@ -30,18 +30,17 @@
 		&:hover,
 		&:focus {
 			background-color: white;
-			color: $secondary-color;
-			border-color: $secondary-color;
+			color: $primary-color;
+			border-color: $primary-color;
 		}
 
 		&:focus {
-			box-shadow: 0 0 0 0.25rem
-				rgba($color: $secondary-color, $alpha: 0.5);
+			box-shadow: 0 0 0 0.25rem rgba($color: $primary-color, $alpha: 0.5);
 		}
 
 		&--success {
-			background-color: $secondary-color;
-			border-color: $secondary-color;
+			background-color: $primary-color;
+			border-color: $primary-color;
 		}
 
 		&--danger {
@@ -68,61 +67,12 @@
 		text-align: center;
 
 		&__link {
-			color: $secondary-color;
+			color: $primary-color;
 			transition: color 0.2s ease-in;
 			cursor: pointer;
 
 			&:hover {
-				color: $primary-color;
-			}
-		}
-	}
-
-	&__social-login {
-		margin-top: 40px;
-		text-align: center;
-
-		&__title {
-			font-size: 1.5rem;
-			font-weight: 500;
-			margin-bottom: 20px;
-		}
-
-		&__list {
-			@include flex(center, center);
-			column-gap: 15px;
-		}
-
-		&__item {
-			@include flex(center);
-			font-size: 1.4rem;
-			color: white;
-			padding: 10px;
-			min-width: 120px;
-			border-radius: 5px;
-			cursor: pointer;
-			transition: all 0.2s ease-in;
-
-			&__icon {
-				font-size: 2rem;
-				margin-right: 5px;
-			}
-
-			&__text {
-				flex: 1;
-				text-align: center;
-			}
-
-			&--facebook {
-				background-color: #3b5999;
-			}
-
-			&--google {
-				background-color: #f4574c;
-			}
-
-			&:hover {
-				opacity: 0.6;
+				color: $secondary-color;
 			}
 		}
 	}

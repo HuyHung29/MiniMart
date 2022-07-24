@@ -52,7 +52,7 @@ function Profile() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});

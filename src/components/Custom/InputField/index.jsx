@@ -1,5 +1,6 @@
+import cls from "classnames";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormFeedback, FormGroup, Input, Label } from "reactstrap";
 
 InputField.propTypes = {
@@ -24,6 +25,7 @@ function InputField(props) {
 	const { name, errors, label, type, className, setFormValue, ...rest } =
 		props;
 	const [value, setValue] = useState(props.value ? props.value : []);
+	const [showPassword, setShowPassword] = useState(false);
 
 	const renderPreviewList = () => {
 		if (name === "pictures") {
@@ -63,7 +65,7 @@ function InputField(props) {
 						type={type}
 						{...rest}
 						className='input__control d-none'
-						autoComplete={type === "password" ? "off" : "on"}
+						autoComplete='on'
 					/>
 					<ul className='preview__list'>{renderPreviewList()}</ul>
 				</FormGroup>
@@ -79,14 +81,44 @@ function InputField(props) {
 						{label}
 					</Label>
 				)}
-				<Input
-					name={name}
-					invalid={!!errors[name]}
-					type={type}
-					{...rest}
-					className='input__control'
-					autoComplete={type === "password" ? "off" : "on"}
-				/>
+				{type === "password" ? (
+					<div
+						className={cls({
+							input__password: true,
+							"is-invalid": !!errors[name]?.message,
+						})}>
+						<Input
+							name={name}
+							invalid={!!errors[name]}
+							type={showPassword ? "text" : type}
+							{...rest}
+							className='input__control'
+							autoComplete='off'
+						/>
+						<i
+							className={cls({
+								"fa-solid fa-eye-slash input__icon": true,
+								hide: showPassword,
+							})}
+							onClick={() => setShowPassword(false)}></i>
+						<i
+							className={cls({
+								"fa-solid fa-eye input__icon": true,
+								show: !showPassword,
+							})}
+							onClick={() => setShowPassword(true)}></i>
+					</div>
+				) : (
+					<Input
+						name={name}
+						invalid={!!errors[name]}
+						type={type}
+						{...rest}
+						className='input__control'
+						autoComplete='on'
+					/>
+				)}
+
 				{errors[name] ? (
 					<FormFeedback className='input__error'>
 						{errors[name]?.message}

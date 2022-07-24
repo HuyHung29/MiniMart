@@ -1,5 +1,4 @@
 import { images } from "constant";
-import React from "react";
 import {
 	Button,
 	Col,
@@ -9,7 +8,6 @@ import {
 	InputGroup,
 	Row,
 } from "reactstrap";
-import { animateScroll as scroll } from "react-scroll";
 
 function Footer() {
 	return (
@@ -135,9 +133,9 @@ function Footer() {
 						bởi <span>Sapo</span>
 					</p>
 					<Button
-						className='footer__copyright__btn'
+						className='footer__copyright__btn shadow-none'
 						onClick={() => {
-							scroll.scrollToTop();
+							window.scrollTo(0, 0);
 						}}>
 						Lên đầu trang
 						<i className='fas fa-arrow-up'></i>

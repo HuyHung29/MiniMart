@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 AddToCartBtn.propTypes = {
 	absolute: PropTypes.bool,
@@ -23,6 +24,8 @@ function AddToCartBtn({ absolute, product, quantity, onClose }) {
 	const isInCart = !!useSelector((state) =>
 		state.purchase.cart.find((item) => item._id === _id)
 	);
+	const { isLogin } = useSelector((state) => state.users);
+	const history = useHistory();
 
 	const productCart = {
 		productId: _id,
@@ -34,9 +37,11 @@ function AddToCartBtn({ absolute, product, quantity, onClose }) {
 	};
 
 	const onAddToCart = () => {
-		dispatch(addToCart(productCart));
-		onClosePreview();
-		toast.success("Thêm sản phẩm thành công!!!");
+		if (isLogin) {
+			dispatch(addToCart(productCart));
+			onClosePreview();
+			toast.success("Thêm sản phẩm thành công!!!");
+		} else history.push("/user/login");
 	};
 
 	const renderBtn = () => {

@@ -1,10 +1,9 @@
-import RegisterForm from "features/User/components/RegisterForm";
-import React from "react";
-import { Link } from "react-router-dom";
-import { Col, Container, Row } from "reactstrap";
 import userApi from "api/userApi";
-import { useHistory } from "react-router-dom";
+import { images } from "constant";
+import RegisterForm from "features/User/components/RegisterForm";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Container } from "reactstrap";
 
 function Register() {
 	const history = useHistory();
@@ -12,7 +11,8 @@ function Register() {
 		const register = async () => {
 			console.log(data);
 			try {
-				await userApi.register(data);
+				const response = await userApi.register(data);
+				console.log(response);
 				history.push("/user/login");
 			} catch (error) {
 				throw error;
@@ -37,55 +37,34 @@ function Register() {
 		phone: "",
 		email: "",
 		password: "",
+		confirmPassword: "",
 	};
 	return (
-		<Container fluid className='register'>
-			<Row>
-				<Col
-					md={{
-						offset: 4,
-						size: 4,
-					}}
-					className=' form'>
-					<div className='form__wrap' id='form-register'>
-						<h1 className='form__title'>Thông tin cá nhân</h1>
-						<RegisterForm
-							onSubmit={onSubmit}
-							defaultValues={defaultValues}
-						/>
-						<p className='form__redirect'>
-							Bạn đã có tài khoản? Đăng nhập{" "}
-							<Link
-								to='/user/login'
-								className='form__redirect__link'>
-								tại đây
+		<div className='authen'>
+			<div className='authen__header'>
+				<Container>
+					<div className='d-flex align-items-center justify-content-between'>
+						<div className='d-flex align-items-center'>
+							<Link to='/'>
+								<img src={images.LOGO_B} alt='logo' />
 							</Link>
-							.
-						</p>
-
-						<div className='form__social-login'>
-							<p className='form__social-login__title'>
-								Hoặc đăng nhập bằng
-							</p>
-							<div className='form__social-login__list'>
-								<div className='form__social-login__item form__social-login__item--facebook'>
-									<i className='fab fa-facebook-f form__social-login__item__icon'></i>
-									<p className='form__social-login__item__text'>
-										Facebook
-									</p>
-								</div>
-								<div className='form__social-login__item form__social-login__item--google'>
-									<i className='fab fa-google-plus-g form__social-login__item__icon'></i>
-									<p className='form__social-login__item__text'>
-										Google
-									</p>
-								</div>
-							</div>
+							<h1 className='authen__header__title'>Đăng ký</h1>
 						</div>
+						<p className='authen__header__text'>
+							Đăng ký tài khoản mới !
+						</p>
 					</div>
-				</Col>
-			</Row>
-		</Container>
+				</Container>
+			</div>
+			<div className='authen__content'>
+				<Container>
+					<RegisterForm
+						onSubmit={onSubmit}
+						defaultValues={defaultValues}
+					/>
+				</Container>
+			</div>
+		</div>
 	);
 }
 

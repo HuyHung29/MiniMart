@@ -29,7 +29,7 @@
 		&::before {
 			content: "";
 			display: block;
-			border: 3px solid $primary-color;
+			border: 3px solid $secondary-color;
 			position: absolute;
 			bottom: 0;
 			left: 0;
@@ -44,7 +44,7 @@
 		transition: 0.25s ease-in;
 
 		&:hover {
-			color: $primary-color;
+			color: $secondary-color;
 		}
 	}
 
@@ -71,12 +71,13 @@
 			@include flex();
 
 			&__img {
-				display: block;
+				display: flex;
 				flex: 0 0 40%;
 				max-width: 40%;
 
 				& img {
 					border-radius: 3px;
+					align-self: center;
 				}
 			}
 
@@ -97,7 +98,7 @@
 				transition: 0.25s ease-in;
 
 				&:hover {
-					color: $primary-color;
+					color: $secondary-color;
 				}
 			}
 		}

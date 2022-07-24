@@ -27,16 +27,18 @@ function ForgetPasswordForm({ onSubmit, defaultValues, goBack }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});
 
 	return (
 		<Form
+			className='authen__form'
 			onSubmit={handleSubmit((data) => {
 				onSubmit(data);
 			})}>
+			<h2 className='authen__form__title'>Quên mật khẩu</h2>
 			<Controller
 				name='email'
 				control={control}

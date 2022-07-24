@@ -33,23 +33,7 @@ export const adminRoutes = [
 		path: "/",
 		exact: true,
 		common: true,
-		component: HomePage,
-	},
-	{
-		path: "/products",
-		component: Products,
-		common: true,
-		routes: [
-			{
-				path: "/products",
-				exact: true,
-				component: ProductList,
-			},
-			{
-				path: "/products/:productId",
-				component: ProductDetail,
-			},
-		],
+		component: () => <Redirect to='/admin' />,
 	},
 	{
 		path: "/admin",
@@ -118,10 +102,6 @@ export const adminRoutes = [
 				component: Profile,
 			},
 			{
-				path: "/admin/address",
-				component: Address,
-			},
-			{
 				path: "/admin/password",
 				component: Password,
 			},
@@ -132,28 +112,6 @@ export const adminRoutes = [
 			{
 				path: "",
 				component: NotFound,
-			},
-		],
-	},
-	{
-		path: "/search",
-		exact: true,
-		common: true,
-		component: ProductSearch,
-	},
-	{
-		path: "/posts",
-		common: true,
-		component: CategoriesPosts,
-		routes: [
-			{
-				path: "/posts",
-				exact: true,
-				component: ListPost,
-			},
-			{
-				path: "/posts/",
-				component: PostDetail,
 			},
 		],
 	},
@@ -312,6 +270,11 @@ export const guestRoutes = [
 		path: "/search",
 		exact: true,
 		component: ProductSearch,
+	},
+	{
+		path: "/cart",
+		exact: true,
+		component: () => <Redirect to='/user/login' />,
 	},
 	{
 		component: NotFound,

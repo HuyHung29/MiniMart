@@ -20,39 +20,11 @@ function Header() {
 	const history = useHistory();
 	const userInfo = useSelector((state) => state.users);
 	const { user, isLogin } = userInfo;
-	const { name, role } = user;
+	const { name } = user;
 
 	const logout = () => {
 		dispatch(userLogout());
 		history.push("/");
-	};
-
-	const renderLink = () => {
-		return role === "admin" ? (
-			<ul className='header__top__item--sub'>
-				<li className='header__top__item--sub__item'>
-					<Link to='/admin/info'>Tài khoản của tôi</Link>
-				</li>
-				<li className='header__top__item--sub__item'>
-					<Link to='/admin/orders'>Đơn mua</Link>
-				</li>
-				<li className='header__top__item--sub__item' onClick={logout}>
-					Đăng xuất
-				</li>
-			</ul>
-		) : (
-			<ul className='header__top__item--sub'>
-				<li className='header__top__item--sub__item'>
-					<Link to='/user'>Tài khoản của tôi</Link>
-				</li>
-				<li className='header__top__item--sub__item'>
-					<Link to='/user/purchase'>Đơn mua</Link>
-				</li>
-				<li className='header__top__item--sub__item' onClick={logout}>
-					Đăng xuất
-				</li>
-			</ul>
-		);
 	};
 
 	return (
@@ -60,14 +32,6 @@ function Header() {
 			<Container>
 				<div className='header__top'>
 					<div className='header__top__side'>
-						{role === "admin" ? (
-							<Link className='header__top__item' to='/admin'>
-								Trang quản trị
-							</Link>
-						) : (
-							""
-						)}
-						<p className='header__top__item'>Tải ứng dụng</p>
 						<p className='header__top__item header__top__item--social'>
 							<span>Kết nối</span>
 							<a
@@ -87,10 +51,6 @@ function Header() {
 						</p>
 					</div>
 					<div className='header__top__side'>
-						<p className='header__top__item header__top__item--none'>
-							<i className='header__top__icon far fa-bell'></i>
-							Thông báo
-						</p>
 						<a
 							href='https://www.facebook.com/profile.php?id=100011702486663'
 							target='_blank'
@@ -104,7 +64,21 @@ function Header() {
 								<i className='header__top__icon fas fa-user-circle'></i>
 								<p>{name}</p>
 
-								{renderLink()}
+								<ul className='header__top__item--sub'>
+									<li className='header__top__item--sub__item'>
+										<Link to='/user'>
+											Tài khoản của tôi
+										</Link>
+									</li>
+									<li className='header__top__item--sub__item'>
+										<Link to='/user/purchase'>Đơn mua</Link>
+									</li>
+									<li
+										className='header__top__item--sub__item'
+										onClick={logout}>
+										Đăng xuất
+									</li>
+								</ul>
 							</div>
 						) : (
 							<>
@@ -151,19 +125,6 @@ function Header() {
 										</Button>
 									</InputGroup>
 								</Form>
-							</div>
-							<div className='header__middle__bottom'>
-								<ul className='header__middle__menu'>
-									<li className='header__middle__item'>
-										Bán chạy nhất
-									</li>
-									<li className='header__middle__item'>
-										Mua nhiều nhất
-									</li>
-									<li className='header__middle__item'>
-										Giảm giá
-									</li>
-								</ul>
 							</div>
 						</Col>
 						<Col md='2'>

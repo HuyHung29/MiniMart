@@ -12,7 +12,7 @@
 		cursor: pointer;
 
 		&:hover {
-			color: $secondary-color;
+			color: $primary-color;
 		}
 
 		&--not {
@@ -21,7 +21,7 @@
 		}
 
 		&.active {
-			color: $secondary-color;
+			color: $primary-color;
 		}
 	}
 
@@ -54,7 +54,7 @@
 		cursor: pointer;
 
 		&:hover {
-			color: $secondary-color;
+			color: $primary-color;
 		}
 	}
 }

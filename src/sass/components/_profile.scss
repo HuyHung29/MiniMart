@@ -60,13 +60,13 @@
 			margin-left: 120px;
 			font-size: 1.6rem;
 			padding: 8px 20px;
-			background-color: $secondary-color;
-			border-color: $secondary-color;
+			background-color: $primary-color;
+			border-color: $primary-color;
 
 			&:hover,
 			&:focus {
-				background-color: $primary-color;
-				border-color: $primary-color;
+				background-color: $secondary-color;
+				border-color: $secondary-color;
 			}
 
 			&.xl {
@@ -107,7 +107,7 @@
 
 		&__form {
 			background-color: white;
-			width: 35vw;
+			width: 40vw;
 			padding: 30px;
 			border-radius: 3px;
 			opacity: 0;
@@ -170,7 +170,7 @@
 					cursor: pointer;
 
 					&:hover {
-						color: $secondary-color;
+						color: $primary-color;
 					}
 				}
 			}

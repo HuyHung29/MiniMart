@@ -1,12 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import userApi from "api/userApi";
 import InputField from "components/Custom/InputField";
-import React from "react";
+import { formValidateData } from "constant";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { Button, Form } from "reactstrap";
 import * as yup from "yup";
-import { formValidateData } from "constant";
-import { toast } from "react-toastify";
-import userApi from "api/userApi";
 
 const schema = yup
 	.object({
@@ -45,7 +44,7 @@ function Password() {
 		reset,
 		formState: { errors, isDirty, isValid },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues: defaultValues,
 	});

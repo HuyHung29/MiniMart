@@ -1,10 +1,20 @@
+import { userLogout } from "app/userSlice";
 import { images } from "constant";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function HeaderAdmin() {
 	const { name } = useSelector((state) => state.users.user);
+	const dispatch = useDispatch();
+	const history = useHistory();
+
+	const logOut = () => {
+		dispatch(userLogout());
+		history.push("/");
+	};
+
 	return (
 		<div className='header--admin'>
 			<div className='header--admin__side'>
@@ -49,7 +59,7 @@ function HeaderAdmin() {
 							</div>
 							<div className='header--admin__task__menu__item'>
 								<Link
-									to='/admin/purchase'
+									to='/admin/orders'
 									className='header--admin__task__menu__icon orange'>
 									<i className='fas fa-box'></i>
 								</Link>
@@ -96,7 +106,9 @@ function HeaderAdmin() {
 					<p className='header--admin__task__notification'>
 						<i className='far fa-bell'></i>
 					</p>
-					<p className='header--admin__task__button'>shopee uni</p>
+					<p className='header--admin__task__button' onClick={logOut}>
+						Đăng xuất
+					</p>
 				</div>
 			</div>
 		</div>

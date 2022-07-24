@@ -21,20 +21,20 @@
 				@include flex(center, space-between);
 
 				&__add {
-					background-color: #ee4d2d;
-					border-color: #ee4d2d;
+					background-color: $third-color;
+					border-color: $third-color;
 					padding: 8px 20px;
 					font-size: 1.4rem;
 
 					&:hover {
-						color: #ee4d2d;
+						color: $third-color;
 						background-color: white;
-						border-color: #ee4d2d;
+						border-color: $third-color;
 					}
 
 					&:focus {
-						background-color: #ee4d2d;
-						border-color: #ee4d2d;
+						background-color: $third-color;
+						border-color: $third-color;
 						color: white;
 					}
 

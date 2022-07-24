@@ -51,7 +51,7 @@ function AddressAddEdit({ currAddress, isShow, setIsShow, onSubmit }) {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues,
 	});

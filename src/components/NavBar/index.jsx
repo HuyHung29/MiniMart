@@ -1,13 +1,12 @@
 import BreadCrumb from "components/BreadCrumb";
-import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
 	Col,
 	Collapse,
 	Container,
 	DropdownItem,
 	DropdownMenu,
-	DropdownToggle,
 	Nav,
 	Navbar,
 	NavbarToggler,
@@ -28,10 +27,12 @@ function NavBar() {
 							<Collapse navbar>
 								<Nav navbar className='w-100'>
 									<UncontrolledDropdown inNavbar nav>
-										<DropdownToggle nav>
+										<Link
+											to='/products'
+											className='nav-link'>
 											<i className='fas fa-bars nav__icon'></i>
 											Danh mục
-										</DropdownToggle>
+										</Link>
 										<DropdownMenu end>
 											{categories.map((item, index) => {
 												return (

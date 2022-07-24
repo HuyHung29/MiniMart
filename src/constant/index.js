@@ -88,9 +88,7 @@ export const limitPerPage = [
 ];
 
 export const orderStatus = {
-	Waiting: "Chờ xác nhận",
-	Goods: "Chờ lấy hàng",
-	Processing: "Đang giao",
-	Done: "Đã giao",
-	Deleted: "Đơn hủy",
+	"Chờ xác nhận": "waiting",
+	"Chờ lấy hàng": "goods",
+	"Đã thanh toán": "done",
 };

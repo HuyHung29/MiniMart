@@ -51,7 +51,7 @@ function SubMenu() {
 				<li className='sub-menu__item'>
 					<NavLink
 						className='sub-menu__link'
-						to='/news'
+						to='/posts'
 						activeClassName='active'>
 						Tin tức
 					</NavLink>

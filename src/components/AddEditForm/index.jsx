@@ -29,7 +29,7 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 		reset,
 		formState: { errors, isSubmitting },
 	} = useForm({
-		mode: "all",
+		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
@@ -201,6 +201,7 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 								history.goBack();
 							} else {
 								reset();
+								history.goBack();
 							}
 						}}>
 						Hủy

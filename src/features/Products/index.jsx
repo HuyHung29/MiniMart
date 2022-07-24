@@ -29,7 +29,7 @@ function Products({ routes }) {
 	useEffect(() => {
 		const fetchProductWithFilter = async () => {
 			try {
-				await dispatch(fetchProducts(filter));
+				dispatch(fetchProducts(filter));
 			} catch (error) {
 				console.log(error);
 			}

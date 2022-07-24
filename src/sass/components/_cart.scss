@@ -66,11 +66,11 @@
 		background-color: white;
 		padding: 12px 15px;
 		border-radius: 5px;
-		color: $secondary-color;
+		color: $primary-color;
 		cursor: pointer;
 
 		&:hover {
-			color: $secondary-color;
+			color: $primary-color;
 		}
 
 		& i {
@@ -153,7 +153,7 @@
 			transition: color 0.2s ease-in;
 
 			&:hover {
-				color: $secondary-color;
+				color: $primary-color;
 			}
 		}
 
@@ -164,7 +164,7 @@
 		}
 
 		&__price {
-			color: $secondary-color;
+			color: $primary-color;
 			font-weight: 600;
 		}
 
@@ -176,7 +176,7 @@
 			transition: color 0.2s ease-in-out;
 
 			&:hover {
-				color: $secondary-color;
+				color: $primary-color;
 			}
 		}
 	}
@@ -190,7 +190,7 @@
 		font-size: 1.5rem;
 
 		& span {
-			color: $secondary-color;
+			color: $primary-color;
 			font-weight: 600;
 		}
 	}
@@ -253,7 +253,7 @@
 
 			&__price,
 			&__total {
-				color: $secondary-color;
+				color: $primary-color;
 				font-weight: 500;
 			}
 
@@ -309,7 +309,7 @@
 					cursor: pointer;
 
 					& i:hover {
-						color: $secondary-color;
+						color: $primary-color;
 					}
 				}
 			}
@@ -373,7 +373,7 @@
 				}
 
 				& .color {
-					color: $secondary-color;
+					color: $primary-color;
 				}
 			}
 
@@ -390,7 +390,7 @@
 					color: $text-color;
 
 					& span {
-						color: $secondary-color;
+						color: $primary-color;
 						font-weight: 500;
 					}
 				}

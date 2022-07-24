@@ -112,7 +112,7 @@
 			margin: 0;
 
 			&.slick-active {
-				border: 1px solid $secondary-color;
+				border: 1px solid $primary-color;
 			}
 
 			& img {
@@ -156,7 +156,7 @@
 		border-radius: 1px;
 
 		&--active {
-			border: 1px solid $secondary-color;
+			border: 1px solid $primary-color;
 		}
 
 		&:focus-visible {
