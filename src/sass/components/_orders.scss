@@ -51,6 +51,11 @@
 		&__input {
 			font-size: 1.4rem;
 			flex: 1;
+
+			padding: 0 15px;
+			border: 1px solid;
+			border-color: #ced4da #ced4da #ced4da transparent;
+			outline: none;
 		}
 
 		&__btn {
@@ -177,7 +182,7 @@
 					flex: 0 0 15%;
 					max-width: 15%;
 					position: relative;
-					cursor: pointer;
+					user-select: none;
 
 					& .status {
 						color: white;
@@ -218,16 +223,12 @@
 						right: 10px;
 						top: calc(100% + 20px);
 						transition: 0.25s ease-in;
+						z-index: 50;
 
 						background-color: white;
 						width: 350px;
 						padding: 20px 10px;
 						border-radius: 3px;
-
-						@include flex();
-						flex-wrap: wrap;
-						row-gap: 20px;
-						z-index: 50;
 
 						&::before {
 							content: "";
@@ -259,9 +260,9 @@
 						}
 
 						&__item {
-							flex: 0 0 50%;
-							max-width: 50%;
 							padding: 0 20px;
+							margin: 15px 20px;
+							cursor: pointer;
 						}
 					}
 				}
@@ -272,6 +273,32 @@
 			display: inline-block;
 			width: 100px;
 			height: 100px;
+		}
+
+		.order__product {
+			@include flex(center, space-around);
+			border: 1px solid $border-color;
+			border-radius: 5px;
+			margin-bottom: 5px;
+
+			&__pic {
+				max-width: 60px;
+				margin: 10px 10px 10px auto;
+				border: 1px solid $border-color;
+				border-radius: 5px;
+			}
+
+			&__quantity {
+				margin-left: 10px;
+				flex: 1;
+				margin-right: 20px;
+			}
+
+			&__title {
+				word-wrap: break-word;
+				word-break: break-word;
+				max-width: 100px;
+			}
 		}
 	}
 }

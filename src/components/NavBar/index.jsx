@@ -37,7 +37,10 @@ function NavBar() {
 											{categories.map((item, index) => {
 												return (
 													<DropdownItem key={index}>
-														{item.name}
+														<Link
+															to={`/${item.name}`}>
+															{item.name}
+														</Link>
 													</DropdownItem>
 												);
 											})}

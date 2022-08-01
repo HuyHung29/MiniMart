@@ -1,5 +1,5 @@
 import { addToCart } from "app/purchaseSlide";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
@@ -26,6 +26,7 @@ function AddToCartBtn({ absolute, product, quantity, onClose }) {
 	);
 	const { isLogin } = useSelector((state) => state.users);
 	const history = useHistory();
+	const [isDisable, setIsDisable] = useState(false);
 
 	const productCart = {
 		productId: _id,
@@ -38,6 +39,7 @@ function AddToCartBtn({ absolute, product, quantity, onClose }) {
 
 	const onAddToCart = () => {
 		if (isLogin) {
+			setIsDisable(true);
 			dispatch(addToCart(productCart));
 			onClosePreview();
 			toast.success("Thêm sản phẩm thành công!!!");
@@ -46,9 +48,14 @@ function AddToCartBtn({ absolute, product, quantity, onClose }) {
 
 	const renderBtn = () => {
 		return isInCart ? (
-			<Button className='add-cart-btn shadow-none'>Tùy chọn</Button>
+			<Button className='add-cart-btn add-cart-btn--done shadow-none'>
+				Đã có trong giỏ hàng
+			</Button>
 		) : (
-			<Button className='add-cart-btn shadow-none' onClick={onAddToCart}>
+			<Button
+				className='add-cart-btn shadow-none'
+				onClick={onAddToCart}
+				disabled={isDisable}>
 				Thêm vào giỏ hàng
 			</Button>
 		);

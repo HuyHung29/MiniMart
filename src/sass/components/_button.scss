@@ -54,6 +54,25 @@
 		color: $primary-color;
 		border-color: $primary-color;
 	}
+
+	&--done {
+		background-color: $secondary-color;
+		border: 1px solid $secondary-color;
+
+		&:focus {
+			background-color: $secondary-color;
+			color: white;
+			box-shadow: none;
+			outline: none;
+			border-color: $secondary-color;
+		}
+
+		&:hover {
+			background-color: white;
+			color: $secondary-color;
+			border-color: $secondary-color;
+		}
+	}
 }
 
 .buy-btn {
@@ -172,13 +191,13 @@
 .scroll-btn {
 	position: fixed;
 	bottom: 50px;
-	right: 50px;
+	right: 20px;
 	justify-content: center;
 	align-items: center;
 	background-color: white;
-	font-size: 3rem;
-	min-width: 60px;
-	min-height: 60px;
+	font-size: 2.6rem;
+	min-width: 50px;
+	min-height: 50px;
 	border-radius: 50%;
 	color: $primary-color;
 	cursor: pointer;

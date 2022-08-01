@@ -30,10 +30,14 @@ function SelectField(props) {
 		type,
 		className,
 		options,
+		address,
 		onChange,
+		readOnly,
 		value,
 		setDistrict,
 		setVillage,
+		setAddress,
+		setCurrAddress,
 		...rest
 	} = props;
 
@@ -65,10 +69,24 @@ function SelectField(props) {
 			<Select
 				name={name}
 				value={options.find((c) => c.value === value) || ""}
+				readOnly={readOnly}
 				onChange={(val) => {
 					setDistrictOpt(val.value);
 					setVillageOpt(val.value);
 					onChange(val.value);
+					if (setCurrAddress) {
+						if (address && val.value !== "-1") {
+							setCurrAddress({
+								city: address[+val.value].city,
+								district: address[+val.value].district,
+								village: address[+val.value].village,
+							});
+							setAddress(
+								address[+val.value].city,
+								address[+val.value].district
+							);
+						} else setCurrAddress(null);
+					}
 				}}
 				options={options}
 				className={Classnames({
@@ -77,7 +95,6 @@ function SelectField(props) {
 				classNamePrefix='select__input'
 				styles={!!errors[name] ? coloursStyles : {}}
 				maxMenuHeight={160}
-				autoComplete={type === "password" ? "off" : "on"}
 				{...rest}
 			/>
 			{errors[name] ? (

@@ -1,8 +1,8 @@
-import React from "react";
+import { deleteFromCart, updateCartItem } from "app/purchaseSlide";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteFromCart, updateCart } from "app/purchaseSlide";
+import { Link } from "react-router-dom";
 
 CartPageItem.propTypes = {
 	item: PropTypes.object.isRequired,
@@ -12,31 +12,37 @@ CartPageItem.propTypes = {
 
 function CartPageItem({ item, handleCheck, checkList }) {
 	const dispatch = useDispatch();
-	const { _id, title, price, quantity, pictures } = item;
+	const { _id, title, price, discount, quantity, pictures } = item;
+	const [itemQuantity, setItemQuantity] = useState(quantity);
+	const finalPrice = price - (price * discount) / 100.0;
 
 	const onDeleteFromCart = () => {
 		dispatch(deleteFromCart(_id));
 	};
 
-	const onUpdateCartPlus = () => {
-		const newQuantity = quantity + 1;
-		dispatch(updateCart({ id: _id, newQuantity }));
-	};
+	const onCartBlur = (e) => {
+		const target = e.target;
+		const value = +target.value;
 
-	const onUpdateCartMinus = () => {
-		const newQuantity = quantity > 0 ? quantity - 1 : 0;
-		dispatch(updateCart({ id: _id, newQuantity }));
+		if (+value === 0) {
+			const newQuantity = 1;
+			dispatch(updateCartItem({ id: _id, newQuantity }));
+		}
+
+		if (value !== quantity)
+			dispatch(updateCartItem({ id: _id, newQuantity: value }));
 	};
 
 	const onUpdateCartTyping = (e) => {
 		const target = e.target;
 		const value = +target.value;
+
 		if (value === 0) {
 			const newQuantity = 0;
-			dispatch(updateCart({ id: _id, newQuantity }));
+			setItemQuantity(newQuantity);
 		} else if (value && value < 999) {
 			const newQuantity = value;
-			dispatch(updateCart({ id: _id, newQuantity }));
+			setItemQuantity(newQuantity);
 			e.target.value = newQuantity;
 		}
 	};
@@ -62,34 +68,23 @@ function CartPageItem({ item, handleCheck, checkList }) {
 			</div>
 			<div className='cart-page__item__price'>
 				<p>
-					{price.toLocaleString()}
+					{finalPrice.toLocaleString()}
 					<sup>đ</sup>
 				</p>
 			</div>
 			<div className='cart-page__item__quantity'>
 				<div className='cart-page__item__quantity__calculate'>
-					<p onClick={onUpdateCartMinus}>
-						<i className='fas fa-minus'></i>
-					</p>
 					<input
 						type='number'
-						value={quantity || 0}
-						onBlur={(e) => {
-							if (+e.target.value === 0) {
-								const newQuantity = 1;
-								dispatch(updateCart({ id: _id, newQuantity }));
-							}
-						}}
+						value={itemQuantity || 0}
+						onBlur={onCartBlur}
 						onChange={onUpdateCartTyping}
 					/>
-					<p onClick={onUpdateCartPlus}>
-						<i className='fas fa-plus'></i>
-					</p>
 				</div>
 			</div>
 			<div className='cart-page__item__total'>
 				<p>
-					{(price * quantity).toLocaleString()}
+					{(finalPrice * quantity).toLocaleString()}
 					<sup>đ</sup>
 				</p>
 			</div>

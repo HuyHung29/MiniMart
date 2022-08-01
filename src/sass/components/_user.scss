@@ -90,6 +90,21 @@
 	}
 
 	&__purchase {
+		&--empty {
+			border: 1px solid $border-color;
+			border-radius: 5px;
+			padding: 100px 0;
+
+			@include flex(center, center);
+			flex-direction: column;
+
+			& p {
+				font-size: 1.6rem;
+				margin-top: 20px;
+				color: $sub-text-color;
+			}
+		}
+
 		&__header {
 			&__tab {
 				@include flex(center);
@@ -106,6 +121,7 @@
 				text-align: center;
 				padding: 15px 0;
 				transition: 0.2s ease-in;
+				cursor: pointer;
 
 				&.active {
 					color: $primary-color;
@@ -123,27 +139,87 @@
 			}
 		}
 
-		&__search {
-			@include flex();
-			margin-top: 20px;
-			background-color: #eaeaea;
-			border-radius: 5px;
-			padding-right: 10px;
+		&__list {
+			margin-top: 30px;
+		}
 
-			&__icon {
-				font-size: 2rem;
-				padding: 10px;
-				transition: 0.25 ease-in;
+		&__item {
+			background-color: white;
+			border-radius: 5px;
+			padding: 20px;
+			margin-bottom: 50px;
+			border: 2px solid $border-color;
+
+			&__status {
+				text-align: right;
+				text-transform: uppercase;
+				font-size: 1.6rem;
+				border-bottom: 1px solid $border-color;
+				padding-bottom: 10px;
+				margin-bottom: 15px;
+				font-weight: 500;
+
+				&._0 {
+					color: $primary-color;
+				}
+
+				&._1 {
+					color: #2cb67d;
+				}
+
+				&._2 {
+					color: $third-color;
+				}
 			}
 
-			&__input {
-				border: none;
-				outline: none;
-				font-size: 1.4rem;
-				background-color: #eaeaea;
+			&__action {
+				@include flex(center);
+			}
 
-				&:focus {
-					background-color: #eaeaea;
+			&__sum {
+				font-size: 1.6rem;
+				text-align: right;
+				margin-left: auto;
+
+				& span {
+					font-size: 2.8rem;
+					color: $primary-color;
+					margin-left: 15px;
+				}
+			}
+		}
+
+		&__product {
+			&__item {
+				@include flex(center);
+				border-bottom: 1px solid $border-color;
+				padding-bottom: 10px;
+				margin-bottom: 20px;
+
+				&__thumbnail {
+					max-width: 80px;
+					border: 1px solid $border-color;
+					border-radius: 5px;
+					object-fit: contain;
+					margin-right: 15px;
+				}
+
+				&__info {
+					margin-right: auto;
+				}
+
+				&__name {
+					font-size: 1.6rem;
+					margin-bottom: 10px;
+				}
+
+				&__quantity {
+					font-size: 1.4rem;
+				}
+
+				&__total {
+					font-size: 1.8rem;
+					color: $primary-color;
 				}
 			}
 		}

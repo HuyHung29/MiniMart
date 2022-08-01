@@ -22,8 +22,16 @@ InputField.defaultProps = {
 };
 
 function InputField(props) {
-	const { name, errors, label, type, className, setFormValue, ...rest } =
-		props;
+	const {
+		name,
+		errors,
+		label,
+		type,
+		className,
+		setFormValue,
+		readOnly,
+		...rest
+	} = props;
 	const [value, setValue] = useState(props.value ? props.value : []);
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -66,6 +74,7 @@ function InputField(props) {
 						{...rest}
 						className='input__control d-none'
 						autoComplete='on'
+						readOnly={readOnly}
 					/>
 					<ul className='preview__list'>{renderPreviewList()}</ul>
 				</FormGroup>
@@ -93,6 +102,7 @@ function InputField(props) {
 							type={showPassword ? "text" : type}
 							{...rest}
 							className='input__control'
+							readOnly={readOnly}
 							autoComplete='off'
 						/>
 						<i
@@ -115,6 +125,7 @@ function InputField(props) {
 						type={type}
 						{...rest}
 						className='input__control'
+						readOnly={readOnly}
 						autoComplete='on'
 					/>
 				)}

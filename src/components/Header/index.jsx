@@ -71,7 +71,7 @@ function Header() {
 										</Link>
 									</li>
 									<li className='header__top__item--sub__item'>
-										<Link to='/user/purchase'>Đơn mua</Link>
+										<Link to='/user/orders'>Đơn mua</Link>
 									</li>
 									<li
 										className='header__top__item--sub__item'

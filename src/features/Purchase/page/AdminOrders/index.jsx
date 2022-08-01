@@ -1,18 +1,14 @@
 import { changeOrderStatus, fetchOrders } from "app/purchaseSlide";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import cls from "classnames";
-import Select from "react-select";
-import { Button, Input } from "reactstrap";
-import { useSelector } from "react-redux";
 import { orderStatus } from "constant";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 import { toast } from "react-toastify";
+import { Button } from "reactstrap";
 
-function Orders() {
+function AdminOrders() {
 	const dispatch = useDispatch();
-	const orders = useSelector((state) => state.purchase.orders);
-	const [ordersFilter, setOrdersFilter] = useState([]);
 	const [active, setActive] = useState({
 		item: 0,
 		style: {
@@ -20,12 +16,90 @@ function Orders() {
 			width: 0,
 		},
 	});
+
 	const [filter, setFilter] = useState({
 		value: 1,
 		label: "Nhập mã đơn hàng",
+		content: "",
 	});
 
-	const firstItem = useRef();
+	const orders = useSelector((state) => {
+		if (filter.content) {
+			if (filter.value === 1) {
+				if (active.item === 0)
+					return state.purchase.orders.filter(
+						(order) => order._id === filter.content
+					);
+
+				if (active.item === 1)
+					return state.purchase.orders.filter(
+						(order) =>
+							order.status === "Chờ xác nhận" &&
+							order._id === filter.content
+					);
+
+				if (active.item === 2)
+					return state.purchase.orders.filter(
+						(order) =>
+							order.status === "Chờ lấy hàng" &&
+							order._id === filter.content
+					);
+
+				if (active.item === 3)
+					return state.purchase.orders.filter(
+						(order) =>
+							order.status === "Đã thanh toán" &&
+							order._id === filter.content
+					);
+			} else {
+				if (active.item === 0)
+					return state.purchase.orders.filter(
+						(order) => order.name === filter.content
+					);
+
+				if (active.item === 1)
+					return state.purchase.orders.filter(
+						(order) =>
+							order.status === "Chờ xác nhận" &&
+							order.name === filter.content
+					);
+
+				if (active.item === 2)
+					return state.purchase.orders.filter(
+						(order) =>
+							order.status === "Chờ lấy hàng" &&
+							order.name === filter.content
+					);
+
+				if (active.item === 3)
+					return state.purchase.orders.filter(
+						(order) =>
+							order.status === "Đã thanh toán" &&
+							order.name === filter.content
+					);
+			}
+		} else {
+			if (active.item === 0) return state.purchase.orders;
+
+			if (active.item === 1)
+				return state.purchase.orders.filter(
+					(order) => order.status === "Chờ xác nhận"
+				);
+
+			if (active.item === 2)
+				return state.purchase.orders.filter(
+					(order) => order.status === "Chờ lấy hàng"
+				);
+
+			if (active.item === 3)
+				return state.purchase.orders.filter(
+					(order) => order.status === "Đã thanh toán"
+				);
+		}
+	});
+
+	const firstItem = useRef(null);
+	const inputSearch = useRef(null);
 
 	const options = [
 		{
@@ -50,20 +124,6 @@ function Orders() {
 		}));
 	}, [dispatch]);
 
-	useEffect(() => {
-		if (active.item === 0) {
-			setOrdersFilter(orders);
-		} else
-			setOrdersFilter(
-				orders.filter((order) => {
-					return (
-						order.status ===
-						Object.keys(orderStatus)[active.item - 1]
-					);
-				})
-			);
-	}, [orders, active.item]);
-
 	const handleActiveTab = (e, item) => {
 		setActive((prev) => ({
 			...prev,
@@ -73,37 +133,53 @@ function Orders() {
 				width: e.target.offsetWidth + "px",
 			},
 		}));
-		if (item === 0) {
-			setOrdersFilter(orders);
-		} else
-			setOrdersFilter(
-				orders.filter((order) => {
-					return order.status === Object.keys(orderStatus)[item - 1];
-				})
-			);
+	};
+
+	const onSearch = () => {
+		if (inputSearch.current.value) {
+			setFilter((prev) => ({
+				...prev,
+				content: inputSearch.current.value,
+			}));
+		} else {
+			setFilter((prev) => ({
+				...prev,
+				content: "",
+			}));
+		}
 	};
 
 	const handleChangeStatus = (status, orderId) => {
-		const fetchChangeStatus = async () => {
-			try {
+		try {
+			if (
+				window.confirm(
+					"Bạn có chắc chắn muốn thay đổi trạng thái đơn hàng này"
+				)
+			) {
 				dispatch(changeOrderStatus({ status, orderId }));
-			} catch (error) {
-				throw error.data.message;
+				toast.success("Thay đổi trạng thái đơn hàng thành công!");
 			}
-		};
-
-		toast.promise(fetchChangeStatus, {
-			pending: "Đang xử lý",
-			success: "Thay đổi trạng thái thành công",
-			error: {
-				render: ({ data }) => {
-					return <p>{data.message}</p>;
-				},
-			},
-		});
+		} catch (error) {
+			throw error.data.message;
+		}
 	};
 
 	const renderStatusList = (currStatus, orderId) => {
+		if (currStatus === "Đã thanh toán") return null;
+
+		if (currStatus === "Chờ lấy hàng")
+			return (
+				<div className='change-status__item'>
+					<p
+						className={"status " + orderStatus["Đã thanh toán"]}
+						onClick={() =>
+							handleChangeStatus("Đã thanh toán", orderId)
+						}>
+						Đã thanh toán
+					</p>
+				</div>
+			);
+
 		return Object.keys(orderStatus).map((status, index) => {
 			return status !== currStatus ? (
 				<div className='change-status__item' key={index}>
@@ -117,23 +193,22 @@ function Orders() {
 		});
 	};
 
-	// console.log(active, ordersFilter);
 	const renderListOrder = () => {
-		return ordersFilter.map((order, index) => (
+		return orders.map((order, index) => (
 			<div className='orders__list__body__item' key={index}>
 				<div className='orders__list__body__item__products'>
-					{order.products.map((product, index) => {
+					{order.products?.map((product, index) => {
 						return (
 							<div key={index} className='order__product'>
 								<div className='d-flex justify-content-between align-items-center flex-grow-1 px-4'>
 									<p className='order__product__title'>
 										{product.title}
 									</p>
-									{/* <img
+									<img
 										src={product.pictures[0]}
 										alt='anh'
 										className='order__product__pic'
-									/> */}
+									/>
 								</div>
 								<div className='d-flex justify-content-between align-items-center px-5'>
 									<i className='fas fa-times'></i>
@@ -256,12 +331,16 @@ function Orders() {
 							});
 						}}
 					/>
-					<Input
-						className='shadow-none orders__search__input'
+					<input
+						className='orders__search__input'
 						placeholder={filter.label}
+						name='content'
+						ref={inputSearch}
 					/>
 
-					<Button className='shadow-none orders__search__btn'>
+					<Button
+						className='shadow-none orders__search__btn'
+						onClick={onSearch}>
 						Tìm kiếm
 					</Button>
 				</div>
@@ -269,14 +348,10 @@ function Orders() {
 				<div className='orders__list'>
 					<div className='orders__list__header'>
 						<h2>{orders.length} Đơn hàng</h2>
-						<Button className='orders__list__header__btn'>
-							<i className='fas fa-suitcase-rolling'></i> Giao
-							hàng loạt
-						</Button>
 					</div>
 
 					<div className='orders__list__body'>
-						{ordersFilter.length <= 0 ? (
+						{orders.length <= 0 ? (
 							<div className='orders__list__body--empty'>
 								<i className='orders__list__empty'>
 									<svg
@@ -355,4 +430,4 @@ function Orders() {
 	);
 }
 
-export default Orders;
+export default AdminOrders;

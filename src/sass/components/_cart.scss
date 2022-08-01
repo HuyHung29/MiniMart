@@ -262,32 +262,13 @@
 					max-width: 100%;
 					@include flex(stretch, center);
 
-					& p {
-						color: $sub-text-color;
-						border: 1px solid $border-color;
-						font-size: 1.2rem;
-						padding: 6px 10px;
-						text-align: center;
-						cursor: pointer;
-
-						&:first-child {
-							border-top-left-radius: 3px;
-							border-bottom-left-radius: 3px;
-							border-right: none;
-						}
-
-						&:last-child {
-							border-top-right-radius: 3px;
-							border-bottom-right-radius: 3px;
-							border-left: none;
-						}
-					}
-
 					& input {
-						flex: 0 0 40%;
-						max-width: 40%;
+						flex: 0 0 100%;
+						max-width: 100%;
 						text-align: center;
 						border: 1px solid $border-color;
+						padding: 6px 0;
+						border-radius: 10px;
 
 						&::-webkit-outer-spin-button,
 						&::-webkit-inner-spin-button {
@@ -339,14 +320,14 @@
 			}
 
 			&__quantity {
-				flex: 0 0 17%;
-				max-width: 17%;
+				flex: 0 0 10%;
+				max-width: 10%;
 				text-align: center;
 			}
 
 			&__total {
-				flex: 0 0 10%;
-				max-width: 10%;
+				flex: 0 0 17%;
+				max-width: 17%;
 				text-align: center;
 			}
 

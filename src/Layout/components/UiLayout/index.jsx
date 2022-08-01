@@ -8,7 +8,9 @@ function UiLayout(props) {
 	const { pathname } = useLocation();
 	return (
 		<div className='layout__content__background'>
-			{pathname.includes("login") || pathname.includes("register") ? (
+			{pathname.includes("login") ||
+			pathname.includes("register") ||
+			pathname.includes("purchase") ? (
 				<>{props.children}</>
 			) : (
 				<>

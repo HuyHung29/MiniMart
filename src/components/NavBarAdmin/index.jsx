@@ -233,6 +233,14 @@ function NavBarAdmin() {
 								Mật khẩu
 							</NavLink>
 						</li>
+						<li className='navbar--admin__subitem'>
+							<NavLink
+								to='/admin/users'
+								exact
+								className='navbar--admin__sublink'>
+								Tài khoản người dùng
+							</NavLink>
+						</li>
 					</ul>
 				</li>
 			</ul>

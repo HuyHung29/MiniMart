@@ -16,6 +16,10 @@ const productsApi = {
 		const url = `${baseUrl}/${id}`;
 		return axiosClient.get(url);
 	},
+	getProductByCate: (id) => {
+		const url = `${baseUrl}/category/${id}`;
+		return axiosClient.get(url);
+	},
 	deleteProduct: (id) => {
 		const url = `${baseUrl}/${id}`;
 		return axiosClient.delete(url);

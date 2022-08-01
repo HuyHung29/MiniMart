@@ -12,20 +12,20 @@ import AdminProductPage from "features/Products/pages/AdminProductPage";
 import ProductDetail from "features/Products/pages/ProductDetail";
 import ProductList from "features/Products/pages/ProductList";
 import ProductSearch from "features/Products/pages/ProductSearch";
+import AdminOrders from "features/Purchase/page/AdminOrders";
 import CartMainPage from "features/Purchase/page/CartMainPage";
-import Orders from "features/Purchase/page/Orders";
+import UserPurchase from "features/Purchase/page/UserPurchase";
 import User from "features/User";
 import Address from "features/User/components/Address";
+import Orders from "features/User/components/Orders";
 import Password from "features/User/components/Password";
 import Profile from "features/User/components/Profile";
-import Purchase from "features/User/components/Purchase";
 import Login from "features/User/pages/Login";
 import MainPage from "features/User/pages/Main";
 import Register from "features/User/pages/Register";
 import AdminHomePage from "Layout/components/AdminHomePage";
 import HomePage from "Layout/components/HomePage";
 import Admin from "Layout/pages/Admin";
-import React from "react";
 import { Redirect } from "react-router-dom";
 
 export const adminRoutes = [
@@ -107,7 +107,7 @@ export const adminRoutes = [
 			},
 			{
 				path: "/admin/orders",
-				component: Orders,
+				component: AdminOrders,
 			},
 			{
 				path: "",
@@ -168,10 +168,10 @@ export const userRoutes = [
 				),
 			},
 			{
-				path: "/user/purchase",
+				path: "/user/orders",
 				component: () => (
 					<MainPage>
-						<Purchase />
+						<Orders />
 					</MainPage>
 				),
 			},
@@ -201,6 +201,10 @@ export const userRoutes = [
 		path: "/search",
 		exact: true,
 		component: ProductSearch,
+	},
+	{
+		path: "/purchase",
+		component: UserPurchase,
 	},
 	{
 		path: "/posts",

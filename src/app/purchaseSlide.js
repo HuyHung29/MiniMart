@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import purchaseApi from "api/purchaseApi";
 import { hideLoading, showLoading } from "./uiSlice";
 
-// const cart = JSON.parse(localStorage.getItem("cart"));
-
 export const fetchOrders = createAsyncThunk(
 	"purchase/fetchOrders",
 	async (_, { dispatch }) => {
@@ -11,6 +9,19 @@ export const fetchOrders = createAsyncThunk(
 			dispatch(showLoading());
 			const response = await purchaseApi.getOrders();
 			dispatch(hideLoading());
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const createOrder = createAsyncThunk(
+	"purchase/createOrder",
+	async (data) => {
+		try {
+			const response = await purchaseApi.createOrder(data);
+
 			return response.data;
 		} catch (error) {
 			throw error.response.data.message;
@@ -55,11 +66,40 @@ export const addToCart = createAsyncThunk(
 	}
 );
 
+export const updateCartItem = createAsyncThunk(
+	"purchase/updateCartItem",
+	async ({ id, newQuantity }) => {
+		try {
+			const response = await purchaseApi.updateCartById(
+				{ quantity: newQuantity },
+				id
+			);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
 export const deleteFromCart = createAsyncThunk(
 	"purchase/deleteFromCart",
 	async (id) => {
 		try {
 			const response = await purchaseApi.deleteCartById(id);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const deleteMultiFromCart = createAsyncThunk(
+	"purchase/deleteMultiFromCart",
+	async (productIds) => {
+		try {
+			const response = await purchaseApi.deleteCartByIds({
+				productIds: JSON.stringify(productIds),
+			});
 			return response.data;
 		} catch (error) {
 			throw error.response.data.message;
@@ -74,33 +114,18 @@ const purchaseSlice = createSlice({
 		orders: [],
 	},
 	reducers: {
-		updateCart(state, action) {
-			const index = state.cart.findIndex(
-				(item) => item.id === action.payload.id
-			);
-			if (index !== -1) {
-				state.cart[index].quantity = action.payload.newQuantity;
-			}
-
-			localStorage.setItem("cart", JSON.stringify(state.cart));
-		},
-
-		deleteMultiFromCart(state, action) {
-			const cartIds = action.payload;
-			cartIds.forEach((item) => {
-				state.cart.splice(
-					state.cart.findIndex((cart) => cart.id === item),
-					1
-				);
-			});
-
-			localStorage.setItem("cart", JSON.stringify(state.cart));
+		clearCart: (state) => {
+			state.cart = [];
+			state.orders = [];
 		},
 	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(fetchOrders.fulfilled, (state, action) => {
 				state.orders = action.payload.orders;
+			})
+			.addCase(createOrder.fulfilled, (state, action) => {
+				state.orders.push(action.payload.orders);
 			})
 			.addCase(fetchCart.fulfilled, (state, action) => {
 				const cart = action.payload.cart;
@@ -124,7 +149,30 @@ const purchaseSlice = createSlice({
 					}));
 				}
 			})
-			.addCase(deleteFromCart.fulfilled, (state, action) => {})
+			.addCase(updateCartItem.fulfilled, (state, action) => {
+				const cart = action.payload.cart;
+				const { products, quantity } = cart;
+				state.cart = products.map((product, index) => ({
+					...product,
+					quantity: quantity[index],
+				}));
+			})
+			.addCase(deleteFromCart.fulfilled, (state, action) => {
+				const cart = action.payload.cart;
+				const { products, quantity } = cart;
+				state.cart = products.map((product, index) => ({
+					...product,
+					quantity: quantity[index],
+				}));
+			})
+			.addCase(deleteMultiFromCart.fulfilled, (state, action) => {
+				const cart = action.payload.cart;
+				const { products, quantity } = cart;
+				state.cart = products.map((product, index) => ({
+					...product,
+					quantity: quantity[index],
+				}));
+			})
 			.addCase(changeOrderStatus.fulfilled, (state, action) => {
 				const id = action.meta.arg.orderId;
 				const index = state.orders.findIndex(
@@ -138,6 +186,6 @@ const purchaseSlice = createSlice({
 	},
 });
 
-export const { updateCart, deleteMultiFromCart } = purchaseSlice.actions;
+export const { updateCart } = purchaseSlice.actions;
 
 export default purchaseSlice.reducer;

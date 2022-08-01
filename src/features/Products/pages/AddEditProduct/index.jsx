@@ -53,7 +53,7 @@ function AddEditProduct() {
 			const fetchEditProduct = async () => {
 				try {
 					const action = fetchCurrentProduct(editProductId);
-					await dispatch(action);
+					dispatch(action);
 				} catch (error) {}
 			};
 

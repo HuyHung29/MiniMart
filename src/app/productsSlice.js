@@ -44,6 +44,20 @@ export const fetchCurrentProduct = createAsyncThunk(
 	}
 );
 
+export const fetchProductsByCate = createAsyncThunk(
+	"products/fetchProductsByCate",
+	async (id, { dispatch }) => {
+		try {
+			dispatch(showLoading());
+			const response = await productsApi.getProductById(id);
+			dispatch(hideLoading());
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
 export const createProduct = createAsyncThunk(
 	"products/createProduct",
 	async (data) => {

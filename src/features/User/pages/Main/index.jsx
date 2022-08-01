@@ -78,7 +78,7 @@ function MainPage(props) {
 								<i className='fas fa-clipboard'></i>
 								<NavLink
 									exact
-									to='/user/purchase'
+									to='/user/orders'
 									className='user__nav__link'>
 									Đơn hàng
 								</NavLink>

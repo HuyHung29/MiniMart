@@ -33,7 +33,7 @@ export const breadcrumbNames = {
 	add: "Thêm mới",
 	edit: "Chỉnh sửa",
 	cart: "Giỏ hàng",
-	purchase: "Đơn mua",
+	orders: "Đơn mua",
 	categories: "Danh mục",
 	posts: "Bài viết",
 	search: "Tìm kiếm",

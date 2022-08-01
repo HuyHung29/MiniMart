@@ -127,6 +127,14 @@ function AddressAddEdit({ currAddress, isShow, setIsShow, onSubmit }) {
 	const onCityChange = () => {
 		setValue("district", "");
 		setValue("village", "");
+		setOptions((prev) => ({
+			...prev,
+			districtOptions: {
+				districts: [],
+				selectOptions: [],
+			},
+			villageOptions: [],
+		}));
 	};
 
 	const setDistrictOptions = (city) => {

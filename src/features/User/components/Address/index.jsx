@@ -111,10 +111,12 @@ function Address() {
 						<p onClick={() => onClickEditBtn(item)}>Sửa</p>
 						<p
 							onClick={() => {
-								window.prompt(
-									"Bạn có chắc muốn xóa địa chỉ này"
-								);
-								dispatch(deleteUserAddress(item._id));
+								if (
+									window.confirm(
+										"Bạn có chắc muốn xóa địa chỉ này"
+									)
+								)
+									dispatch(deleteUserAddress(item._id));
 							}}>
 							Xóa
 						</p>
