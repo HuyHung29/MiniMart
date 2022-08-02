@@ -235,7 +235,7 @@ function NavBarAdmin() {
 						</li>
 						<li className='navbar--admin__subitem'>
 							<NavLink
-								to='/admin/users'
+								to='/admin/accounts'
 								exact
 								className='navbar--admin__sublink'>
 								Tài khoản người dùng

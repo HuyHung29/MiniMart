@@ -5,6 +5,7 @@ import productsReducer from "app/productsSlice";
 import purchaseReducer from "app/purchaseSlide";
 import uiReducer from "app/uiSlice";
 import postsReducer from "app/postsSlice";
+import accountReducer from "app/accountSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
 		purchase: purchaseReducer,
 		posts: postsReducer,
 		ui: uiReducer,
+		accounts: accountReducer,
 	},
 });

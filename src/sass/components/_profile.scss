@@ -177,3 +177,139 @@
 		}
 	}
 }
+
+.account {
+	border: 1px solid $border-color;
+
+	&__heading {
+		margin: 15px 0;
+	}
+
+	&__name {
+		flex: 0 0 15%;
+		max-width: 15%;
+
+		& p {
+			margin: 0 10px;
+			word-break: break-word;
+		}
+	}
+
+	&__email {
+		flex: 0 0 25%;
+		max-width: 25%;
+		text-align: center;
+
+		& p {
+			margin: 0 10px;
+			word-break: break-word;
+		}
+	}
+
+	&__phone {
+		flex: 0 0 15%;
+		max-width: 15%;
+		text-align: center;
+		& p {
+			margin: 0 10px;
+			word-break: break-word;
+		}
+	}
+
+	&__order {
+		flex: 0 0 15%;
+		max-width: 15%;
+		text-align: center;
+		& p {
+			margin: 0 10px;
+			word-break: break-word;
+		}
+	}
+
+	&__status {
+		flex: 0 0 10%;
+		max-width: 10%;
+		text-align: center;
+		& p {
+			margin: 0 10px;
+			word-break: break-word;
+		}
+	}
+
+	&__action {
+		flex: 0 0 20%;
+		max-width: 20%;
+		text-align: center;
+
+		&__btn {
+			background-color: $primary-color;
+			border-color: $primary-color;
+			padding: 8px 10px;
+			font-size: 1.4rem;
+
+			&:hover {
+				color: $primary-color;
+				background-color: white;
+				border-color: $primary-color;
+			}
+
+			&:focus {
+				background-color: $primary-color;
+				border-color: $primary-color;
+				color: white;
+			}
+
+			& i {
+				margin-right: 5px;
+			}
+
+			&--enable {
+				background-color: $secondary-color;
+				border-color: $secondary-color;
+				padding: 8px 10px;
+				font-size: 1.4rem;
+
+				&:hover {
+					color: $secondary-color;
+					background-color: white;
+					border-color: $secondary-color;
+				}
+
+				&:focus {
+					background-color: $secondary-color;
+					border-color: $secondary-color;
+					color: white;
+				}
+
+				& i {
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+
+	&__header {
+		@include flex(center);
+		font-size: 1.4rem;
+		background-color: #f6f6f6;
+		padding: 20px 0;
+		border-radius: 3px;
+		color: $sub-text-color;
+		transition: 0.2s ease-in;
+
+		&--hidden {
+			display: none;
+		}
+	}
+
+	&__item {
+		@include flex(center);
+		padding: 20px 0;
+		font-size: 1.4rem;
+		transition: 0.2s ease-in;
+
+		&:nth-child(even) {
+			background-color: rgba($color: #ccc, $alpha: 0.2);
+		}
+	}
+}

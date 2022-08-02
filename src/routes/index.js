@@ -16,6 +16,7 @@ import AdminOrders from "features/Purchase/page/AdminOrders";
 import CartMainPage from "features/Purchase/page/CartMainPage";
 import UserPurchase from "features/Purchase/page/UserPurchase";
 import User from "features/User";
+import Accounts from "features/User/components/Accounts";
 import Address from "features/User/components/Address";
 import Orders from "features/User/components/Orders";
 import Password from "features/User/components/Password";
@@ -108,6 +109,10 @@ export const adminRoutes = [
 			{
 				path: "/admin/orders",
 				component: AdminOrders,
+			},
+			{
+				path: "/admin/accounts",
+				component: Accounts,
 			},
 			{
 				path: "",
@@ -239,6 +244,11 @@ export const guestRoutes = [
 	{
 		path: "/user/register",
 		component: Register,
+	},
+	{
+		path: "/category",
+		exact: true,
+		component: ProductList,
 	},
 	{
 		path: "/products",
