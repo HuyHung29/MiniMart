@@ -7,6 +7,8 @@ import Slider from "react-slick";
 ImageSlider.propTypes = {
 	dots: PropTypes.bool,
 	infinite: PropTypes.bool,
+	draggable: PropTypes.bool,
+	arrows: PropTypes.bool,
 	slidesToShow: PropTypes.number,
 	slidesToScroll: PropTypes.number,
 	pictures: PropTypes.array.isRequired,
@@ -16,8 +18,10 @@ ImageSlider.propTypes = {
 ImageSlider.defaultProps = {
 	dots: true,
 	infinite: false,
+	draggable: false,
 	slidesToShow: 1,
 	slidesToScroll: 1,
+	arrows: false,
 	pictures: [],
 	withModal: false,
 };
@@ -29,6 +33,8 @@ function ImageSlider({
 	slidesToScroll,
 	pictures,
 	withModal,
+	draggable,
+	arrows,
 	...props
 }) {
 	const [imgActive, setImgActive] = useState(pictures[0] ? pictures[0] : "");
@@ -41,6 +47,8 @@ function ImageSlider({
 		slidesToScroll: slidesToScroll,
 		nextArrow: <NextPrevBtn next={true} />,
 		prevArrow: <NextPrevBtn next={false} />,
+		draggable: draggable,
+		arrows: arrows,
 	};
 
 	const toggleModal = () => {

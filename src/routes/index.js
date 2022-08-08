@@ -132,6 +132,11 @@ export const userRoutes = [
 		component: HomePage,
 	},
 	{
+		path: "/category",
+		exact: true,
+		component: ProductList,
+	},
+	{
 		path: "/user",
 		component: User,
 		routes: [

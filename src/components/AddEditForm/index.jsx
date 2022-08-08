@@ -5,7 +5,7 @@ import InputField from "components/Custom/InputField";
 import SelectField from "components/Custom/SelectField";
 import { itemTitle } from "constant";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -27,12 +27,19 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 		setValue,
 		handleSubmit,
 		reset,
-		formState: { errors, isSubmitting },
+		formState: { errors, isSubmitSuccessful, isSubmitting },
 	} = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(schema),
 		defaultValues,
 	});
+
+	const [isDisabled, setIsDisabled] = useState(false);
+
+	useEffect(() => {
+		if (isSubmitting) setIsDisabled(true);
+		if (isSubmitSuccessful) setIsDisabled(false);
+	}, [isSubmitSuccessful, isSubmitting]);
 
 	const options = categories.map((item) => {
 		return { value: item._id, label: item.name };
@@ -187,13 +194,13 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 				{renderController()}
 				<Col className='text-center' md='12'>
 					<Button
-						disabled={isSubmitting}
+						disabled={isDisabled}
 						type='submit'
 						className='form__btn form__btn--success'>
 						{editItem ? "Cập nhật" : "Tạo mới"}
 					</Button>
 					<Button
-						disabled={isSubmitting}
+						disabled={isDisabled}
 						className='form__btn form__btn--danger'
 						type='reset'
 						onClick={() => {

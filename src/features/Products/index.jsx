@@ -18,13 +18,32 @@ function Products({ routes }) {
 	});
 
 	useEffect(() => {
-		setFilter((prev) => ({
-			...prev,
-			page: page,
-			sort: sort,
-			limit: limit || 20,
-		}));
-	}, [page, sort, limit]);
+		const search = qs.parse(location.search);
+		if (
+			search["price[lt]"] ||
+			search["price[lte]"] ||
+			search["price[gt]"] ||
+			search["price[gte]"]
+		) {
+			setFilter((prev) => ({
+				...prev,
+				page: page,
+				sort: sort,
+				limit: limit || 20,
+				"price[lt]": search["price[lt]"],
+				"price[lte]": search["price[lte]"],
+				"price[gt]": search["price[gt]"],
+				"price[gte]": search["price[gte]"],
+			}));
+		} else {
+			setFilter((prev) => ({
+				...prev,
+				page: page,
+				sort: sort,
+				limit: limit || 20,
+			}));
+		}
+	}, [page, sort, limit, location.search]);
 
 	useEffect(() => {
 		const fetchProductWithFilter = async () => {
@@ -37,6 +56,16 @@ function Products({ routes }) {
 
 		fetchProductWithFilter();
 	}, [dispatch, filter]);
+
+	useEffect(() => {
+		if (location.pathname === "/products" && !location.search) {
+			dispatch(
+				fetchProducts({
+					limit: 20,
+				})
+			);
+		}
+	});
 
 	return (
 		<Switch>

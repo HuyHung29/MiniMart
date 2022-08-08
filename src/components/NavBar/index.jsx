@@ -38,7 +38,8 @@ function NavBar() {
 												return (
 													<DropdownItem key={index}>
 														<Link
-															to={`/${item.name}`}>
+															className='d-block'
+															to={`/category?id=${item._id}`}>
 															{item.name}
 														</Link>
 													</DropdownItem>

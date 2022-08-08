@@ -1,12 +1,11 @@
-import { fetchCurrentProduct } from "app/productsSlice";
+import { fetchCurrentProduct, fetchSameProducts } from "app/productsSlice";
 import AddToCartBtn from "components/AddToCartBtn";
-import BuyBtn from "components/BuyBtn";
 import ImageSlider from "components/ImageSlider";
 import Loading from "components/Loading";
 import ProductSlider from "components/ProductSlider";
 import parse from "html-react-parser";
 import qs from "query-string";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
@@ -17,7 +16,7 @@ function ProductDetail() {
 	const { id } = qs.parse(search);
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
-	const products = useSelector((state) => state.products.listProduct);
+	const sameProducts = useSelector((state) => state.products.sameProduct);
 	const product = useSelector((state) => state.products.currentProduct);
 	const [quantity, setQuantity] = useState(1);
 	const {
@@ -40,15 +39,16 @@ function ProductDetail() {
 	const productDesc = product.description ? parse(description) : "";
 
 	useEffect(() => {
-		const fetchEditProduct = async () => {
-			try {
-				const action = fetchCurrentProduct(id);
-				await dispatch(action);
-			} catch (error) {}
-		};
-
-		fetchEditProduct();
+		if (id) {
+			dispatch(fetchCurrentProduct(id));
+		}
 	}, [id, dispatch]);
+
+	useEffect(() => {
+		if (category) {
+			dispatch(fetchSameProducts(category));
+		}
+	}, [category, dispatch]);
 
 	return (
 		<Container className='product-detail'>
@@ -67,6 +67,7 @@ function ProductDetail() {
 											slidesToScroll={1}
 											slidesToShow={4}
 											withModal={true}
+											arrows={true}
 											dots={false}
 										/>
 									</Col>
@@ -103,17 +104,28 @@ function ProductDetail() {
 
 											{/* Product price */}
 											<div className='product-detail__page__info__bg'>
-												<p className='product__price--old product__price--detail--old'>
-													<sup>đ</sup>
-													{productPrice}
-												</p>{" "}
-												<p className='product__price product__price--detail'>
-													<sup>đ</sup>
-													{productCurrentPrice}
-												</p>
-												<span className='product__price__discount'>
-													{discount}% GIẢM
-												</span>
+												{product.discount !== 0 ? (
+													<>
+														<p className='product__price--old product__price--detail--old'>
+															<sup>đ</sup>
+															{productPrice}
+														</p>{" "}
+														<p className='product__price product__price--detail'>
+															<sup>đ</sup>
+															{
+																productCurrentPrice
+															}
+														</p>
+														<span className='product__price__discount'>
+															{discount}% GIẢM
+														</span>
+													</>
+												) : (
+													<p className='product__price product__price--detail'>
+														<sup>đ</sup>
+														{productPrice}
+													</p>
+												)}
 											</div>
 
 											{/* Product category */}
@@ -209,11 +221,6 @@ function ProductDetail() {
 
 											<AddToCartBtn product={product} />
 
-											<BuyBtn
-												content={"Mua ngay"}
-												className={`buy-btn--margin`}
-											/>
-
 											{/* Share social */}
 											<div className='product-detail__page__info__share'>
 												<h3 className='product-detail__page__info__share__title'>
@@ -257,13 +264,17 @@ function ProductDetail() {
 								Sản phẩm cùng loại
 							</h2>
 							<section className='bg-white product-detail__page'>
-								<ProductSlider
-									products={products}
-									slidesToScroll={1}
-									slidesToShow={4}
-									dots={false}
-									infinite={true}
-								/>
+								{sameProducts.length > 0 ? (
+									<ProductSlider
+										products={sameProducts}
+										slidesToScroll={1}
+										slidesToShow={5}
+										dots={false}
+										infinite={false}
+									/>
+								) : (
+									<p>Không có sản phẩm nào cùng loại</p>
+								)}
 							</section>
 						</Col>
 					</>

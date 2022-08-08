@@ -41,6 +41,7 @@ function AddEditProduct() {
 				.number()
 				.typeError("Giá sản phầm phải là số")
 				.min(0, "Giá phải là số dương")
+				.max(100, "Giảm giá chỉ từ 0 - 100%")
 				.required("Vui lòng nhập trường này"),
 			country: yup.string().required("Vui lòng nhập trường này"),
 			unit: yup.string().required("Vui lòng nhập trường này"),

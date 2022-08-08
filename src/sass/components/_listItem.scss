@@ -4,10 +4,11 @@
 	border-radius: 2px;
 
 	&__header {
+		@include flex(center, space-between);
 		& h2 {
 			font-weight: 400;
-			padding-bottom: 20px;
 		}
+		padding-bottom: 20px;
 
 		border-bottom: 1px solid $border-color;
 	}

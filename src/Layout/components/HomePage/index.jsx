@@ -1,15 +1,33 @@
 import ProductSlider from "components/ProductSlider";
 import ReadMore from "components/ReadMore";
 import { bannerImg, images } from "constant";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Col, Container, Row } from "reactstrap";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchProductsHomePage } from "app/productsSlice";
+import { hideLoading, showLoading } from "app/uiSlice";
 
 function HomePage() {
-	const products = useSelector((state) => state.products.listProduct);
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.products.homepageProduct);
+	const categories = useSelector((state) => state.categories);
 	const posts = useSelector((state) => state.posts.listPosts);
+
+	useEffect(() => {
+		if (categories.length > 0 && products.length === 0) {
+			try {
+				dispatch(showLoading());
+				dispatch(fetchProductsHomePage(categories[3]._id));
+				dispatch(fetchProductsHomePage(categories[2]._id));
+				dispatch(fetchProductsHomePage(categories[1]._id));
+				dispatch(fetchProductsHomePage(categories[6]._id));
+				dispatch(hideLoading());
+			} catch (error) {}
+		}
+	}, [categories, products, dispatch]);
 
 	const renderListPost = () => {
 		return posts.map((post, index) => {
@@ -60,6 +78,33 @@ function HomePage() {
 		});
 	};
 
+	const renderHomeProducts = () => {
+		if (products.length > 0) {
+			return products.map((item) => {
+				const cate = categories.find(
+					(cate) => cate._id === item[0].category
+				);
+				return (
+					<Col md='12' className='home__slider' key={cate._id}>
+						<div className='home__link--wrap'>
+							<Link
+								to={`/category?id=${cate._id}`}
+								className='home__link'>
+								{cate.name}
+							</Link>
+						</div>
+						<ProductSlider
+							dots={false}
+							slidesToShow={5}
+							slidesToScroll={5}
+							products={item}
+						/>
+					</Col>
+				);
+			});
+		}
+	};
+
 	return (
 		<>
 			<div className='top-slider'>
@@ -80,58 +125,7 @@ function HomePage() {
 							</Col>
 						);
 					})}
-					<Col md='12' className='home__slider'>
-						<div className='home__link--wrap'>
-							<Link to='/products' className='home__link'>
-								Sản phẩm bán chạy
-							</Link>
-						</div>
-						<ProductSlider
-							dots={false}
-							slidesToShow={5}
-							slidesToScroll={5}
-							products={products}
-						/>
-					</Col>
-					<Col md='12' className='home__slider'>
-						<div className='home__link--wrap'>
-							<Link to='/products' className='home__link'>
-								Rau quả
-							</Link>
-						</div>
-						<ProductSlider
-							dots={false}
-							slidesToShow={5}
-							slidesToScroll={5}
-							products={products}
-						/>
-					</Col>
-					<Col md='12' className='home__slider'>
-						<div className='home__link--wrap'>
-							<Link to='/products' className='home__link'>
-								Đồ đông lạnh
-							</Link>
-						</div>
-						<ProductSlider
-							dots={false}
-							slidesToShow={5}
-							slidesToScroll={5}
-							products={products}
-						/>
-					</Col>
-					<Col md='12' className='home__slider'>
-						<div className='home__link--wrap'>
-							<Link to='/products' className='home__link'>
-								Hoa quả
-							</Link>
-						</div>
-						<ProductSlider
-							dots={false}
-							slidesToShow={5}
-							slidesToScroll={5}
-							products={products}
-						/>
-					</Col>
+					{renderHomeProducts()}
 					<Col md='12' className='home__post'>
 						<div className='home__link--wrap'>
 							<Link to='/posts' className='home__link'>

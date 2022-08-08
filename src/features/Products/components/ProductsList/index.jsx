@@ -8,6 +8,7 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import Select from "react-select";
 import { Button, Input } from "reactstrap";
 import cls from "classnames";
+import ListItem from "../ListItem";
 
 ProductsList.propTypes = {
 	productList: PropTypes.array,
@@ -78,58 +79,16 @@ function ProductsList({
 				<p>Không tìm thấy sản phẩm</p>
 			</div>
 		) : (
-			products.map((product, index) => (
-				<div className='list__item' key={index}>
-					<div className='list__checkbox list__checkbox--body'>
-						<Input
-							className='check-input shadow-none'
-							type='checkbox'
-							name='checkbox'
-							value={product._id}
-							onChange={handleCheck}
-							checked={checkList.includes(product._id)}
-						/>
-					</div>
-					<div className='list__name list__name--body'>
-						<p>{product.title}</p>
-					</div>
-					<div className='list__pictures list__pictures--body'>
-						{product.pictures.map((img, i) => (
-							<img src={img} key={i} alt='anh' className='img' />
-						))}
-					</div>
-					<div className='list__cate list__cate--body'>
-						<p>
-							{categories.find(
-								(cate) => cate._id === product.category
-							)
-								? categories.find(
-										(cate) => cate._id === product.category
-								  ).name
-								: ""}
-						</p>
-					</div>
-					<div className='list__price list__price--body'>
-						<p>
-							{product.price.toLocaleString()} <sup>đ</sup>
-						</p>
-					</div>
-					<div className='list__origin list__origin--body'>
-						<p>{product.country}</p>
-					</div>
-					<div className='list__action list__action--body'>
-						<Link to={pathname + `/edit/${product._id}`}>
-							<Button className='list__action__btn shadow-none'>
-								Sửa
-							</Button>
-						</Link>
-						<Button
-							className='list__action__btn shadow-none'
-							onClick={() => handleDeleteItem(product._id)}>
-							Xóa
-						</Button>
-					</div>
-				</div>
+			products.map((product) => (
+				<ListItem
+					product={product}
+					key={product._id}
+					categories={categories}
+					pathname={pathname}
+					handleDeleteItem={handleDeleteItem}
+					handleCheck={handleCheck}
+					checkList={checkList}
+				/>
 			))
 		);
 	};
@@ -138,6 +97,26 @@ function ProductsList({
 		<div className='list-product shadow-sm'>
 			<div className='list-product__header'>
 				<h2>Tất cả sản phẩm</h2>
+				<div className='limit'>
+					<p>Số sản phẩm trên 1 trang</p>
+					<Select
+						placeholder='Số sản phẩm trên 1 trang'
+						className='limit__select'
+						onChange={(val) => {
+							history.push(
+								`${pathname}${replaceLimit(val.value)}`
+							);
+						}}
+						defaultValue={
+							limit
+								? limitPerPage.find((item) => {
+										return item.value === +limit;
+								  })
+								: limitPerPage[2]
+						}
+						options={limitPerPage}
+					/>
+				</div>
 			</div>
 
 			<div className='list-product__action'>
@@ -236,27 +215,6 @@ function ProductsList({
 						</ul>
 					</div>
 
-					<div className='limit'>
-						<p>Số sản phẩm trên 1 trang</p>
-						<Select
-							placeholder='Số sản phẩm trên 1 trang'
-							className='limit__select'
-							onChange={(val) => {
-								history.push(
-									`${pathname}${replaceLimit(val.value)}`
-								);
-							}}
-							defaultValue={
-								limit
-									? limitPerPage.find((item) => {
-											return item.value === +limit;
-									  })
-									: limitPerPage[2]
-							}
-							options={limitPerPage}
-						/>
-					</div>
-
 					<div className='view'>
 						<div
 							className={cls({
@@ -296,6 +254,7 @@ function ProductsList({
 								products ? products.map((item) => item._id) : ""
 							}
 							onChange={handleCheck}
+							checked={checkList.length === products.length}
 							className='check-input shadow-none'
 						/>
 					</div>

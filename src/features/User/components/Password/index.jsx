@@ -98,6 +98,7 @@ function Password() {
 									errors={errors}
 									label=''
 									ref={null}
+									type='password'
 									className='profile__user__input'
 								/>
 							)}
@@ -114,6 +115,7 @@ function Password() {
 									errors={errors}
 									label=''
 									ref={null}
+									type='password'
 									className='profile__user__input'
 								/>
 							)}
@@ -132,6 +134,7 @@ function Password() {
 									errors={errors}
 									label=''
 									ref={null}
+									type='password'
 									className='profile__user__input'
 								/>
 							)}
@@ -145,7 +148,6 @@ function Password() {
 						Xác nhận
 					</Button>
 				</div>
-				<p className='forget-password'>Quên mật khẩu?</p>
 			</Form>
 		</div>
 	);

@@ -1,13 +1,6 @@
 import { images } from "constant";
-import {
-	Button,
-	Col,
-	Container,
-	Form,
-	Input,
-	InputGroup,
-	Row,
-} from "reactstrap";
+import { Link } from "react-router-dom";
+import { Button, Col, Container, Input, InputGroup, Row } from "reactstrap";
 
 function Footer() {
 	return (
@@ -64,11 +57,15 @@ function Footer() {
 					<Col>
 						<ul className='footer__list'>
 							<h3 className='footer__list__title'>Tài khoản</h3>
-							<li className='footer__item'>Trang chủ</li>
-							<li className='footer__item'>Giới thiệu</li>
-							<li className='footer__item'>Sản phẩm</li>
-							<li className='footer__item'>Tin tức</li>
-							<li className='footer__item'>Liên hệ</li>
+							<li className='footer__item'>
+								<Link to='/'>Trang chủ</Link>
+							</li>
+							<li className='footer__item'>
+								<Link to='/products'>Sản phẩm</Link>
+							</li>
+							<li className='footer__item'>
+								<Link to='/posts'>Tin tức</Link>
+							</li>
 						</ul>
 					</Col>
 					<Col>
@@ -76,11 +73,15 @@ function Footer() {
 							<h3 className='footer__list__title'>
 								Hỗ trợ khách hàng
 							</h3>
-							<li className='footer__item'>Trang chủ</li>
-							<li className='footer__item'>Giới thiệu</li>
-							<li className='footer__item'>Sản phẩm</li>
-							<li className='footer__item'>Tin tức</li>
-							<li className='footer__item'>Liên hệ</li>
+							<li className='footer__item'>
+								<Link to='/'>Trang chủ</Link>
+							</li>
+							<li className='footer__item'>
+								<Link to='/products'>Sản phẩm</Link>
+							</li>
+							<li className='footer__item'>
+								<Link to='/posts'>Tin tức</Link>
+							</li>
 						</ul>
 					</Col>
 					<Col>
@@ -89,19 +90,19 @@ function Footer() {
 							<p className='footer__mail__desc'>
 								Gửi email nhận khuyến mãi
 							</p>
-							<Form className='footer__mail__form'>
+							<div className='footer__mail__form'>
 								<InputGroup>
 									<Input
-										className='footer__mail__input'
+										className='footer__mail__input shadow-none'
 										placeholder='Email của bạn'
 									/>
 									<Button
-										className='footer__mail__btn'
+										className='footer__mail__btn shadow-none'
 										type='submit'>
 										<i className='fab fa-telegram-plane'></i>
 									</Button>
 								</InputGroup>
-							</Form>
+							</div>
 
 							<div className='footer__social'>
 								<h3 className='footer__social__title'>

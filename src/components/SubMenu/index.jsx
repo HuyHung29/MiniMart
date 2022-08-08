@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import qs from "query-string";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 
@@ -10,7 +11,16 @@ function SubMenu() {
 		return categories.map((item, index) => {
 			return (
 				<li className='second-menu__item' key={index}>
-					{item.name}
+					<NavLink
+						className='sub-menu__link'
+						to={`/category?id=${item._id}`}
+						activeClassName='active'
+						isActive={(match, location) => {
+							const { id } = qs.parse(location.search);
+							return id === item._id;
+						}}>
+						{item.name}
+					</NavLink>
 				</li>
 			);
 		});
@@ -33,17 +43,15 @@ function SubMenu() {
 					</NavLink>
 				</li>
 				<li className='sub-menu__item'>
-					<NavLink
-						to='/products'
+					<p
 						className='sub-menu__link sub-menu__link--not'
-						onClick={() => setIsOpen((prev) => !prev)}
-						activeClassName='active'>
+						onClick={() => setIsOpen((prev) => !prev)}>
 						Sản phẩm{" "}
 						<i
 							className={`fas fa-chevron-right sub-menu__icon ${
 								isOpen ? "active" : ""
 							}`}></i>
-					</NavLink>
+					</p>
 					<ul className={`second-menu ${isOpen ? "active" : ""}`}>
 						{renderSubItem()}
 					</ul>

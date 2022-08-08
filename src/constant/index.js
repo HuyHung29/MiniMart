@@ -37,6 +37,7 @@ export const breadcrumbNames = {
 	categories: "Danh mục",
 	posts: "Bài viết",
 	search: "Tìm kiếm",
+	category: "Danh mục",
 };
 
 export const formValidateData = {

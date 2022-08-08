@@ -16,6 +16,30 @@ export const fetchProducts = createAsyncThunk(
 	}
 );
 
+export const fetchProductsHomePage = createAsyncThunk(
+	"products/fetchProductsHomePage",
+	async (id) => {
+		try {
+			const response = await productsApi.getProductByCate(id);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
+export const fetchSameProducts = createAsyncThunk(
+	"products/fetchSameProducts",
+	async (id) => {
+		try {
+			const response = await productsApi.getProductByCate(id);
+			return response.data;
+		} catch (error) {
+			throw error.response.data.message;
+		}
+	}
+);
+
 export const fetchProductsSearch = createAsyncThunk(
 	"products/fetchProductsSearch",
 	async (params, { dispatch }) => {
@@ -49,7 +73,7 @@ export const fetchProductsByCate = createAsyncThunk(
 	async (id, { dispatch }) => {
 		try {
 			dispatch(showLoading());
-			const response = await productsApi.getProductById(id);
+			const response = await productsApi.getProductByCate(id);
 			dispatch(hideLoading());
 			return response.data;
 		} catch (error) {
@@ -111,6 +135,8 @@ const productsSlice = createSlice({
 	name: "products",
 	initialState: {
 		listProduct: [],
+		homepageProduct: [],
+		sameProduct: [],
 		currentProduct: {},
 		previewProduct: {
 			product: {},
@@ -137,6 +163,18 @@ const productsSlice = createSlice({
 				state.listProduct = action.payload.products;
 				state.pagination = action.payload.pagination;
 			})
+			.addCase(fetchProductsHomePage.fulfilled, (state, action) => {
+				state.homepageProduct.push(action.payload.products);
+			})
+			.addCase(fetchProductsByCate.fulfilled, (state, action) => {
+				state.listProduct = action.payload.products;
+			})
+			.addCase(fetchSameProducts.pending, (state) => {
+				state.sameProduct = [];
+			})
+			.addCase(fetchSameProducts.fulfilled, (state, action) => {
+				state.sameProduct = action.payload.products;
+			})
 			.addCase(fetchCurrentProduct.pending, (state) => {
 				state.currentProduct = {};
 			})
@@ -145,6 +183,7 @@ const productsSlice = createSlice({
 			})
 			.addCase(createProduct.fulfilled, (state, action) => {
 				state.listProduct.unshift(action.payload.product);
+				state.pagination.total += 1;
 			})
 			.addCase(updateProduct.fulfilled, (state, { payload }) => {
 				const { product } = payload;

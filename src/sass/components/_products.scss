@@ -362,7 +362,6 @@
 
 					& .product__quantity {
 						margin: unset;
-						flex: 1;
 					}
 				}
 
@@ -553,5 +552,17 @@
 				}
 			}
 		}
+	}
+}
+
+.list-empty {
+	background-color: white;
+	padding: 100px 0;
+	@include flex(center, center);
+	flex-direction: column;
+
+	& p {
+		margin-top: 15px;
+		font-size: 1.4rem;
 	}
 }

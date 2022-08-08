@@ -6,6 +6,7 @@ import Slider from "react-slick";
 
 ProductSlider.propTypes = {
 	dots: PropTypes.bool,
+	draggable: PropTypes.bool,
 	infinite: PropTypes.bool,
 	slidesToShow: PropTypes.number,
 	slidesToScroll: PropTypes.number,
@@ -17,6 +18,7 @@ ProductSlider.defaultProps = {
 	infinite: false,
 	slidesToShow: 4,
 	slidesToScroll: 1,
+	draggable: true,
 };
 
 function ProductSlider({
@@ -24,6 +26,7 @@ function ProductSlider({
 	infinite,
 	slidesToShow,
 	slidesToScroll,
+	draggable,
 	products,
 }) {
 	const settings = {
@@ -34,6 +37,7 @@ function ProductSlider({
 		slidesToScroll: slidesToScroll,
 		nextArrow: <NextPrevBtn next={true} />,
 		prevArrow: <NextPrevBtn next={false} />,
+		draggable: draggable,
 	};
 
 	const renderProducts = () => {
