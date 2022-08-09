@@ -46,6 +46,9 @@ function LoginForm({ onSubmit, defaultValues, forgetClick }) {
 				onSubmit(data);
 			})}>
 			<h2 className='authen__form__title'>Đăng nhập</h2>
+			<p className='authen__form__sub-title'>
+				Vui lòng xác thực tài khoản trc khi đăng nhập
+			</p>
 			<Controller
 				name='email'
 				control={control}

@@ -39,7 +39,12 @@
 
 		&__title {
 			font-size: 2.4rem;
-			margin-bottom: 30px;
+			margin-bottom: 15px;
+		}
+
+		&__sub-title {
+			font-size: 1.4rem;
+			color: $third-color;
 		}
 
 		& .form-control {
