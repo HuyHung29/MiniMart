@@ -38,7 +38,7 @@ function CartPageItem({ item, handleCheck, checkList }) {
 		const value = +target.value;
 
 		if (value === 0) {
-			const newQuantity = 0;
+			const newQuantity = 1;
 			setItemQuantity(newQuantity);
 		} else if (value && value < 999) {
 			const newQuantity = value;

@@ -1,10 +1,11 @@
 import { deleteMultiFromCart } from "app/purchaseSlide";
+import BuyBtn from "components/BuyBtn";
 import { images } from "constant";
 import CartPageItem from "features/Purchase/components/CartPageItem";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Col, Container, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 
 function CartMainPage() {
 	const dispatch = useDispatch();
@@ -148,9 +149,10 @@ function CartMainPage() {
 											{totalPrice()}
 										</span>
 									</p>
-									<Button className='buy-btn mt-0'>
-										<Link to='purchase'>Mua hang</Link>
-									</Button>
+									<BuyBtn
+										className='buy-btn mt-0 w-100'
+										content='Mua hàng'
+									/>
 								</div>
 							</div>
 						</>

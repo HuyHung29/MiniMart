@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
 BuyBtn.propTypes = {
 	content: PropTypes.string.isRequired,
@@ -9,9 +10,11 @@ BuyBtn.propTypes = {
 
 function BuyBtn({ content, className }) {
 	return (
-		<Button className={`buy-btn shadow-none  ${className}`}>
-			{content}
-		</Button>
+		<Link to='/purchase' className='flex-grow-1'>
+			<Button className={`buy-btn shadow-none  ${className}`}>
+				{content}
+			</Button>
+		</Link>
 	);
 }
 
