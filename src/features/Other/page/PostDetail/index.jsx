@@ -51,9 +51,9 @@ function PostDetail() {
 	};
 
 	return (
-		<Container>
+		<Container className='px-md-5'>
 			<Row className='post__detail'>
-				<Col md='2'>
+				<Col lg='2' className='d-md-none'>
 					<h2 className='post__detail__title'>Danh mục tin tức</h2>
 					<SubMenu />
 				</Col>

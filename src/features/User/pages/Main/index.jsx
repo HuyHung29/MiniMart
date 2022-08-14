@@ -16,9 +16,9 @@ function MainPage(props) {
 	}, [pathname]);
 
 	return (
-		<Container className='user'>
+		<Container className='user px-md-5'>
 			<Row>
-				<Col md='2'>
+				<Col className='d-none d-lg-block' lg='2'>
 					<div className='user__nav'>
 						<div className='user__nav__header'>
 							<div className='user__nav__img'>
@@ -94,6 +94,58 @@ function MainPage(props) {
 					</div>
 				</Col>
 			</Row>
+
+			<div className='user__setting__btn d-block d-lg-none'>
+				<i className='fa-solid fa-gear'></i>
+				<div className='user__nav shadow'>
+					<ul className='user__nav__list'>
+						<li className='user__nav__item'>
+							<i className='fas fa-user'></i>
+							<Link
+								to='/user/profile'
+								className='user__nav__link'>
+								Tài khoản của tôi
+							</Link>
+							<ul className='user__nav__sub-nav open'>
+								<li className='user__nav__item sub-item'>
+									<NavLink
+										to='/user/profile'
+										className='user__nav__link'
+										activeClassName='active'>
+										Hồ sơ
+									</NavLink>
+								</li>
+								<li className='user__nav__item sub-item'>
+									<NavLink
+										to='/user/address'
+										className='user__nav__link'
+										activeClassName='active'>
+										Địa chỉ
+									</NavLink>
+								</li>
+								<li className='user__nav__item sub-item'>
+									<NavLink
+										to='/user/password'
+										className='user__nav__link'
+										activeClassName='active'>
+										Đổi mật khẩu
+									</NavLink>
+								</li>
+							</ul>
+						</li>
+
+						<li className='user__nav__item'>
+							<i className='fas fa-clipboard'></i>
+							<NavLink
+								exact
+								to='/user/orders'
+								className='user__nav__link'>
+								Đơn hàng
+							</NavLink>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</Container>
 	);
 }

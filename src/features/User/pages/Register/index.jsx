@@ -9,10 +9,9 @@ function Register() {
 	const history = useHistory();
 	const onSubmit = (data) => {
 		const register = async () => {
-			console.log(data);
 			try {
-				const response = await userApi.register(data);
-				console.log(response);
+				await userApi.register(data);
+
 				history.push("/user/login");
 			} catch (error) {
 				throw error;
@@ -43,7 +42,7 @@ function Register() {
 		<div className='authen'>
 			<div className='authen__header'>
 				<Container>
-					<div className='d-flex align-items-center justify-content-between'>
+					<div className='d-flex align-items-center justify-content-between authen__header--wrap'>
 						<div className='d-flex align-items-center'>
 							<Link to='/'>
 								<img src={images.LOGO_B} alt='logo' />

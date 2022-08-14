@@ -26,9 +26,7 @@ function ReadMore({ content, row, readMore, className }) {
 	return (
 		<>
 			<div
-				className={
-					className ? className + " read-more" : null + " read-more"
-				}
+				className={className ? className + " read-more" : "read-more"}
 				style={style}>
 				{content}
 			</div>

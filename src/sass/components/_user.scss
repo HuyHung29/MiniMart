@@ -1,6 +1,54 @@
 .user {
 	padding-top: 40px;
 	padding-bottom: 50px;
+	position: relative;
+
+	&__setting__btn {
+		position: absolute;
+		background-color: $primary-color;
+		color: white;
+		padding: 10px 15px;
+		border-radius: 5px;
+		top: 15px;
+		left: 0;
+		z-index: 80;
+
+		font-size: 2rem;
+
+		&:hover .user__nav {
+			display: block;
+		}
+
+		& .user__nav {
+			display: none;
+			position: absolute;
+			top: 0;
+			right: 0;
+			transform: translateX(100%);
+			background-color: white;
+			width: 300px;
+			padding: 0 15px 10px;
+		}
+
+		& .user__nav__list {
+			margin-top: 0;
+		}
+
+		& .user__nav__item {
+			& i {
+				color: $text-color;
+			}
+		}
+
+		& .user__nav__link {
+			font-size: 1.6rem;
+			color: $text-color;
+		}
+
+		& .user__nav__sub-nav.open {
+			height: auto;
+		}
+	}
 
 	&__nav {
 		&__header {
@@ -90,6 +138,12 @@
 	}
 
 	&__purchase {
+		&--wrap {
+			@include mobile {
+				flex-flow: column-reverse;
+			}
+		}
+
 		&--empty {
 			border: 1px solid $border-color;
 			border-radius: 5px;

@@ -43,6 +43,10 @@
 		@include flex();
 		padding: 20px 0;
 
+		@include mobile {
+			display: none;
+		}
+
 		&__options {
 			width: 200px;
 			font-size: 1.4rem;
@@ -157,11 +161,41 @@
 					flex: 0 0 40%;
 					max-width: 40%;
 					padding-left: 10px;
+
+					@include tablet {
+						flex: 0 0 50%;
+						max-width: 50%;
+					}
+
+					@include mobile {
+						flex: 0 0 70%;
+						max-width: 70%;
+					}
+
+					&__text {
+						margin-top: 20px;
+						margin-left: 3px;
+						display: none;
+
+						@include mobile {
+							display: block;
+						}
+					}
 				}
 
 				&__summary {
 					flex: 0 0 10%;
 					max-width: 10%;
+
+					@include tablet {
+						flex: 0 0 15%;
+						max-width: 15%;
+						padding-left: 10px;
+					}
+
+					@include mobile {
+						display: none;
+					}
 				}
 
 				&__address {
@@ -171,11 +205,38 @@
 					& p {
 						padding: 0 20px;
 					}
+
+					@include mobileAndTablet {
+						display: none;
+					}
 				}
 
 				&__info {
 					flex: 0 0 20%;
 					max-width: 20%;
+
+					@include mobileAndTablet {
+						display: none;
+					}
+				}
+
+				&__detail {
+					@include pc {
+						display: none;
+					}
+
+					@include tablet {
+						flex: 0 0 20%;
+						max-width: 20%;
+					}
+
+					@include mobile {
+						display: none;
+					}
+
+					& p {
+						line-break: anywhere;
+					}
 				}
 
 				&__status {
@@ -183,6 +244,11 @@
 					max-width: 15%;
 					position: relative;
 					user-select: none;
+
+					@include mobile {
+						flex: 0 0 30%;
+						max-width: 30%;
+					}
 
 					& .status {
 						color: white;
@@ -227,6 +293,11 @@
 
 						background-color: white;
 						width: 350px;
+
+						@include mobile {
+							width: 200px;
+						}
+
 						padding: 20px 10px;
 						border-radius: 3px;
 
@@ -286,6 +357,10 @@
 				margin: 10px 10px 10px auto;
 				border: 1px solid $border-color;
 				border-radius: 5px;
+
+				@include mobile {
+					display: none;
+				}
 			}
 
 			&__quantity {

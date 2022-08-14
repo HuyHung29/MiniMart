@@ -50,7 +50,7 @@ function Products({ routes }) {
 			try {
 				dispatch(fetchProducts(filter));
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		};
 

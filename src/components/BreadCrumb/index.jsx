@@ -1,5 +1,4 @@
 import { breadcrumbNames } from "constant";
-import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";

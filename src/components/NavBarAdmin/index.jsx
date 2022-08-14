@@ -1,8 +1,19 @@
 import cls from "classnames";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function NavBarAdmin() {
+NavBarAdmin.propTypes = {
+	haveHeading: PropTypes.bool,
+	isOpenMenu: PropTypes.bool,
+};
+
+NavBarAdmin.defaultProp = {
+	haveHeading: false,
+	isOpenMenu: false,
+};
+
+function NavBarAdmin({ haveHeading, isOpenMenu }) {
 	const [active, setActive] = useState({
 		orders: false,
 		products: false,
@@ -19,7 +30,18 @@ function NavBarAdmin() {
 	};
 
 	return (
-		<div className='navbar--admin'>
+		<div
+			className={cls({
+				"navbar--admin": true,
+				active: isOpenMenu,
+			})}>
+			<p
+				className={cls({
+					"navbar--admin__heading": true,
+					"d-none": !haveHeading,
+				})}>
+				MENU QUẢN TRỊ
+			</p>
 			<ul className='navbar--admin__list'>
 				<li className='navbar--admin__item'>
 					<div
@@ -53,34 +75,6 @@ function NavBarAdmin() {
 								}}
 								className='navbar--admin__sublink'>
 								Tất cả đơn hàng
-							</NavLink>
-						</li>
-						<li className='navbar--admin__subitem'>
-							<NavLink
-								to='/admin/orders?status=processing'
-								isActive={(_, location) => {
-									if (
-										location.pathname + location.search ===
-										"/admin/orders?status=processing"
-									)
-										return true;
-								}}
-								className='navbar--admin__sublink'>
-								Đang xử lý
-							</NavLink>
-						</li>
-						<li className='navbar--admin__subitem'>
-							<NavLink
-								to='/admin/orders?status=completed'
-								isActive={(_, location) => {
-									if (
-										location.pathname + location.search ===
-										"/admin/orders?status=completed"
-									)
-										return true;
-								}}
-								className='navbar--admin__sublink'>
-								Đã giao
 							</NavLink>
 						</li>
 					</ul>

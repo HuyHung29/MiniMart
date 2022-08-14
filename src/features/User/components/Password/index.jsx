@@ -52,7 +52,6 @@ function Password() {
 	const onUserChangePassword = (data) => {
 		const changePassword = async () => {
 			try {
-				console.log(data);
 				await userApi.changePassword(data);
 				reset();
 			} catch (error) {

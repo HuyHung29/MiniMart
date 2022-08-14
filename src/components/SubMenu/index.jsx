@@ -64,14 +64,6 @@ function SubMenu() {
 						Tin tức
 					</NavLink>
 				</li>
-				<li className='sub-menu__item'>
-					<NavLink
-						className='sub-menu__link'
-						to='/contact'
-						activeClassName='active'>
-						Liên hệ
-					</NavLink>
-				</li>
 			</ul>
 		</div>
 	);

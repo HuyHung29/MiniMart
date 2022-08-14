@@ -45,9 +45,7 @@ function Accounts() {
 						<p>{account.phone}</p>
 					</div>
 					<div className='account__order'>
-						<a href="../order/index.php?id=<?=$row['id']?>">
-							{orderQuantity} đơn hàng
-						</a>
+						<p>{orderQuantity} đơn hàng</p>
 					</div>
 					<div className='account__status'>
 						<p>{account.isActive ? "Hoạt động" : "Bị khóa"}</p>

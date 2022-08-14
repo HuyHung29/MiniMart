@@ -73,7 +73,7 @@ function UserPurchase() {
 		<div className='layout'>
 			<div className='authen__header'>
 				<Container>
-					<div className='d-flex align-items-center justify-content-between'>
+					<div className='d-flex align-items-center justify-content-between authen__header--wrap'>
 						<div className='d-flex align-items-center'>
 							<Link to='/'>
 								<img src={images.LOGO_B} alt='logo' />
@@ -96,7 +96,7 @@ function UserPurchase() {
 									Vui lòng điền thông tin người nhận
 								</p>
 							</div>
-							<Row>
+							<Row className='user__purchase--wrap'>
 								<Col md='6'>
 									<PurchaseForm
 										address={address}

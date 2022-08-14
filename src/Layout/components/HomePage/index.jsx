@@ -32,7 +32,7 @@ function HomePage() {
 	const renderListPost = () => {
 		return posts.map((post, index) => {
 			return index < 3 ? (
-				<Col key={index}>
+				<Col md='12' lg='4' key={index}>
 					<div className='home__post__item'>
 						<Link
 							className='home__post__item__img'
@@ -93,12 +93,30 @@ function HomePage() {
 								{cate.name}
 							</Link>
 						</div>
-						<ProductSlider
-							dots={false}
-							slidesToShow={5}
-							slidesToScroll={5}
-							products={item}
-						/>
+						<div className='d-none d-sm-none d-md-block d-lg-none overflow-hidden'>
+							<ProductSlider
+								dots={false}
+								slidesToShow={3}
+								slidesToScroll={2}
+								products={item}
+							/>
+						</div>
+						<div className='d-sm-block d-md-none d-lg-none overflow-hidden'>
+							<ProductSlider
+								dots={false}
+								slidesToShow={2}
+								slidesToScroll={2}
+								products={item}
+							/>
+						</div>
+						<div className='d-none d-sm-none d-md-none d-lg-block overflow-hidden'>
+							<ProductSlider
+								dots={false}
+								slidesToShow={5}
+								slidesToScroll={5}
+								products={item}
+							/>
+						</div>
 					</Col>
 				);
 			});
@@ -110,11 +128,16 @@ function HomePage() {
 			<div className='top-slider'>
 				<img src={images.SLIDER_IMG} alt='slider' />
 			</div>
-			<Container className='home'>
+			<Container className='home px-md-5'>
 				<Row className='home__banner'>
 					{bannerImg.map((item, index) => {
 						return (
-							<Col key={index}>
+							<Col
+								xs='12'
+								sm='12'
+								md='4'
+								className='mb-3'
+								key={index}>
 								<div className='home__banner__item'>
 									<img
 										src={item}

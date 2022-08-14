@@ -21,7 +21,6 @@ export const fetchUserInfo = createAsyncThunk(
 			const response = await userApi.getUser();
 			return response.data;
 		} catch (error) {
-			console.log(JSON.stringify(error));
 			thunkApi.dispatch(
 				getNewAccessToken(JSON.parse(localStorage.getItem("refresh")))
 			);

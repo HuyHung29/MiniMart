@@ -1,12 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { Button, Col, Container, Row } from "reactstrap";
 import moment from "moment";
+import { fetchCategories } from "app/categoriesSlice";
 
 function Categories() {
+	const dispatch = useDispatch();
 	const location = useLocation();
 	const categories = useSelector((state) => state.categories);
+
+	useEffect(() => {
+		dispatch(fetchCategories());
+	}, [dispatch]);
 
 	const renderList = () => {
 		return categories.map((category, index) => (
@@ -23,18 +29,10 @@ function Categories() {
 					<p>{category.name}</p>
 				</div>
 				<div className='category-list__content__body__list__item__create'>
-					<p>
-						{moment(category.createdAt).format(
-							"MMMM Do YYYY, h:mm:ss a"
-						)}
-					</p>
+					<p>{moment(category.createdAt).format("MMMM Do YYYY")}</p>
 				</div>
 				<div className='category-list__content__body__list__item__update'>
-					<p>
-						{moment(category.updatedAt).format(
-							"MMMM Do YYYY, h:mm:ss a"
-						)}
-					</p>
+					<p>{moment(category.updatedAt).format("MMMM Do YYYY")}</p>
 				</div>
 			</div>
 		));

@@ -55,9 +55,9 @@ function ListPost() {
 	};
 
 	return (
-		<Container>
+		<Container className='px-md-5'>
 			<Row className='post-list'>
-				<Col md='2'>
+				<Col lg='2'>
 					<h2 className='post-list__title'>Danh mục tin tức</h2>
 					<SubMenu />
 				</Col>

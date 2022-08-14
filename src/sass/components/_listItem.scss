@@ -17,6 +17,18 @@
 		@include flex(center);
 		padding: 20px 0;
 
+		@include mobile {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		&--post {
+			@include mobile {
+				flex-direction: row;
+				align-items: center;
+			}
+		}
+
 		&__header {
 			@include flex(center, center);
 
@@ -94,6 +106,11 @@
 	margin-left: auto;
 	@include flex(stretch, space-between);
 
+	@include mobile {
+		margin-left: 0;
+		margin-top: 20px;
+	}
+
 	&-task {
 		position: relative;
 		border: 1px solid $border-color;
@@ -117,7 +134,18 @@
 			visibility: visible;
 			opacity: 1;
 			top: calc(100% + 10px);
-			left: 0;
+
+			@include pc {
+				left: 0;
+			}
+
+			@include tablet {
+				left: 0;
+			}
+
+			@include mobile {
+				right: 0;
+			}
 		}
 
 		&__list {
@@ -129,11 +157,26 @@
 			background-color: white;
 			z-index: 50;
 			top: 0;
-			left: 0;
 			border-radius: 3px;
 			transition: 0.2s ease-in;
-			transform-origin: left top;
-			will-change: top, left;
+
+			@include pc {
+				left: 0;
+				transform-origin: left top;
+				will-change: top, left;
+			}
+
+			@include tablet {
+				left: 0;
+				transform-origin: left top;
+				will-change: top, left;
+			}
+
+			@include mobile {
+				right: 0;
+				transform-origin: right top;
+				will-change: top, right;
+			}
 
 			&::before {
 				content: "";
@@ -198,6 +241,10 @@
 
 	@include flex(center);
 
+	@include mobileAndTablet {
+		display: none;
+	}
+
 	&__item {
 		font-size: 1.6rem;
 		color: $sub-text-color;
@@ -228,6 +275,11 @@
 		& input {
 			cursor: pointer;
 		}
+
+		@include mobile {
+			flex: 0 0 10%;
+			max-width: 10%;
+		}
 	}
 
 	&__title {
@@ -238,23 +290,41 @@
 			flex: 0 0 25%;
 			max-width: 25%;
 			text-align: center;
+
+			@include mobile {
+				flex: 0 0 30%;
+				max-width: 30%;
+			}
 		}
 
 		&__text {
 			text-align: left;
 			margin-left: 15px;
 		}
+
+		@include mobile {
+		}
 	}
 
 	&__name {
 		flex: 0 0 15%;
 		max-width: 15%;
+
+		@include mobile {
+			flex: 0 0 20%;
+			max-width: 20%;
+		}
 	}
 
 	&__pictures {
 		flex: 0 0 25%;
 		max-width: 25%;
 		text-align: center;
+
+		@include mobile {
+			flex: 0 0 40%;
+			max-width: 40%;
+		}
 
 		&--body {
 			text-align: left;
@@ -282,24 +352,40 @@
 	&__desc {
 		flex: 0 0 30%;
 		max-width: 30%;
+
+		@include mobile {
+			display: none;
+		}
 	}
 
 	&__cate {
 		flex: 0 0 15%;
 		max-width: 15%;
 		text-align: center;
+
+		@include mobile {
+			display: none;
+		}
 	}
 
 	&__price {
 		flex: 0 0 10%;
 		max-width: 10%;
 		text-align: center;
+
+		@include mobile {
+			display: none;
+		}
 	}
 
 	&__origin {
 		flex: 0 0 10%;
 		max-width: 10%;
 		text-align: center;
+
+		@include mobile {
+			display: none;
+		}
 	}
 
 	&__action {
@@ -307,12 +393,21 @@
 		max-width: 20%;
 		text-align: center;
 
+		@include mobile {
+			flex: 0 0 30%;
+			max-width: 30%;
+		}
+
 		&__btn {
 			margin-left: 15px;
 			background-color: $third-color;
 			border-color: $third-color;
 			padding: 8px 10px;
 			font-size: 1.4rem;
+
+			@include mobile {
+				margin: 0 15px 15px;
+			}
 
 			&:hover {
 				color: $third-color;

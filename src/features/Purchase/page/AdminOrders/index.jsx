@@ -219,6 +219,11 @@ function AdminOrders() {
 							</div>
 						);
 					})}
+
+					<p className='orders__list__body__item__products__text'>
+						Tổng đơn hàng: {order.sumMoney.toLocaleString()}
+						<sup>đ</sup>
+					</p>
 				</div>
 				<div className='orders__list__body__item__summary text-center'>
 					<p>
@@ -236,6 +241,18 @@ function AdminOrders() {
 					</p>
 				</div>
 				<div className='orders__list__body__item__info'>
+					<p>Họ tên: {order.name}</p>
+					<p>Email: {order.email}</p>
+				</div>
+				<div className='orders__list__body__item__detail'>
+					<p>
+						Địa chỉ:{" "}
+						{order.address +
+							", " +
+							order.district +
+							", " +
+							order.city}
+					</p>
 					<p>Họ tên: {order.name}</p>
 					<p>Email: {order.email}</p>
 				</div>
@@ -415,6 +432,9 @@ function AdminOrders() {
 									</div>
 									<div className='orders__list__body__item__info'>
 										<p>Thông tin khách hàng</p>
+									</div>
+									<div className='orders__list__body__item__detail'>
+										<p>Thông tin đặt hàng</p>
 									</div>
 									<div className='orders__list__body__item__status text-center'>
 										<p>Trạng thái</p>

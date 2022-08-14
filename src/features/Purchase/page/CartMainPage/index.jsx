@@ -63,7 +63,6 @@ function CartMainPage() {
 	};
 
 	const onDeleteMultiFromCart = () => {
-		console.log("click");
 		if (checkList.length > 0) {
 			dispatch(deleteMultiFromCart(checkList));
 			setCheckList([]);
@@ -136,9 +135,6 @@ function CartMainPage() {
 										Chọn tất cả ({checkList.length})
 									</label>
 									<p onClick={onDeleteMultiFromCart}>Xóa</p>
-									<p className='color'>
-										Lưu vào danh sách yêu thích
-									</p>
 								</div>
 								<div className='cart-page__item__summary'>
 									<p>

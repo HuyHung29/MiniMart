@@ -13,6 +13,18 @@ export const fetchCategories = createAsyncThunk(
 	}
 );
 
+export const createCate = createAsyncThunk(
+	"categories/createCate",
+	async (data) => {
+		try {
+			const response = await categoriesApi.createCategory(data);
+			return response.data;
+		} catch (error) {
+			throw error;
+		}
+	}
+);
+
 const categoriesSlice = createSlice({
 	name: "categories",
 	initialState: [],

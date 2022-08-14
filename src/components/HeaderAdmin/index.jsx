@@ -1,3 +1,4 @@
+import { clearCart } from "app/purchaseSlide";
 import { userLogout } from "app/userSlice";
 import { images } from "constant";
 import React from "react";
@@ -12,6 +13,7 @@ function HeaderAdmin() {
 
 	const logOut = () => {
 		dispatch(userLogout());
+		dispatch(clearCart());
 		history.push("/");
 	};
 

@@ -7,9 +7,9 @@ function Footer() {
 		<footer
 			className='footer'
 			style={{ backgroundImage: `url(${images.BG_FOOTER})` }}>
-			<Container className='footer__container'>
+			<Container className='footer__container px-md-5'>
 				<Row>
-					<Col>
+					<Col md='6' lg='3' className='pb-md-4'>
 						<img
 							src={images.LOGO_B}
 							alt='logo'
@@ -54,7 +54,7 @@ function Footer() {
 							</div>
 						</div>
 					</Col>
-					<Col>
+					<Col md='6' lg='3' className='pb-md-4'>
 						<ul className='footer__list'>
 							<h3 className='footer__list__title'>Tài khoản</h3>
 							<li className='footer__item'>
@@ -68,7 +68,7 @@ function Footer() {
 							</li>
 						</ul>
 					</Col>
-					<Col>
+					<Col md='6' lg='3' className='pb-md-4'>
 						<ul className='footer__list'>
 							<h3 className='footer__list__title'>
 								Hỗ trợ khách hàng
@@ -84,7 +84,7 @@ function Footer() {
 							</li>
 						</ul>
 					</Col>
-					<Col>
+					<Col md='6' lg='3' className='pb-md-4'>
 						<div className='footer__mail'>
 							<h3 className='footer__mail__title'>Gửi mail</h3>
 							<p className='footer__mail__desc'>

@@ -142,6 +142,18 @@
 	&__middle {
 		padding: 10px 0;
 
+		@include mobileAndTablet {
+			padding: 15px;
+		}
+
+		&__logo {
+			@include mobileAndTablet {
+				@include flex(center, center);
+				padding-top: 15px;
+				padding-bottom: 15px;
+			}
+		}
+
 		& .form-wrap {
 			padding: 2px;
 			background-color: white;
@@ -230,22 +242,37 @@
 	}
 
 	&--admin {
-		@include flex(center, space-between);
 		padding-top: 10px;
 		padding-bottom: 10px;
 		border-bottom: 1px solid $border-color;
 		box-shadow: 0px 0px 5px rgba($color: #000000, $alpha: 0.2);
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
+
 		z-index: 80;
-		min-height: 71px;
-		max-height: 71px;
+
+		@include pc {
+			@include flex(center, space-between);
+			min-height: $admin-header-height;
+			max-height: $admin-header-height;
+			position: fixed;
+			top: 0;
+			right: 0;
+			left: 0;
+		}
+
+		@include mobileAndTablet {
+			@include flex();
+			flex-direction: column;
+		}
 		background-color: white;
 
 		&__side {
 			@include flex(center);
+
+			@include mobileAndTablet {
+				justify-content: space-between;
+			}
+
+			padding: 0 15px;
 		}
 
 		&__logo {
@@ -287,6 +314,11 @@
 			@include flex(center, center);
 			padding: 0 20px;
 			border-left: 1px solid $border-color;
+
+			@include mobileAndTablet {
+				padding: 0;
+				border-left: none;
+			}
 
 			&__list {
 				font-size: 2.8rem;
@@ -414,6 +446,10 @@
 				border: 1px solid $border-color;
 				border-radius: 50px;
 				transition: 0.2s ease-in;
+
+				@include mobile {
+					padding: 10px;
+				}
 
 				&:hover {
 					background-color: rgba($color: #ccc, $alpha: 0.1);

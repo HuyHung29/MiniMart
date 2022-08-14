@@ -34,10 +34,8 @@ function Address() {
 	const onSubmitForm = (data, resetForm) => {
 		let action = null;
 		if (currAddress) {
-			console.log("edit");
 			action = updateUserAddress({ id: currAddress._id, data });
 		} else {
-			console.log("add");
 			action = addNewAddress(data);
 		}
 

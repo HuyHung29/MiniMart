@@ -95,7 +95,7 @@ function Posts() {
 				<h2>Tất cả bài viết</h2>
 			</div>
 
-			<div className='list-product__action'>
+			<div className='list-product__action list-product__action--post'>
 				<div className='list-product__action__header'>
 					<h3>{posts.length} bài viết</h3>
 				</div>

@@ -87,7 +87,6 @@ function AddEditProduct() {
 			  };
 
 	const onSubmit = (data) => {
-		console.log(data);
 		const formData = new FormData();
 		if (isEdit) {
 			for (let key in data) {
@@ -117,7 +116,7 @@ function AddEditProduct() {
 				action = createProduct(formData);
 			}
 			try {
-				const response = await dispatch(action);
+				const response = dispatch(action);
 				unwrapResult(response);
 				history.goBack();
 			} catch (error) {

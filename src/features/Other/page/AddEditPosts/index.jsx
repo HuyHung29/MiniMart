@@ -61,7 +61,6 @@ function AddEditPosts() {
 			  };
 
 	const onSubmit = (data) => {
-		console.log(data);
 		const formData = new FormData();
 		if (isEdit) {
 			for (let key in data) {

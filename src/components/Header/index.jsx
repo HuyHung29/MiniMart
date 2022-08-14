@@ -14,6 +14,7 @@ import {
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userLogout } from "app/userSlice";
+import { clearCart } from "app/purchaseSlide";
 
 function Header() {
 	const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function Header() {
 	const { name } = user;
 
 	const logout = () => {
+		dispatch(clearCart());
 		dispatch(userLogout());
 		history.push("/");
 	};
@@ -30,7 +32,7 @@ function Header() {
 	return (
 		<header className='header'>
 			<Container>
-				<div className='header__top'>
+				<div className='header__top d-none d-lg-flex'>
 					<div className='header__top__side'>
 						<p className='header__top__item header__top__item--social'>
 							<span>Kết nối</span>
@@ -98,12 +100,21 @@ function Header() {
 				</div>
 				<div className='header__middle'>
 					<Row className='align-content-center'>
-						<Col md='3' className='header__middle__logo'>
+						<Col
+							xs='12'
+							sm='12'
+							lg='3'
+							className='header__middle__logo'>
 							<Link to='/'>
 								<img src={images.LOGO} alt='logo' />
 							</Link>
 						</Col>
-						<Col className='header__middle__search'>
+						<Col
+							xs='12'
+							sm='12'
+							md='9'
+							lg='7'
+							className='header__middle__search'>
 							<div className='form-wrap'>
 								<Form
 									className='header__middle__form'
@@ -127,7 +138,7 @@ function Header() {
 								</Form>
 							</div>
 						</Col>
-						<Col md='2'>
+						<Col xs='12' sm='12' md='3' lg='2'>
 							<Cart />
 						</Col>
 					</Row>

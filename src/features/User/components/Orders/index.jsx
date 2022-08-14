@@ -32,8 +32,6 @@ function Orders() {
 			);
 	});
 
-	console.log(orders);
-
 	const firstItem = useRef();
 
 	useEffect(() => {

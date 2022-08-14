@@ -51,7 +51,7 @@ function ProductDetail() {
 	}, [category, dispatch]);
 
 	return (
-		<Container className='product-detail'>
+		<Container className='product-detail px-md-5'>
 			<Row>
 				{Object.entries(product).length === 0 ? (
 					<Loading />
@@ -265,13 +265,35 @@ function ProductDetail() {
 							</h2>
 							<section className='bg-white product-detail__page'>
 								{sameProducts.length > 0 ? (
-									<ProductSlider
-										products={sameProducts}
-										slidesToScroll={1}
-										slidesToShow={5}
-										dots={false}
-										infinite={false}
-									/>
+									<>
+										<div className='d-none d-sm-none d-md-block d-lg-none overflow-hidden'>
+											<ProductSlider
+												products={sameProducts}
+												slidesToScroll={2}
+												slidesToShow={3}
+												dots={false}
+												infinite={false}
+											/>
+										</div>
+										<div className='d-sm-block d-md-none d-lg-none overflow-hidden'>
+											<ProductSlider
+												products={sameProducts}
+												slidesToScroll={2}
+												slidesToShow={2}
+												dots={false}
+												infinite={false}
+											/>
+										</div>
+										<div className='d-none d-sm-none d-md-none d-lg-block overflow-hidden'>
+											<ProductSlider
+												products={sameProducts}
+												slidesToScroll={1}
+												slidesToShow={5}
+												dots={false}
+												infinite={false}
+											/>
+										</div>
+									</>
 								) : (
 									<p>Không có sản phẩm nào cùng loại</p>
 								)}

@@ -88,7 +88,7 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 			if (item === "category" || item === "unit") {
 				if (item === "unit") {
 					return (
-						<Col md='6' key={index}>
+						<Col xs='12' sm='12' md='6' key={index}>
 							<Controller
 								name={item}
 								control={control}
@@ -115,7 +115,7 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 					);
 				} else {
 					return (
-						<Col md='6' key={index}>
+						<Col xs='12' sm='12' md='6' key={index}>
 							<Controller
 								name={item}
 								control={control}
@@ -167,7 +167,7 @@ function AddEditForm({ onSubmit, schema, defaultValues, editItem }) {
 					/>
 				</Col>
 			) : (
-				<Col md='6' key={index}>
+				<Col xs='12' sm='12' md='6' key={index}>
 					<Controller
 						name={item}
 						control={control}

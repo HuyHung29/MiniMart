@@ -1,8 +1,24 @@
 .breadcrumb {
 	margin-bottom: 0;
+	flex-wrap: nowrap;
+
+	@include tablet {
+		padding: 15px 30px;
+	}
+
+	@include mobile {
+		padding: 15px 0;
+	}
 
 	&-item {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		font-size: 1.4rem;
+
+		&:last-child {
+			flex: 2;
+		}
 
 		&::before {
 			display: none;

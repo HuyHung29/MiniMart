@@ -50,7 +50,7 @@ function AdminProductPage() {
 					unwrapResult(response);
 					setCheckList([]);
 				} catch (error) {
-					console.log(error);
+					throw error;
 				}
 			};
 

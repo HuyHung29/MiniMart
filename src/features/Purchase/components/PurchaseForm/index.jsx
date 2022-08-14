@@ -214,7 +214,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 				resetForm();
 			})}>
 			<Row className='row'>
-				<Col md='12'>
+				<Col lg='12'>
 					<Controller
 						name='selectAddress'
 						control={control}
@@ -232,7 +232,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='6'>
+				<Col lg='6'>
 					<Controller
 						name='name'
 						control={control}
@@ -248,7 +248,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='6'>
+				<Col lg='6'>
 					<Controller
 						name='email'
 						control={control}
@@ -264,7 +264,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='6'>
+				<Col lg='6'>
 					<Controller
 						name='phone'
 						control={control}
@@ -279,7 +279,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='6'>
+				<Col lg='6'>
 					<Controller
 						name='city'
 						control={control}
@@ -296,7 +296,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='6'>
+				<Col lg='6'>
 					<Controller
 						name='district'
 						control={control}
@@ -316,7 +316,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='6'>
+				<Col lg='6'>
 					<Controller
 						name='address'
 						control={control}
@@ -335,7 +335,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='12'>
+				<Col lg='12'>
 					<Controller
 						name='note'
 						control={control}
@@ -351,7 +351,7 @@ function PurchaseForm({ cart, address, user, onSubmitPurchase }) {
 						)}
 					/>
 				</Col>
-				<Col md='12'>
+				<Col lg='12'>
 					<Button
 						type='submit'
 						className='buy-btn'

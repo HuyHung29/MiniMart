@@ -22,8 +22,7 @@ function Login() {
 		const login = async () => {
 			try {
 				const result = await dispatch(userLogin(data));
-				const originalResult = unwrapResult(result);
-				console.log(originalResult);
+				unwrapResult(result);
 				history.push("/");
 			} catch (error) {
 				throw error;
@@ -115,7 +114,7 @@ function Login() {
 		<div className='authen'>
 			<div className='authen__header'>
 				<Container>
-					<div className='d-flex align-items-center justify-content-between'>
+					<div className='d-flex align-items-md-center justify-content-md-between authen__header--wrap'>
 						<div className='d-flex align-items-center'>
 							<Link to='/'>
 								<img src={images.LOGO_B} alt='logo' />

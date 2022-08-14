@@ -32,7 +32,6 @@ export const createOrder = createAsyncThunk(
 export const changeOrderStatus = createAsyncThunk(
 	"purchase/changeOrderStatus",
 	async ({ status, orderId }) => {
-		console.log(status, orderId);
 		try {
 			const response = await purchaseApi.changeOrderStatus(
 				{ status },
@@ -124,9 +123,6 @@ const purchaseSlice = createSlice({
 			.addCase(fetchOrders.fulfilled, (state, action) => {
 				state.orders = action.payload.orders;
 			})
-			.addCase(createOrder.fulfilled, (state, action) => {
-				state.orders.push(action.payload.orders);
-			})
 			.addCase(fetchCart.fulfilled, (state, action) => {
 				const cart = action.payload.cart;
 				const { products, quantity } = cart;
@@ -180,12 +176,12 @@ const purchaseSlice = createSlice({
 				);
 
 				if (index !== -1) {
-					state.orders[index] = action.payload.order;
+					state.orders[index].status = action.payload.order.status;
 				}
 			});
 	},
 });
 
-export const { updateCart } = purchaseSlice.actions;
+export const { clearCart } = purchaseSlice.actions;
 
 export default purchaseSlice.reducer;
