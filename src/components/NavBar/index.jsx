@@ -47,15 +47,17 @@ function NavBar() {
 										</Link>
 										<DropdownMenu end>
 											{categories.map((item, index) => {
-												return (
-													<DropdownItem key={index}>
-														<Link
-															className='d-block'
-															to={`/category?id=${item._id}`}>
-															{item.name}
-														</Link>
-													</DropdownItem>
-												);
+												if (![0, 6].includes(index))
+													return (
+														<DropdownItem
+															key={index}>
+															<Link
+																className='d-block'
+																to={`/category?id=${item._id}`}>
+																{item.name}
+															</Link>
+														</DropdownItem>
+													);
 											})}
 										</DropdownMenu>
 									</UncontrolledDropdown>

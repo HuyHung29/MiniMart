@@ -20,10 +20,10 @@ function HomePage() {
 		if (categories.length > 0 && products.length === 0) {
 			try {
 				dispatch(showLoading());
-				dispatch(fetchProductsHomePage(categories[3]._id));
-				dispatch(fetchProductsHomePage(categories[2]._id));
+				dispatch(fetchProductsHomePage(categories[5]._id));
+				dispatch(fetchProductsHomePage(categories[4]._id));
 				dispatch(fetchProductsHomePage(categories[1]._id));
-				dispatch(fetchProductsHomePage(categories[6]._id));
+				// dispatch(fetchProductsHomePage(categories[6]._id));
 				dispatch(hideLoading());
 			} catch (error) {}
 		}

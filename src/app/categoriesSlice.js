@@ -31,7 +31,12 @@ const categoriesSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchCategories.fulfilled, (state, action) => {
-			return state.concat(action.payload.categories);
+			const list = action.payload.categories.filter((item, index) => {
+				return ![0, 6].includes(index);
+			});
+			console.log(list);
+			// return state.concat(action.payload.categories);
+			return [...list];
 		});
 	},
 });
